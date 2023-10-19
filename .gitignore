@@ -101,3 +101,6 @@ db.sqlite3
 
 # Backup files #
 *.bak
+
+# Virtual environment #
+venv/

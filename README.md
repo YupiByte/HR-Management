@@ -38,6 +38,19 @@ pip install --upgrade pip && pip install -r requirements.txt
 
 (use pip3 if using python3)
 
+### Environment Variables
+File that will contain the environment variables is located in the root of the project
+
+```sh
+DJANGO_SECRET_KEY= ...
+DJANGO_DEBUG= ...
+DJANGO_ALLOWED_HOSTS= ...
+DJANGO_DATABASE_NAME= ...
+DJANGO_DATABASE_USER= ...
+DJANGO_DATABASE_PASSWORD= ...
+```
+This will be shared in a private channel
+
 
 ### Development Installation
 
@@ -47,6 +60,13 @@ When you are creating for the first time development enviroment in you machine
 python manage.py migrate
 # Create superuser
 python manage.py createsuperuser
+
+Username (leave blank to use 'your_user_name'): 
+Email address: hola@hello.com
+Password: 
+Password (again): 
+Superuser created successfully.
+
 ```
 
 ### Running the server

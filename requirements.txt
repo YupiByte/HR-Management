@@ -3,8 +3,7 @@ Pillow
 django-crispy-forms
 django-formtools
 django-ckeditor
-django-ckeditor-filebrowser
 django-imagekit
 django-tables2
 django-celery-beat
-FullCalendar
+python-dotenv
