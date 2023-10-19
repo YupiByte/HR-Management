@@ -9,13 +9,6 @@ The owners of the Project are Luis F. J. Velázquez Sosa, Lilliana Marrero Solí
 
 #### **Make sure you are using python <= 3.10**
 
-Python 3.11+ version causes issues when installing the requirements
-
-You can run to se the version of python you are running:
-```sh
-python --version
-```
-
 ### Unix Systems
 
 Create virtual enviroment:
