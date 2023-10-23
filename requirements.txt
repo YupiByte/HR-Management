@@ -1,0 +1,9 @@
+Django
+Pillow
+django-crispy-forms
+django-formtools
+django-ckeditor
+django-imagekit
+django-tables2
+django-celery-beat
+python-dotenv
