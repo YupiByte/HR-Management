@@ -1,17 +1,24 @@
 {% extends './static/base.html'%}
+{% load static %}
+{% block title %}Login{% endblock title %}
+
 {% block content %}
-    <h1> Login </h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        <form>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Username</label>
-              <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input type="password" class="form-control" name="password">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        
+
+  <div class="container d-flex align-items-center justify-content-center" style="height: 100vh;">
+    
+      <img src="{% static 'img/logo_penguin.png' %}" alt="logo" class="mb-4" style="width: 150px; height: 150px;">
+
+    <form style="width: 400px;" action="" method="post">
+    {% csrf_token %}
+      <form>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Username</label>
+          <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
 {% endblock content %}
