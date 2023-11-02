@@ -5,7 +5,7 @@ from django.contrib import messages
 
  
 def login_user(request):
-    '''if request.method == "POST":
+    if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
 
@@ -18,5 +18,5 @@ def login_user(request):
             return redirect("home")
         else:
             messages.error(request, "Invalid username or password")
-            return redirect("login")'''
+            return redirect("login")
     return render(request, "authenticate/login.html", {}) 
