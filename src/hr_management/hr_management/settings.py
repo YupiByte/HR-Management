@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user'
+    'user', # User module
+    'django_tables2' # added by Lilliana during user_module branch development
 ]
 
 MIDDLEWARE = [
