@@ -1,18 +1,14 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
 
-# Parent Class
+# Abstract Parent Class
 class User(models.Model):
     user_id = models.AutoField(primary_key=True) # Automatic Primary Key
     username = models.CharField(max_length=32, unique=True)
     password = models.CharField(max_length=64) # Note: MODIFY to a HASH
     full_name = models.CharField(max_length=64)
 
-    class Meta: # Tells Django not to create a database table for this class. (Abstract class)
+    class Meta: # Tells Django not to create a database table for this class.
             abstract = True
-
-    # def __str__(self):
-    #     return self.username
     
 # Child Class inherits from User
 class Admin(User):
