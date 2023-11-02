@@ -7,3 +7,4 @@ django-imagekit
 django-tables2
 django-celery-beat
 python-dotenv
+crispy-bootstrap5
