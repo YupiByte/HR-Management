@@ -8,8 +8,17 @@
 </head>
 
 <body>
-    <h1> Publications Page O.O </h1>
+    <h1> Publications Page 🐙</h1>
 
+    <section>
+
+        {% for item in data %}
+        <h1>{{item.title}} Published: {{item.publication_date}}</h1>
+        <p> {{item.body_description|safe}}
+
+        {% endfor %}
+
+    </section>
 
 
 </body>

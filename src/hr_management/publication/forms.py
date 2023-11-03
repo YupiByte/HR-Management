@@ -1,7 +1,7 @@
 from django import forms
 from .models import Publication
-from datetime import datetime
-
+from datetime import date
+from ckeditor.widgets import CKEditorWidget
 
 class PublicationCreateForm(forms.ModelForm):
 
@@ -11,15 +11,24 @@ class PublicationCreateForm(forms.ModelForm):
                             )
                             )
 
-    body_description = forms.CharField(
-                            widget=forms.Textarea(attrs={
+    body_description = forms.CharField(widget=CKEditorWidget(attrs={
                                 "placeholder": "Description" ,
                                 "class": "Publication-Class-Name" ,
                                 "rows": 8 ,
                                 "cols": 32
-                            })
-                            )
+                            }))
+    # body_description = forms.CharField(
+    #                         widget=forms.Textarea(attrs={
+    #                             "placeholder": "Description" ,
+    #                             "class": "Publication-Class-Name" ,
+    #                             "rows": 8 ,
+    #                             "cols": 32
+    #                         })
+    #                         )
     
+
+    publication_date = forms.DateField(label=date.today)
+
     class Meta:
         model = Publication
         fields = [
@@ -27,16 +36,11 @@ class PublicationCreateForm(forms.ModelForm):
             'body_description',
         ]
 
+    def clean_publication_title(self, *args, **kwargs):
 
-        def clean_publication_title(self, *args, **kwargs):
+        title = self.cleaned_data.get("title")
 
-            title = self.cleaned_data.get("title")
-
-            if not len(title):
-                raise forms.ValidationError("Invalid Title")
-            
-            return title
+        if not len(title):
+            raise forms.ValidationError("Invalid Title")
         
-
-        def generate_date():
-            return str(datetime.today().strftime('%Y-%m-%d'))
+        return title
