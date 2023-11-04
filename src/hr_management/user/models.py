@@ -6,6 +6,7 @@ class User(models.Model):
     username = models.CharField(max_length=32, unique=True)
     password = models.CharField(max_length=64) # Note: MODIFY to a HASH
     full_name = models.CharField(max_length=64)
+    is_admin = models.BooleanField(default=True)
 
     class Meta: # Tells Django not to create a database table for this class.
             abstract = True
@@ -13,7 +14,7 @@ class User(models.Model):
 # Child Class inherits from User
 class Admin(User):
     # admin = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    is_admin = models.BooleanField(default=True)
+    # is_admin = models.BooleanField(default=True)
 
     def __str__(self):
         return self.username

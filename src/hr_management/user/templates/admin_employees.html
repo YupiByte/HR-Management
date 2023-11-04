@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <!-- {% block content %} -->
+    <h1>Employees at HR Management</h1>
+    <p>Manage Employees (Add, Edit, Remove)</p>
+    <p>Page under construction...</p>
+
+    <p>
+
+        {% for item in context %}
+        <h1>{{item.full_name}}</h1>
+        <p> {{item.employee_type}} </p>
+        {% endfor %}
+    </p>
+</body>
+<!-- {% endblock %} -->
+</html>
