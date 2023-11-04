@@ -15,3 +15,14 @@ def home(request):
 
     context = {"data": data}
     return render(request, "index.html", context)
+
+
+def dynamic_home(request, id):
+
+        obj = get_object_or_404(Publication, id=id)
+
+        context = {
+              "object": obj
+        }
+
+        return render(request, "publication/index.html", context)
