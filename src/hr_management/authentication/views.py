@@ -28,7 +28,7 @@ def login_user(request):
             login(request, user)
             messages.success(request, 
                             "You have successfully logged in")
-            return redirect("user_home")
+            return redirect("home")
         else:
             messages.error(request, "Invalid username or password")
             return redirect("login")
@@ -40,3 +40,7 @@ def logout_user(request):
     logout(request)
     messages.success(request, "You have successfully logged out")
     return redirect("login")
+
+
+def home(request):
+    return render(request, "authenticate/home.html", {})
