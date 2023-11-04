@@ -19,5 +19,5 @@ class Publication(models.Model):
     def __str__(self):
         return self.title
 
-    # def get_absolute_url(self):
-    #     return reverse("publication:publication")
+    def get_absolute_url(self):
+        return reverse("publication:publication-post", kwargs={"id": self.id} )

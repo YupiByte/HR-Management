@@ -10,5 +10,8 @@ from .models import *
 
 def home(request):
     data = Publication.objects.all()
+
+    # data = get_object_or_404(Publication, id=id)
+
     context = {"data": data}
     return render(request, "index.html", context)
