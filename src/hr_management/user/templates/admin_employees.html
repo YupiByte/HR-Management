@@ -7,10 +7,9 @@
     <p>Page under construction...</p>
 
     <p>
-
-        {% for item in context %}
-        <h1>{{item.full_name}}</h1>
-        <p> {{item.employee_type}} </p>
+        {% for employee in item %}
+        <p>{{employee.username}}</p>
+        <p> {{employee.employee_type}} </p>
         {% endfor %}
     </p>
 </body>

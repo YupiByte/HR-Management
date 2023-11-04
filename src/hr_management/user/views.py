@@ -6,10 +6,10 @@ def home(request):
     return render(request, "index.html")
 
 def admin_employees(request):
-    obj = Employee.objects.get(user_id=1)
-    context = {'object': obj}
-    # item = Employee.objects.all()
-    # context = {"item": item}
+    # obj = Employee.objects.get(user_id=1)
+    # context = {'object': obj}
+    item = Employee.objects.all()
+    context = {"item": item}
     return render(request, "admin_employees.html", context) # return all items in the Employee object
 
 
