@@ -87,8 +87,7 @@ local_settings.py
 
 .env
 db.sqlite3
-0003_remove_employee_is_admin_alter_admin_is_admin_and_more.py
-src/hr_management/user/migrations/0002_admin_employee_delete_user.py
+
 
 # PyCharm #
 .idea/
