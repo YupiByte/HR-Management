@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <title> Leave Request </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'publication/style.css' %}">
+
+</head>
+
+<body>
+    <h1> Request Leave Page 🐙</h1>
+
+    <section>
+
+        {% for item in request_form %}
+        <h1>{{item.employee_id}} Published: {{item.request_type}}</h1>
+        <p> {{item.start_date|safe}}
+            {{item.end_date|safe}}
+
+        </p>
+        {% endfor %}
+
+    </section>
+
+
+</body>
+
+
+</html>
