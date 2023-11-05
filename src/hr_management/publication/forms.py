@@ -17,15 +17,6 @@ class PublicationCreateForm(forms.ModelForm):
                                 "rows": 8 ,
                                 "cols": 32
                             }))
-    # body_description = forms.CharField(
-    #                         widget=forms.Textarea(attrs={
-    #                             "placeholder": "Description" ,
-    #                             "class": "Publication-Class-Name" ,
-    #                             "rows": 8 ,
-    #                             "cols": 32
-    #                         })
-    #                         )
-    
 
     publication_date = forms.DateField(label=date.today)
 

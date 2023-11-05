@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'publication.apps.PublicationConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'req_leave',
 ]
 
 
