@@ -1,24 +1,50 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from .models import Request
 from .forms import LeaveRequestForm
 
 
 
+def home_view(*args, **kwargs):
+    return HttpResponse("<h1> Test </h1>")
+
+
+
 def submit_leave_request(request):
-    if request.method == 'POST':
-        form = LeaveRequestForm(request.POST)
-        if form.is_valid():
-            leave_request = form.save(commit=False)
-            leave_request.employee = request.user
-            leave_request.status = 'Pending'
-            leave_request.save()
-            return redirect('leave_request_success')  # Redirect to a success page
-    else:
+
+    form = LeaveRequestForm(request.POST or None)
+
+    if form.is_valid():
+        form.save()
         form = LeaveRequestForm()
+
+
+    context = {
+        'form': form
+    }
+
+    return render(request, "req_leave/submit_leave_request.html", context)
+
+
+# def submit_leave_request(request):
+
+
+
+#     if request.method == 'POST':
+#         form = LeaveRequestForm(request.POST)
+#         if form.is_valid():
+#             leave_request = form.save(commit=False)
+
+#             leave_request.
+
+#             leave_request.request_status = 'Pending'
+#             leave_request.save()
+#             # return redirect('leave_request_success')  # Redirect to a success page
+#     else:
+#         form = LeaveRequestForm()
     
-    context = {'form': form}
-    return render(request, 'req_leave/submit_leave_request.html', context)
+#     context = {'form': form}
+#     return render(request, 'submit_leave_request.html', context)
 
 
 
@@ -33,12 +59,12 @@ def manage_leave_request(request):
 
 
 
-def leave_request_approval(request):
-    if request.method == 'POST':
-        leave_request_id = request.POST.get('leave_request_id')
-        status = request.POST.get('status')
-        leave_request = Request.objects.get(id=leave_request_id)
-        leave_request.status = status
-        leave_request.save()
-    leave_requests = Request.objects.filter(status='Pending')
-    return render(request, 'leaves/request_approval.html', {'leave_requests': leave_requests})
+# def leave_request_approval(request):
+#     if request.method == 'POST':
+#         leave_request_id = request.POST.get('leave_request_id')
+#         status = request.POST.get('status')
+#         leave_request = Request.objects.get(id=leave_request_id)
+#         leave_request.status = status
+#         leave_request.save()
+#     leave_requests = Request.objects.filter(status='Pending')
+#     return render(request, 'request_approval.html', {'leave_requests': leave_requests})

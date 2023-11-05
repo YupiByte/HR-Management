@@ -2,6 +2,7 @@ from django import forms
 from .models import Request
 
 class LeaveRequestForm(forms.ModelForm):
+
     class Meta:
         model = Request
         # fields = ['start_date', 'end_date', 'request_type']

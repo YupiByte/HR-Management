@@ -18,14 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from req_leave.views import submit_leave_request, manage_leave_request
+from req_leave import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("publication.urls")),
     path('ckeditor/',include('ckeditor_uploader.urls')),
-    path('request/', include("req_leave.urls"))
+    path('request/', include("req_leave.urls")),
+
+    path('req/', views.home_view, name='req'),
+
     # path('request/', submit_leave_request, name='submit_leave_request'),
     # path('manage/', manage_leave_request, name='manage_leave_request')
 ]

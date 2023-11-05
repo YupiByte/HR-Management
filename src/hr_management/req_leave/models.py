@@ -5,7 +5,6 @@ temp_employee_id = "TEMPORARY_EMPLOYEE_ID"
 
 class Request(models.Model):
 
-
     STATUS_CHOICES = (
         ('Pending', 'Pending'),
         ('Approved', 'Approved'),
