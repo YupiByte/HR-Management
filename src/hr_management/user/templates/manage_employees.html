@@ -1,0 +1,40 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="division-3">
+    <div>
+        <h1>Manage Employees</h1>
+        <!-- Filtering options (input fields, search button) -->
+        <input type="text" id="first_name_filter" placeholder="Filter by First Name">
+        <input type="text" id="last_name_filter" placeholder="Filter by Last Name">
+        <button id="search_button">Search</button>
+        <button id="add_employee_button">Add New Employee</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Position</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+            <tr>
+                <td>{{ employee.first_name }}</td>
+                <td>{{ employee.last_name }}</td>
+                <td>{{ employee.employee_type }}</td>
+                <td>
+                    <button class="edit_employee_button">Edit</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+

@@ -1,27 +1,23 @@
 from django.shortcuts import render, HttpResponse
 from .models import Employee, Admin
 
-# Create your views here.
+
 def home(request):
     return render(request, "index.html")
 
-def admin_employees(request):
-    # obj = Employee.objects.get(user_id=1)
-    # context = {'object': obj}
-    item = Employee.objects.all()
-    context = {"item": item}
-    return render(request, "admin_employees.html", context) # return all items in the Employee object
+# Dummy page for features under construction
+def tmp(request):
+    return render(request, "tmp.html")
 
-
+# Admin landing page after authentication
 def admin_home(request):
-    navigation_data = [
-        {"name": "Dashboard", "url": "admin_home"},
-        {"name": "Employees", "url": "admin_employees"}, # Change to Manage Employees link
-        {"name": "Dummy Home", "url": "home"}, # Change to Manage Requests link
-        {"name": "Dummy Home", "url": "home"}, # Change to Calendar link
-        {"name": "Dummy Home", "url": "home"}, # Change to Publications link
-    ]
-
-    context = {"title": "Dashboard", "navigation_data": navigation_data}
+    context = {"title": "Dashboard"}
     return render(request, "admin_home.html", context)
+
+def manage_employees(request):
+    employees = Employee.objects.all()
+    context = {"title": "Manage Employees", 'employees': employees}
+    return render(request, 'manage_employees.html', context)
+
+
 

@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'static/base.css' %}">
+    <title>Human Resources Inc.</title> 
+</head>
+<body>
+    <div class="division-1">
+        <div class="navbar-title">Human Resources Inc.</div>
+        <div class="logo-container">
+            <img src="{% static 'static/penguin_logo.png' %}" alt="Application Logo" class="navbar-logo">
+        </div>
+        <ul class="navbar-section">
+            <li><a href="{% url 'admin_home' %}">Home</a></li>
+            <li><a href="{% url 'manage_employees' %}">Employees</a></li>
+            <li><a href="{% url 'tmp' %}">Requests PTO/Sick Days</a></li>
+            <li><a href="{% url 'tmp' %}">Calendar</a></li>
+            <li><a href="{% url 'tmp' %}">Publications</a></li>   
+        </ul>
+    </div>
+
+    <div class="division-2">
+        <img src="{% static 'static/auth.png' %}" alt="Authentication" class="login-icon">
+        <button class="help-button">?</button>
+
+        <div class="division-3">{% block content %} {% endblock %}</div>
+
+    </div>
+</body>
+</html>
