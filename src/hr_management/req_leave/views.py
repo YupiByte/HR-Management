@@ -24,7 +24,7 @@ def request_submit(request):
     #     return HttpResponse("<h1> Invalid Request Form </h1>")
 
     context = {"request_form": request_form}
-    return render(request, "submit_leave_request.html", context)
+    return render(request, "request.html", context)
 
 
 # def submit_leave_request(request):

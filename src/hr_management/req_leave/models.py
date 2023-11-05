@@ -26,7 +26,7 @@ class Request(models.Model):
     end_date = models.DateField()
 
     def __str__(self):
-        return f"{self.employee.username} - {self.request_type}\
+        return f"{self.employee_id} - {self.request_type}\
               {self.start_date} to {self.end_date}"
 
 

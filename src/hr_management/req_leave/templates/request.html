@@ -17,7 +17,7 @@
     <section>
 
         {% for item in request_form %}
-        <h1>{{item.employee_id}} Published: {{item.request_type}}</h1>
+        <h1>{{item.employee_id}} Item: {{item.request_type}}</h1>
         <p> {{item.start_date|safe}}
             {{item.end_date|safe}}
 
