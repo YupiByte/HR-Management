@@ -8,8 +8,7 @@ class PublicationCreateForm(forms.ModelForm):
     title = forms.CharField(required=True, label='',
                             widget=forms.TextInput(
                                 attrs={"placeholder": "Title"}
-                            )
-                            )
+                            ))
 
     body_description = forms.CharField(widget=CKEditorWidget(attrs={
                                 "placeholder": "Description" ,

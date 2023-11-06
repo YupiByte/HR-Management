@@ -1,29 +1,51 @@
 from django import forms
 from .models import Request
+from datetime import timezone, date
+from uuid import uuid1
+
+
+def generate_request_id():
+    return str(uuid1())[:8]
+
+def get_employee_id():
+    '''
+    '''
+    get_id = "1324"
+
+    return get_id
+
 
 class RequestCreateForm(forms.ModelForm):
-
 
     REQ_CHOICES = (
         ('PTO', 'Paid Time Off'),
         ('Sick Day', 'Sick Day'),
     )
 
-    employee_id = forms.CharField(required=True, label='employee_id',
-                                    widget=forms.TextInput(
-                                    attrs={"placeholder": "id"}
-                                  ))
+    # Must be read-only, value given by getting current user's employee_id
+    employee_id = forms.CharField(required=True, initial=get_employee_id(), \
+                                label='employee_id',
+                                widget=forms.TextInput(
+                                attrs={"placeholder": "id"}
+                                ))
 
-    request_id = forms.CharField(required=True, label='request_id',
-                                    widget=forms.TextInput(
-                                    attrs={"placeholder": "req_id"}
-                                  ))
 
+    # Must be read-only
+    request_id = forms.CharField(required=True,  initial=generate_request_id, \
+                                label='request_id',
+                                widget=forms.TextInput(
+                                attrs={"placeholder": "req_id"}
+                                ))
+
+    # Must be read-only; Possibly hide the field
     request_type = forms.ChoiceField(choices=REQ_CHOICES, label='Request Type')
-    request_status = forms.CharField(label='Request Status')
+    request_status = forms.CharField(label='Request Status', initial='Pending')
 
-    start_date = forms.DateField(label='Start of Leave')
-    end_date = forms.DateField(label='End of Leave')
+    start_date = forms.DateField(required=True, label='Start of Leave', \
+                                 widget=forms.SelectDateWidget(), initial=date.today)
+    
+    end_date = forms.DateField(required=True, label='End of Leave', \
+                               widget=forms.SelectDateWidget(), initial=date.today)
 
 
     class Meta:

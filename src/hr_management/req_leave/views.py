@@ -11,10 +11,10 @@ def home_view(*args, **kwargs):
 # View all requests
 def view_request(request):
 
-    request_form = Request.objects.all()
+    view_request = Request.objects.all()
 
-    context = {"request_form": request_form}
-    return render(request, "request.html", context)
+    context = {"view_request": view_request}
+    return render(request, "view_request.html", context)
 
 
 # Creates a leave request form
