@@ -15,6 +15,11 @@ def get_employee_id():
     return get_id
 
 
+# TO-DO: Make immutable fields!
+# Admin page, view requests, can only change status fields.
+# Admin can click on a box, accept or decline which then updates
+# the Request's status field.
+
 class RequestCreateForm(forms.ModelForm):
 
     REQ_CHOICES = (
@@ -61,17 +66,26 @@ class RequestCreateForm(forms.ModelForm):
             raise forms.ValidationError("Start date should be before the end date.")
 
 
-# class LeaveRequestForm(forms.ModelForm):
+# Utilized by the Administrator to manage the request
+# Pseudocode...
+class RequestManage(forms.ModelForm):
 
-#     class Meta:
-#         model = Request
-#         # fields = ['start_date', 'end_date', 'request_type']
-#         fields = '__all__'
+    class Meta:
+        model = Request
+        fields = '__all__'
+
+    req_choices = (
+        ('Accept', 'Accept'),
+        ('Reject', 'Reject')
+    )
     
-#     def clean(self):
-#         cleaned_data = super().clean()
-#         start_date = cleaned_data.get('start_date')
-#         end_date = cleaned_data.get('end_date')
+    manage_request = forms.ChoiceField(label='Manage Request', \
+                                    widget=forms.SelectMultiple(choices=req_choices))
+    
 
-#         if start_date and end_date and start_date > end_date:
-#             raise forms.ValidationError("Start date should be before the end date.")
+    if (manage_request == 'Accept'):
+        Request.request_status = 'Accepted'
+    else:
+        Request.request_status = 'Declined'
+
+    
