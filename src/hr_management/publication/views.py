@@ -4,16 +4,15 @@ from django.http import Http404
 from .forms import PublicationCreateForm
 from .models import *
 
-# from "../venv/lib/python3.10/site-packages" import ckeditor
 # Create your views here.
 
 
+# Renders the Publication Post as requested by the url
 def home(request):
-    data = Publication.objects.all()
 
-    # data = get_object_or_404(Publication, id=id)
+    publication_post = Publication.objects.all()
 
-    context = {"data": data}
+    context = {"publication_post": publication_post}
     return render(request, "index.html", context)
 
 

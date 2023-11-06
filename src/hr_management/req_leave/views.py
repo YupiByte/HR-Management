@@ -36,6 +36,12 @@ def request_submit(request):
     return render(request, "request.html", context)
 
 
+# Approve / Reject
+def manage_request(request):
+
+    ''''''
+
+
 # def submit_leave_request(request):
 
 #     form = LeaveRequestForm(request.POST or None)

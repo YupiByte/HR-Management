@@ -1,12 +1,12 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #0f0303;
+    background-color: #e9e9f1;
     margin: 0;
     padding: 0;
 }
 
 h1 {
-    background-color: #3498db;
+    background-color: #033047;
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -18,11 +18,11 @@ section {
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgb(220, 220, 220);
 }
 
 h1#publications-header {
-    background-color: #3498db;
+    background-color: #cbcbcb;
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -36,7 +36,7 @@ h1#publications-header {
 h1#publications-header {
     font-size: 24px;
     font-weight: bold;
-    color: #333;
+    color: #f3f3f3;
 }
 
 p {

@@ -3,6 +3,13 @@ from .models import Publication
 from datetime import date
 from ckeditor.widgets import CKEditorWidget
 
+
+
+
+# Details how the module is presented.
+# Uses CKEditor Package to handle the publication's
+# features (text editor, file handling and image storing)
+
 class PublicationCreateForm(forms.ModelForm):
 
     title = forms.CharField(required=True, label='',
@@ -10,6 +17,9 @@ class PublicationCreateForm(forms.ModelForm):
                                 attrs={"placeholder": "Title"}
                             ))
 
+    # Creates the CKEditor Widget
+    # No longer requires a separate image_address attribute,
+    # it is built into CKEditor
     body_description = forms.CharField(widget=CKEditorWidget(attrs={
                                 "placeholder": "Description" ,
                                 "class": "Publication-Class-Name" ,
@@ -17,6 +27,7 @@ class PublicationCreateForm(forms.ModelForm):
                                 "cols": 32
                             }))
 
+    # Auto generates the date
     publication_date = forms.DateField(label=date.today)
 
     class Meta:
