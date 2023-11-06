@@ -1,6 +1,5 @@
 from django.db import models
 
-temp_employee_id = "TEMPORARY_EMPLOYEE_ID"
 # Create your models here.
 
 class Request(models.Model):

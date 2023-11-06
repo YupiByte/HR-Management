@@ -14,18 +14,13 @@
 <body>
     <h1> Request Leave Page 🐙</h1>
 
-    <section>
+    <form action="" method="POST"> {% csrf_token %}
 
-        {% for item in request_form %}
-        <h1>{{item.employee_id}} Item: {{item.request_type}}</h1>
-        <p> {{item.start_date|safe}}
-            {{item.end_date|safe}}
+        {{ request_form.as_p }}
 
-        </p>
-        {% endfor %}
-
-    </section>
-
+        <input type="submit" value="Send"/>
+    
+    </form>
 
 </body>
 

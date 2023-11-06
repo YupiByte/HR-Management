@@ -8,7 +8,16 @@ from .forms import *
 def home_view(*args, **kwargs):
     return HttpResponse("<h1> Test </h1>")
 
+# View all requests
+def view_request(request):
 
+    request_form = Request.objects.all()
+
+    context = {"request_form": request_form}
+    return render(request, "request.html", context)
+
+
+# Creates a leave request form
 def request_submit(request):
 
     # request_form = Request.objects.all()

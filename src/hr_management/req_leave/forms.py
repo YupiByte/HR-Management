@@ -9,21 +9,21 @@ class RequestCreateForm(forms.ModelForm):
         ('Sick Day', 'Sick Day'),
     )
 
-    employee_id = forms.CharField(required=True, label='',
-                                  widget=forms.TextInput(
-                                      attrs={"placeholder": "id"}
+    employee_id = forms.CharField(required=True, label='employee_id',
+                                    widget=forms.TextInput(
+                                    attrs={"placeholder": "id"}
                                   ))
 
-    request_id = forms.CharField(required=True, label='',
-                                  widget=forms.TextInput(
-                                      attrs={"placeholder": "req_id"}
+    request_id = forms.CharField(required=True, label='request_id',
+                                    widget=forms.TextInput(
+                                    attrs={"placeholder": "req_id"}
                                   ))
 
-    request_type = forms.ChoiceField(choices=REQ_CHOICES)
-    request_status = forms.CharField()
+    request_type = forms.ChoiceField(choices=REQ_CHOICES, label='Request Type')
+    request_status = forms.CharField(label='Request Status')
 
-    start_date = forms.DateField()
-    end_date = forms.DateField()
+    start_date = forms.DateField(label='Start of Leave')
+    end_date = forms.DateField(label='End of Leave')
 
 
     class Meta:
