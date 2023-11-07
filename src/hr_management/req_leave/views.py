@@ -5,9 +5,6 @@ from .forms import *
 
 
 
-def home_view(*args, **kwargs):
-    return HttpResponse("<h1> Test </h1>")
-
 # View all requests
 def view_request(request):
 
