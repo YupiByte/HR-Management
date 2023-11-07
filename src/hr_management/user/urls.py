@@ -4,11 +4,11 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path("manage_employees/", views.manage_employees, name="manage_employees"), # <========== video equivalent to path('', views.home)
-    # path('admin_home/', views.admin_home, name='admin_home'), 
-    # path('home/', views.home, name='home'),
+    path('admin_home/', views.admin_home, name='admin_home'), 
     path('tmp/', views.tmp, name='tmp'),
-    # path('create/', views.create_employee_view, name='create_employee'),
+    path('create_employee/', views.create_employee, name='create_employee'),
     path('create/', views.create_employee, name='create_employee'),
+    path('employee_record/<int:pk>', views.employee_record, name='employee_record'),
 ]
 
 '''

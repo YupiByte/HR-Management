@@ -8,12 +8,21 @@
 <nav class="navbar-section">
     <div class="container-fluid">
         
-          <li class="nav-item">
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'admin_home' %}">Home</a>
+          </p> 
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'tmp' %}">PTO/Sick Days Requests</a>
+          </p> 
+          <p class="nav-item">
             <a class="nav-link" href="{% url 'manage_employees' %}">Employees</a>
-          </li>
-          <li class="nav-item">
+          </p>
+          <p class="nav-item">
             <a class="nav-link" href="{% url 'tmp' %}">Publications</a>
-          </li>        
+          </p>      
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'tmp' %}">Calendar</a>
+          </p>   
           
         </ul>
       </div>

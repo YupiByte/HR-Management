@@ -1,13 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Employee, Admin
+from .models import Employee, Administrator
 from .forms import CreateEmployeeForm
 
 '''
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddRecordForm
-from .models import Record
 '''
 
 
@@ -18,10 +16,10 @@ def home(request):
 def tmp(request):
     return render(request, "tmp.html")
 
-# # Admin landing page after authentication
-# def admin_home(request):
-#     context = {"title": "Dashboard"}
-#     return render(request, "admin_home.html", context)
+# Admin landing page after authentication
+def admin_home(request):
+    context = {"title": "Dashboard"}
+    return render(request, "../templates/administrator/admin_home.html", context)
 
 
 # def manage_employees(request):
@@ -31,7 +29,22 @@ def tmp(request):
 
 
 def manage_employees(request):
-    return render(request, '../templates/administrator/manage_employees.html', {})
+    employees = Employee.objects.all()
+	# # Check to see if logging in
+    # if request.method == 'POST':
+    #     username = request.POST['username']
+    #     password = request.POST['password']
+	# 	# Authenticate
+    #     user = authenticate(request, username=username, password=password)
+    #     if user is not None:
+    #         login(request, user)
+    #         messages.success(request, "You Have Been Logged In!")
+    #         return redirect('home')
+    #     else:
+    #         messages.success(request, "There Was An Error Logging In, Please Try Again...")
+    #         return redirect('home')
+    # else:
+    return render(request, '../templates/administrator/manage_employees.html', {'title':'Manage Employees', 'employees':employees})
 
 
 def create_employee(request):
@@ -50,8 +63,14 @@ def create_employee(request):
     form = CreateEmployeeForm()
     return render(request, '../templates/administrator/create_employee.html', {'form':form})
 
-    # return render(request, '../templates/administrator/create_employee.html', {})
 
+def employee_record(request, pk):
+	# if request.user.is_authenticated:
+	employee_record = Employee.objects.get(id=pk) # Look Up Records
+	return render(request, '../templates/administrator/employee_record.html', {'title': 'Employee Record', 'employee_record':employee_record})
+	# else:
+	# 	messages.success(request, "You Must Be Logged In To View That Page...")
+	# 	return redirect('home')
 
 '''
 def home(request):
