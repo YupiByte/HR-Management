@@ -9,6 +9,7 @@ urlpatterns = [
     path('create_employee/', views.create_employee, name='create_employee'),
     path('create/', views.create_employee, name='create_employee'),
     path('employee_record/<int:pk>', views.employee_record, name='employee_record'),
+    path('delete_employee/<int:pk>', views.delete_employee, name='delete_employee'),
 ]
 
 '''

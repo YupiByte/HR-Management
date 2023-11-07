@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Employee, Administrator
 from .forms import CreateEmployeeForm
+from django.contrib import messages
 
 '''
 from django.contrib.auth import authenticate, login, logout
@@ -71,6 +72,14 @@ def employee_record(request, pk):
 	# else:
 	# 	messages.success(request, "You Must Be Logged In To View That Page...")
 	# 	return redirect('home')
+
+
+def delete_employee(request, pk):
+     delete_it = Employee.objects.get(id=pk)
+     delete_it.delete()
+     messages.success(request, "Employee Deleted Successfully")
+    
+     return redirect('manage_employees')
 
 '''
 def home(request):
