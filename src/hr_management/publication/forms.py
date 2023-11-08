@@ -2,7 +2,9 @@ from django import forms
 from .models import Publication
 from datetime import date
 from ckeditor.widgets import CKEditorWidget
-
+from django.urls import reverse_lazy
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 
 
@@ -11,6 +13,14 @@ from ckeditor.widgets import CKEditorWidget
 # features (text editor, file handling and image storing)
 
 class PublicationCreateForm(forms.ModelForm):
+
+    # Crispy Form utilities
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_action = reverse_lazy('request_submit')
+        self.helper.form_method = 'GET'
+
 
     title = forms.CharField(required=True, label='',
                             widget=forms.TextInput(

@@ -19,6 +19,8 @@ def get_employee_id():
 
     return get_id
 
+
+
 # Calculating for total requested days,
 # subtracting the weekend days
 # Still a WIP, needs testing
@@ -60,16 +62,20 @@ class RequestCreateForm(forms.ModelForm):
     employee_id = forms.CharField(required=True, initial=get_employee_id(), \
                                 label='employee_id',
                                 widget=forms.TextInput(
-                                attrs={"placeholder": "id"}
-                                ))
+                                attrs={"placeholder": "id", \
+                                       "read-only": "read-only"}
+                                )
+                                )
 
 
     # Must be read-only
-    request_id = forms.CharField(required=True,  initial=generate_request_id, \
+    request_id = forms.CharField(required=True,  initial=generate_request_id(), \
                                 label='request_id',
                                 widget=forms.TextInput(
-                                attrs={"placeholder": "req_id"}
-                                ))
+                                attrs={"placeholder": "req_id", \
+                                       "read-only": "read-only"}
+                                )
+                                )
 
     # Must be read-only; Possibly hide the field
     request_type = forms.ChoiceField(choices=REQ_CHOICES, \
@@ -88,10 +94,11 @@ class RequestCreateForm(forms.ModelForm):
                                 attrs={'type': 'date', 'min': \
                                 datetime.now().date()}), initial=date.today)
 
-
     class Meta:
         model = Request
-        fields = "__all__"
+        # fields = "__all__"
+        fields = ['employee_id', 'request_id', \
+                'request_type', 'start_date', 'end_date']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -116,7 +123,7 @@ class RequestManage(forms.ModelForm):
     )
     
     manage_request = forms.ChoiceField(label='Manage Request', \
-                                    widget=forms.SelectMultiple(choices=req_choices))
+                    widget=forms.SelectMultiple(choices=req_choices))
     
 
     if (manage_request == 'Accept'):
