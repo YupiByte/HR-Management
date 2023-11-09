@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <title> Publications - Create </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'publication/style.css' %}">
+
+</head>
+
+<body>
+    <h1> Publications Create Page 🐙</h1>
+
+    <!-- Posting Publications Field -->
+    <section>
+
+        <h2> Create Publication </h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {{form.media}}
+            {{form.as_p}}
+
+            <button type="submit"> Post </button>
+
+        </form>
+
+    </section>
+
+    <!-- Showing all Publications -->
+    <section>
+
+        {% for item in publication_post %}
+        <h1>{{item.title}} Published: {{item.publication_date}}</h1>
+        <p> {{item.body_description|safe}}
+
+        {% endfor %}
+
+    </section>
+
+
+
+
+</body>
+
+
+</html>

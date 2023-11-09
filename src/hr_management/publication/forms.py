@@ -1,5 +1,5 @@
 from django import forms
-from .models import Publication
+from .models import *
 from datetime import date
 from ckeditor.widgets import CKEditorWidget
 from django.urls import reverse_lazy
@@ -47,6 +47,9 @@ class PublicationCreateForm(forms.ModelForm):
             'body_description',
         ]
 
+        # Testing
+        exclude = ['publication_date']
+
     def clean_publication_title(self, *args, **kwargs):
 
         title = self.cleaned_data.get("title")
@@ -55,3 +58,14 @@ class PublicationCreateForm(forms.ModelForm):
             raise forms.ValidationError("Invalid Title")
         
         return title
+
+
+
+# Form containing no subscritable attributes
+# utilized to render outside of Admin page
+class PublicationMeta(forms.ModelForm):
+
+    class Meta:
+        model = Publication
+        fields = ['title', 'body_description']
+        exclude = ['publication_date']
