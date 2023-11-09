@@ -3,13 +3,14 @@ from . import views
 
 urlpatterns = [
     path("", views.home, name="home"),
-    path("manage_employees/", views.manage_employees, name="manage_employees"), # <========== video equivalent to path('', views.home)
-    path('admin_home/', views.admin_home, name='admin_home'), 
     path('tmp/', views.tmp, name='tmp'),
-    path('create_employee/', views.create_employee, name='create_employee'),
-    path('create/', views.create_employee, name='create_employee'),
+    path('admin_home/', views.admin_home, name='admin_home'), 
+    path("manage_employees/", views.manage_employees, name="manage_employees"), # <========== video equivalent to path('', views.home)
+    path('register_employee/', views.register_employee, name='register_employee'),
     path('employee_record/<int:pk>', views.employee_record, name='employee_record'),
     path('delete_employee/<int:pk>', views.delete_employee, name='delete_employee'),
+    path('add_employee/', views.add_employee, name='add_employee'),
+    
 ]
 
 '''

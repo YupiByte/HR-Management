@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Employee, Administrator
-from .forms import CreateEmployeeForm
+from .forms import RegisterEmployeeForm, AddEmployeeForm
 from django.contrib import messages
 
 '''
@@ -48,9 +48,9 @@ def manage_employees(request):
     return render(request, '../templates/administrator/manage_employees.html', {'title':'Manage Employees', 'employees':employees})
 
 
-def create_employee(request):
+def register_employee(request):
     if request.method == 'POST':
-        form = CreateEmployeeForm(request.POST)
+        form = RegisterEmployeeForm(request.POST)
         if form.is_valid():
             form.save()
 	# 		# Authenticate and login
@@ -61,17 +61,17 @@ def create_employee(request):
     #         messages.success(request, "You Have Successfully Registered! Welcome!")
     #         return redirect('home')
     # else:
-    form = CreateEmployeeForm()
-    return render(request, '../templates/administrator/create_employee.html', {'form':form})
+    form = RegisterEmployeeForm()
+    return render(request, '../templates/administrator/register_employee.html', {'form':form})
 
 
 def employee_record(request, pk):
-	# if request.user.is_authenticated:
-	employee_record = Employee.objects.get(id=pk) # Look Up Records
-	return render(request, '../templates/administrator/employee_record.html', {'title': 'Employee Record', 'employee_record':employee_record})
-	# else:
-	# 	messages.success(request, "You Must Be Logged In To View That Page...")
-	# 	return redirect('home')
+	if request.user.is_authenticated:
+		employee_record = Employee.objects.get(id=pk) # Look Up Records
+		return render(request, '../templates/administrator/employee_record.html', {'title': 'Employee Record', 'employee_record':employee_record})
+	else:
+		messages.success(request, "You Must Be Logged In To View That Page...")
+		return redirect('tmp')
 
 
 def delete_employee(request, pk):
@@ -80,6 +80,33 @@ def delete_employee(request, pk):
      messages.success(request, "Employee Deleted Successfully")
     
      return redirect('manage_employees')
+
+
+def add_employee(request):
+	form = AddEmployeeForm(request.POST or None)
+	if request.user.is_authenticated:
+		if request.method == "POST":
+			if form.is_valid():
+				add_employee = form.save()
+				messages.success(request, "Employee Added...")
+				return redirect('manage_employees')
+		return render(request, '../templates/administrator/add_employee.html', {'form':form})
+	else:
+		messages.success(request, "You Must Be Logged In...")
+		return redirect('manage_employees')
+      
+# def add_record(request):
+# 	form = AddRecordForm(request.POST or None)
+# 	if request.user.is_authenticated:
+# 		if request.method == "POST":
+# 			if form.is_valid():
+# 				add_record = form.save()
+# 				messages.success(request, "Record Added...")
+# 				return redirect('home')
+# 		return render(request, 'add_record.html', {'form':form})
+# 	else:
+# 		messages.success(request, "You Must Be Logged In...")
+# 		return redirect('home')
 
 '''
 def home(request):
