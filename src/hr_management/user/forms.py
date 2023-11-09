@@ -1,4 +1,4 @@
-from .models import Employee
+from .models import NewUser
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
@@ -54,7 +54,7 @@ class AddEmployeeForm(forms.ModelForm):
 	available_sickdays = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Available Sick Days", "class":"form-control"}), label="")
 	
 	class Meta:
-		model = Employee
+		model = NewUser
 		exclude = ("user",)
 
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .models import Employee
+from .models import NewUser
 from .forms import RegisterEmployeeForm, AddEmployeeForm
 from django.contrib import messages
 from django.urls import reverse
@@ -23,14 +23,14 @@ def admin_home(request):
 
 
 def manage_employees(request):
-    employees = Employee.objects.all()
+    employees = NewUser.objects.all()
     context = {"title": "Manage Employees", 'employees': employees}
     return render(request, '../templates/administrator/manage_employees.html', context)
 
 
 
 def manage_employees(request):
-    employees = Employee.objects.all()
+    employees = NewUser.objects.all()
 	# Check to see if logging in
     # if request.method == 'POST':
     #     username = request.POST['username']
@@ -71,7 +71,7 @@ def register_employee(request):
 
 def employee_record(request, pk):
 	if request.user.is_authenticated:
-		employee_record = Employee.objects.get(id=pk) # Look Up Records
+		employee_record = NewUser.objects.get(id=pk) # Look Up Records
 		return render(request, '../templates/administrator/employee_record.html', {'title': 'Employee Record', 'employee_record':employee_record})
 	else:
 		messages.success(request, "You Must Be Logged In To View That Page...")
@@ -80,7 +80,7 @@ def employee_record(request, pk):
 
 
 def delete_employee(request, pk):
-     delete_it = Employee.objects.get(id=pk)
+     delete_it = NewUser.objects.get(id=pk)
 	#  Add conditional to confirm deletion of employee <=================================
      delete_it.delete()
      messages.success(request, "Employee Deleted Successfully")
