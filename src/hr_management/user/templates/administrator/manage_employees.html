@@ -9,13 +9,10 @@
     <br/>
 
 <!-- {% if user.is_authenticated %} -->
-
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-  <button href="{% url 'add_employee' %}" class="btn btn-secondary me-md-2">Add Employee</button>
-</div>
   
-<br/><br/>
-
+</div>
+  <a href="{% url 'add_employee' %}" class="btn btn-secondary">Add Employee</a>
+  <br/><br/>
 
 
 <table class="table table-striped table-hover table-bordered">
@@ -58,7 +55,7 @@
 <br/>
 
 <form method="POST" action="{% url 'home' %}">
-	{% csrf_token %}
+	{% csrf_token %} <!-- ("Cross-Site Request Forgery Token") -->
 
   <div class="mb-3">
     <input type="text" class="form-control" name="username", placeholder="Username" required>
@@ -74,70 +71,4 @@
 <!-- {% endif %} -->
 
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div class="division-3">
-    <div>
-        <h1>Manage Employees</h1>
-
-        <input type="text" id="first_name_filter" placeholder="Filter by First Name">
-        <input type="text" id="last_name_filter" placeholder="Filter by Last Name">
-        <button id="search_button">Search</button>
-        <button id="add_employee_button">Add New Employee</button>
-    </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Position</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for employee in employees %}
-            <tr>
-                <td>{{ employee.first_name }}</td>
-                <td>{{ employee.last_name }}</td>
-                <td>{{ employee.employee_type }}</td>
-                <td>
-                    <button class="edit_employee_button">Edit</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div> -->
-
 

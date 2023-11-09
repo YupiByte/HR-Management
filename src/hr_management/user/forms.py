@@ -1,5 +1,4 @@
 from .models import Employee
-from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
@@ -50,7 +49,7 @@ class AddEmployeeForm(forms.ModelForm):
 	last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), label="")
 	email = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Email", "class":"form-control"}), label="")
 	phone = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), label="")
-	employee_type = forms.ChoiceField(required=True, choices= EMPLOYEE_TYPE, widget=forms.Select(attrs={"placeholder":"Position", "class":"form-control"}), label="")
+	employee_type = forms.ChoiceField(required=True, choices= EMPLOYEE_TYPE, widget=forms.Select(attrs={"placeholder":"Position", "class":"form-control", }), label="")
 	available_pto = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Available PTO", "class":"form-control"}), label="")
 	available_sickdays = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Available Sick Days", "class":"form-control"}), label="")
 	
@@ -91,34 +90,3 @@ class SignUpForm(UserCreationForm):
 
 
 '''
-
-
-
-
-
-# ======================> FROM 4-hr tutorial
-# class CreateEmployeeForm(forms.ModelForm):
-#     username            = forms.CharField()
-#     password            = forms.CharField()
-#     first_name          = forms.CharField()
-#     last_name           = forms.CharField()
-#     email               = forms.EmailField()
-#     phone_number        = PhoneNumberField()
-#     employee_type       = forms.CharField()
-#     available_pto       = forms.IntegerField()
-#     available_sickdays  = forms.IntegerField()
-
-#     class Meta:
-#         model = Employee
-#         fields = [
-#             'username',
-#             'password',
-#             'first_name',
-#             'last_name',
-#             'email',
-#             'phone_number',
-#             'employee_type',
-#             'available_pto',
-#             'available_sickdays',
-#         ]
-# <=======================================
