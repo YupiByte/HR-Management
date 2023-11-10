@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
 from .models import NewUser
 from .forms import RegisterEmployeeForm, AddEmployeeForm
 from django.contrib import messages
@@ -106,7 +105,7 @@ def add_employee(request):
 
 def update_employee(request, pk):
 	if request.user.is_authenticated:
-		current_employee = Employee.objects.get(id=pk)
+		current_employee = NewUser.objects.get(id=pk)
 		form = AddEmployeeForm(request.POST or None, instance=current_employee)
 		if form.is_valid():
 			form.save()
