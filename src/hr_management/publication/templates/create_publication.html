@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <h1> Publications Create Page 🐙</h1>
+    <h1> Create Publication </h1>
 
     <!-- Posting Publications Field -->
     <section>
@@ -38,9 +38,9 @@
         <h1>{{post.title}} Published: {{post.publication_date}}</h1>
         <p> {{post.body_description|safe}}
 
-        <!-- Edit Button -->
-        <a class="btn btn-outline-info" 
-        href="{% url 'publication:edit_publication' id=post.id %}">Edit</a>
+        <!-- Edit Button -->    <!-- Text Decoration none to remove underline -->
+        <a class="btn edit-button" style="text-decoration:none;"
+        href="{% url 'publication:edit_publication' id=post.id %}">Edit </a>
 
         <!-- Remove Button -->
         <form method="post" 
@@ -48,7 +48,7 @@
 
             {% csrf_token %}
 
-            <button type="submit" class="btn btn-outline-danger">Remove</button>
+            <button type="submit" class="btn remove-button">Remove</button>
 
         </form>
 

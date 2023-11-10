@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404, HttpResponse
 
-from .forms import PublicationCreateForm, PublicationMeta
+from .forms import PublicationMeta
 from .models import *
 
 # Create your views here.
