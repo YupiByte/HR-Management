@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="division-3">
+    <h2 class="division-3-title">{{title}}</h2><br/>
+
+    <div class="card">
+        <div class="card-header"><strong>
+    	    {{ employee_record.first_name }} 
+		    {{ employee_record.last_name }}</strong>
+            <a href="{% url 'update_employee' employee_record.id%}" class="btn btn-secondary">Update Record</a>
+        </div>
+
+        <div class="card-body">
+            <p class="card-text">
+            <strong>Email: </strong>{{ employee_record.email }}</p>
+
+            <p class="card-text">
+            <strong>Phone: </strong>{{ employee_record.phone }}</p>
+
+            <p class="card-text">
+            <strong>Position: </strong>{{ employee_record.employee_type }}</p>
+
+            <p class="card-text">
+            <strong>Available PTO: </strong>{{ employee_record.available_pto }}</p>
+
+            <p class="card-text">
+            <strong>Available Paid Sick Days: </strong>{{ employee_record.available_sickdays }}</p>
+
+            <p class="card-text">
+            <strong>Username: </strong>{{ employee_record.username }}</p>
+
+            <p class="card-text">
+            <strong>password: </strong>{{ employee_record.password }}</p> <!--wonder if django manages the passoword and we don't need to store it-->
+
+            <p class="card-text">
+            <strong>ID: </strong>{{ employee_record.id }}</p>
+        </div>
+    </div>
+</div>
+
+<a href="{% url 'manage_employees' %}" class="btn btn-secondary">Back</a>
+
+<br/><br/>
+<a href="{% url 'delete_employee' employee_record.id %}" class="btn btn-danger">Delete</a>
+
+{% endblock %}
