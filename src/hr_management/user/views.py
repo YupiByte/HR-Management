@@ -32,41 +32,40 @@ def manage_employees(request):
 def manage_employees(request):
     employees = Employee.objects.all()
 	# Check to see if logging in
-    # if request.method == 'POST':
-    #     username = request.POST['username']
-    #     password = request.POST['password']
-	# 	# Authenticate
-    #     user = authenticate(request, username=username, password=password)
-    #     if user is not None:
-    #         login(request, user)
-    #         messages.success(request, "You Have Been Logged In!")
-    #         return redirect('home')
-    #     else:
-    #         messages.success(request, "There Was An Error Logging In, Please Try Again...")
-    #         return redirect('home')
-    # else:
-    return render(request, '../templates/administrator/manage_employees.html', {'title':'Manage Employees', 'employees':employees})
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+		# Authenticate
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, "You Have Been Logged In!")
+            return redirect('home')
+        else:
+            messages.success(request, "There Was An Error Logging In, Please Try Again...")
+            return redirect('home')
+    else:
+    	return render(request, '../templates/administrator/manage_employees.html', {'title':'Manage Employees', 'employees':employees})
 
 
 
 def register_employee(request):
-    if request.method == 'POST':
-        form = RegisterEmployeeForm(request.POST)
-        if form.is_valid():
-            form.save()
-	# 		# Authenticate and login
-    #         username = form.cleaned_data['username']
-    #         password = form.cleaned_data['password1']
-    #         user = authenticate(username=username, password=password)
-    #         login(request, user)
-    #         messages.success(request, "You Have Successfully Registered! Welcome!")
-    #         return redirect('home')
-    # else:
-    form = RegisterEmployeeForm()
-    return render(request, '../templates/administrator/register_employee.html', {'form':form})
+	if request.method == 'POST':
+		form = RegisterEmployeeForm(request.POST)
+		if form.is_valid():
+			form.save()
+			# Authenticate and login
+			username = form.cleaned_data['username']
+			password = form.cleaned_data['password1']
+			user = authenticate(username=username, password=password)
+			login(request, user)
+			messages.success(request, "You Have Successfully Registered! Welcome!")
+			return redirect('home')
+	else:
+		form = RegisterEmployeeForm()
+		return render(request, '../templates/administrator/register_employee.html', {'form':form})
 
-	# return render(request, 'register.html', {'form':form})
-
+	return render(request, '../templates/administrator/register_employee.html', {'form':form})
 
 
 def employee_record(request, pk):
