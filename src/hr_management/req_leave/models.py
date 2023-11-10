@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -28,6 +29,8 @@ class Request(models.Model):
         return f"{self.employee_id} - {self.request_type}\
               {self.start_date} to {self.end_date}"
 
+    def get_absolute_url(self):
+        return reverse("request:view_request", kwargs={"id": self.id})
 
     class Meta:
         app_label = 'req_leave'

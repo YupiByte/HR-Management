@@ -108,27 +108,4 @@ class RequestCreateForm(forms.ModelForm):
         if start_date and end_date and start_date > end_date:
             raise forms.ValidationError("Start date should be before the end date.")
 
-
-# Utilized by the Administrator to manage the request
-# Pseudocode...
-class RequestManage(forms.ModelForm):
-
-    class Meta:
-        model = Request
-        fields = '__all__'
-
-    req_choices = (
-        ('Accept', 'Accept'),
-        ('Reject', 'Reject')
-    )
-    
-    manage_request = forms.ChoiceField(label='Manage Request', \
-                    widget=forms.SelectMultiple(choices=req_choices))
-    
-
-    if (manage_request == 'Accept'):
-        Request.request_status = 'Accepted'
-    else:
-        Request.request_status = 'Declined'
-
     
