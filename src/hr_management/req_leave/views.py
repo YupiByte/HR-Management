@@ -14,7 +14,8 @@ def view_request(request):
 
     # Utilize this alongside a function to obtain the current
     # logged in employee's ID (MAKE SURE TO GET CORRECT EMPLOYEE_ID)
-    # request_query = Request.objects.filter(employee_id="Shrimp")
+    # get_logged_employee = ... (Use Django's method)
+    # request_query = Request.objects.filter(employee_id=get_logged_employee)
 
     # Comment / Remove this
     view_request = Request.objects.all()
@@ -109,4 +110,4 @@ def update_request_status(request, pk):
 
     leave_request.save()
 
-    return redirect('manage_request')
+    return redirect('req_leave:manage_request')
