@@ -45,9 +45,13 @@ INSTALLED_APPS = [
     'publication.apps.PublicationConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'crispy_forms',
+    'crispy_bootstrap4',
     'req_leave',
 ]
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
 CKEDITOR_UPLOAD_PATH = 'uploads/'

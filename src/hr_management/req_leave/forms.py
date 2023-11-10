@@ -77,12 +77,14 @@ class RequestCreateForm(forms.ModelForm):
                                 )
                                 )
 
-    # Must be read-only; Possibly hide the field
+
     request_type = forms.ChoiceField(choices=REQ_CHOICES, \
                                     label='Request Type', \
                                     widget=forms.RadioSelect())
 
-    request_status = forms.CharField(label='Request Status', initial='Pending')
+    # Must be read-only; Possibly hide the field
+    request_status = forms.CharField(label='Request Status', initial='Pending', \
+                                     widget=forms.HiddenInput())
 
     start_date = forms.DateField(required=True, label='Start', \
                                 widget=forms.DateInput( \
@@ -108,4 +110,10 @@ class RequestCreateForm(forms.ModelForm):
         if start_date and end_date and start_date > end_date:
             raise forms.ValidationError("Start date should be before the end date.")
 
+        d_req = days_requested(start_date, end_date)
+        
+
+        if d_req > 15:
+            raise forms.ValidationError(f"Cannot request more than 15 days at once!\
+                                        You requested {d_req} days")
     

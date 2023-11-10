@@ -1,8 +1,12 @@
 <!DOCTYPE html>
+
+{% load static %}
+
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Manage</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'req_leave/style.css' %}">
 </head>
 <body>
     <h1>Manage Requests</h1>
@@ -12,6 +16,7 @@
                 <th>Employee</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th> Days Requested </th>
                 <th>Request Type</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -23,18 +28,26 @@
                 <td>{{ leave_request.employee_id }}</td>
                 <td>{{ leave_request.start_date }}</td>
                 <td>{{ leave_request.end_date }}</td>
+                <td>{{ leave_request.days_requested }}</td>
                 <td>{{ leave_request.request_type }}</td>
                 <td>{{ leave_request.request_status }}</td>
                 <td>
-                    <form method="post" action="{% url 'update_request_status' pk=leave_request.pk %}">
+                    <form method="post"
+                    action="{% url 'req_leave:update_request_status' pk=leave_request.pk %}">
+
                         {% csrf_token %}
                         <input type="hidden" name="action" value="accept">
-                        <button type="submit">Accept</button>
+                        <button type="submit" class="button accept-button"> Accept </button>
+
                     </form>
-                    <form method="post" action="{% url 'update_request_status' pk=leave_request.pk %}">
+
+                    <form method="post"
+                    action="{% url 'req_leave:update_request_status' pk=leave_request.pk %}">
+
                         {% csrf_token %}
                         <input type="hidden" name="action" value="decline">
-                        <button type="submit">Decline</button>
+                        <button type="submit" class="button decline-button"> Decline </button>
+
                     </form>
                 </td>
             </tr>
