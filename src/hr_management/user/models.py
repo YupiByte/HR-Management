@@ -35,6 +35,7 @@ class CustomAccountManager(BaseUserManager):
 
 
 
+# This will be the Parent 
 class NewUser(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(_('email address'), unique=True)
