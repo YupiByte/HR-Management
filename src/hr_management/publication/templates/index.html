@@ -16,9 +16,9 @@
 
     <section>
 
-        {% for item in publication_post %}
-        <h1>{{item.title}} Published: {{item.publication_date}}</h1>
-        <p> {{item.body_description|safe}}
+        {% for post in publication_post %}
+        <h1>{{post.title}} Published: {{post.publication_date}}</h1>
+        <p> {{post.body_description|safe}}
 
         {% endfor %}
 

@@ -16,10 +16,17 @@ class PublicationCreateForm(forms.ModelForm):
 
     # Crispy Form utilities
     def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance', None)
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_action = reverse_lazy('request_submit')
         self.helper.form_method = 'GET'
+
+        # If editing an existing instance, set form action accordingly
+        if instance:
+            self.helper.form_action = reverse_lazy('edit_publication', args=[instance.id])
+        else:
+            self.helper.form_action = reverse_lazy('request_submit')
 
 
     title = forms.CharField(required=True, label='',

@@ -34,9 +34,23 @@
     <!-- Showing all Publications -->
     <section>
 
-        {% for item in publication_post %}
-        <h1>{{item.title}} Published: {{item.publication_date}}</h1>
-        <p> {{item.body_description|safe}}
+        {% for post in publication_post %}
+        <h1>{{post.title}} Published: {{post.publication_date}}</h1>
+        <p> {{post.body_description|safe}}
+
+        <!-- Edit Button -->
+        <a class="btn btn-outline-info" 
+        href="{% url 'publication:edit_publication' id=post.id %}">Edit</a>
+
+        <!-- Remove Button -->
+        <form method="post" 
+        action="{% url 'publication:remove_publication' id=post.id %}">
+
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-outline-danger">Remove</button>
+
+        </form>
 
         {% endfor %}
 

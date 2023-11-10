@@ -29,4 +29,4 @@ class Publication(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("publication:publication-post", kwargs={"id": self.id} )
+        return reverse("publication:view_publications", kwargs={"id": self.id} )
