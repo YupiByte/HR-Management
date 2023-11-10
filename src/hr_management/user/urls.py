@@ -5,6 +5,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path('tmp/', views.tmp, name='tmp'),
     path('admin_home/', views.admin_home, name='admin_home'), 
+    path('logout_user/', views.logout_user, name='logout_user'),
     path("manage_employees/", views.manage_employees, name="manage_employees"), # <========== equivalent to path('', views.home)
     path('register_employee/', views.register_employee, name='register_employee'),
     path('employee_record/<int:pk>', views.employee_record, name='employee_record'),

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .models import Employee
+from .models import Employee, Parent_User
 from .forms import RegisterEmployeeForm, AddEmployeeForm
 from django.contrib import messages
 from django.urls import reverse
@@ -9,28 +9,7 @@ from django.urls import reverse
 
 
 def home(request):
-    return render(request, "index.html")
-
-# Dummy page for features under construction
-def tmp(request):
-    return render(request, "tmp.html")
-
-# Admin landing page after authentication
-def admin_home(request):
-    context = {"title": "Dashboard"}
-    return render(request, "../templates/administrator/admin_home.html", context)
-
-
-
-def manage_employees(request):
-    employees = Employee.objects.all()
-    context = {"title": "Manage Employees", 'employees': employees}
-    return render(request, '../templates/administrator/manage_employees.html', context)
-
-
-
-def manage_employees(request):
-    employees = Employee.objects.all()
+    # employees = Employee.objects.all()
 	# Check to see if logging in
     if request.method == 'POST':
         username = request.POST['username']
@@ -40,17 +19,46 @@ def manage_employees(request):
         if user is not None:
             login(request, user)
             messages.success(request, "You Have Been Logged In!")
-            return redirect('home')
+            return redirect('admin_home')
         else:
             messages.success(request, "There Was An Error Logging In, Please Try Again...")
             return redirect('home')
     else:
-    	return render(request, '../templates/administrator/manage_employees.html', {'title':'Manage Employees', 'employees':employees})
+    	return render(request, '../templates/home.html', {'title':'Login'})
+
+
+# Dummy page for features under construction
+def tmp(request):
+    return render(request, "tmp.html")
+
+# Admin landing page after authentication
+def admin_home(request):
+	if request.user.is_authenticated:
+		context = {"title": "Dashboard"}
+		return render(request, "../templates/administrator/admin_home.html", context)
+	else:
+		messages.success(request, "You Must Be Logged In To View That Page...")
+		return redirect('home')
+
+
+def manage_employees(request):
+	if request.user.is_authenticated:
+		employees = Parent_User.objects.all()
+		context = {"title": "Manage Employees", 'employees': employees}
+		return render(request, '../templates/administrator/manage_employees.html', context)
+	else:
+			messages.success(request, "You Must Be Logged In To View That Page...")
+			return redirect('home')
+
+
+
 
 def logout_user(request): # <================== Work in progress
 	logout(request)
 	messages.success(request, "You Have Been Logged Out...")
 	return redirect('home')
+
+
 
 def register_employee(request):
 	if request.method == 'POST':
@@ -77,17 +85,20 @@ def employee_record(request, pk):
 		return render(request, '../templates/administrator/employee_record.html', {'title': 'Employee Record', 'employee_record':employee_record})
 	else:
 		messages.success(request, "You Must Be Logged In To View That Page...")
-		return redirect('tmp')
+		return redirect('home')
 
 
 
 def delete_employee(request, pk):
-     delete_it = Employee.objects.get(id=pk)
-	#  Add conditional to confirm deletion of employee <=================================
-     delete_it.delete()
-     messages.success(request, "Employee Deleted Successfully")
-    
-     return redirect('manage_employees')
+	if request.user.is_authenticated:
+		delete_it = Employee.objects.get(id=pk)
+		#  Add conditional to confirm deletion of employee <=================================
+		delete_it.delete()
+		messages.success(request, "Employee Deleted Successfully")
+		return redirect('manage_employees')
+	else:
+		messages.success(request, "You Must Be Logged In To Do That...")
+		return redirect('home')
 
 
 

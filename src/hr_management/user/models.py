@@ -8,10 +8,12 @@ class Parent_User(models.Model):
     last_name = models.CharField(max_length=64)
     email = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
- 
-    class Meta: # tells Django not to create a database table for this class.
-            abstract = True
     
+    #     class Meta: # tells Django not to create a database table for this class.
+#             abstract = True
+
+    def __str__(self):
+        return(f"{self.first_name} {self.last_name}")
 
 class Administrator(Parent_User): # Child Class inherits from User Abstract Class
 

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="division-3">
+    <br/><br/>
+    <div class="col-md-6 offset-md-3">
+    <h1>{{title}}</h1>
+    <br/>
+    <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %} <!-- ("Cross-Site Request Forgery Token") -->
+
+        <div class="mb-3">
+        <input type="text" class="form-control" name="username", placeholder="Username" required>
+        
+        </div><br/>
+        <div class="mb-3">
+        <input type="password" class="form-control" name="password", placeholder="Password" required>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-secondary">Login</button>
+    </form>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<h1>This is the index page</h1>
+
+<h3> Will Admin and Employee land here before being redirected to the login page?</h3>
+
+<h3> Link to admin home page: <a href="{% url 'admin_home' %}">Admin Home</a></h3> -->

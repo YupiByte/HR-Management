@@ -16,15 +16,44 @@
             <img src="{% static 'static/penguin_logo.png' %}" alt="Application Logo" class="navbar-logo">
         </div>
         {% include "navbar.html" %}
-
     </div>
+
+
+ 
 
     <div class="division-2">
         <img src="{% static 'static/auth.png' %}" alt="Authentication" class="login-icon">
+        {% if user.is_authenticated %}
+        <p class="nav-item">
+            <a class="nav-link" href="{% url 'logout_user' %}">Logout</a>
+        </p>
+        {% else %}
+        <p class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </p>
+        {% endif %}
+
+
+        <!-- Button on the bottom of page opens user manual-->
         <button class="help-button">?</button>
+
+
+    <!-- Print messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
 
         <div class="division-3">{% block content %}  {% endblock %}</div>
 
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
 </body>
 </html>
