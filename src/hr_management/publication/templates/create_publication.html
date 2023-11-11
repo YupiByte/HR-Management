@@ -20,10 +20,11 @@
         <h2> Create Publication </h2>
         
         <form method="post">
-            {% csrf_token %}
             
             {{form.media}}
             {{form.as_p}}
+
+            {% csrf_token %}
 
             <button type="submit"> Post </button>
 
@@ -33,6 +34,9 @@
 
     <!-- Showing all Publications -->
     <section>
+
+        <!-- Token can be removed -->
+        {% csrf_token %}
 
         {% for post in publication_post %}
         <h1>{{post.title}} Published: {{post.publication_date}}</h1>

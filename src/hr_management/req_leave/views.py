@@ -15,11 +15,13 @@ def view_request(request):
     # Utilize this alongside a function to obtain the current
     # logged in employee's ID (MAKE SURE TO GET CORRECT EMPLOYEE_ID)
     # get_logged_employee = ... (Use Django's method)
+    # get_logged_employee = "Cowman"
     # request_query = Request.objects.filter(employee_id=get_logged_employee)
 
     # Comment / Remove this
     view_request = Request.objects.all()
 
+    # Change view_request to request_query
     # Calculating days requested per request
     for leave_request in view_request:
         leave_request.days_requested = \
@@ -97,7 +99,7 @@ def manage_request(request):
 
 
 
-
+# Utilized for updating the request status
 @require_POST
 def update_request_status(request, pk):
     leave_request = get_object_or_404(Request, pk=pk)
