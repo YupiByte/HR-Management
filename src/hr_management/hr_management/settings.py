@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'publication.apps.PublicationConfig',
+    'calendar_app',
     'ckeditor',
     'ckeditor_uploader',
     'crispy_forms',

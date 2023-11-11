@@ -1,12 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 # from django.http import Http404, HttpResponse
+# Messages used for cancelling request unavailability
+from django.contrib import messages
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 # Necessary for making queries; Retrieving corresponding employee(s)
 from django.db import models
 from .models import *
+# For adding absences to Calendar
+from calendar_app.models import Absence_Calendar
 from .forms import *
-
 
 
 # View all requests
@@ -58,6 +61,10 @@ def cancel_request(request, id):
 
     cancel_request = get_object_or_404(Request, id=id)
 
+    if cancel_request.request_status != "Pending":
+        messages.info(request, "Can't cancel request that has been attended!")
+        return redirect("../../view")
+
     if request.method == "POST":
         
         cancel_request.delete()
@@ -65,6 +72,7 @@ def cancel_request(request, id):
 
     context = {"request": cancel_request}
     return render(request, "view_request.html", context)
+
 
 # For managing requests
 def manage_request(request):
@@ -81,6 +89,7 @@ def manage_request(request):
 
             if action == 'Accept':
                 leave_request.request_status = 'Accepted'
+
             elif action == 'Decline':
                 leave_request.request_status = 'Declined'
 
@@ -100,14 +109,37 @@ def manage_request(request):
 
 
 # Utilized for updating the request status
+# that is when a form is updated (POST)
 @require_POST
 def update_request_status(request, pk):
     leave_request = get_object_or_404(Request, pk=pk)
     action = request.POST.get('action')
 
     if action == 'accept':
+
+        # Check if it has already been Accepted
+        # Dont do anything
+        if leave_request.request_status == 'Accepted':
+            return redirect('req_leave:manage_request')
+
         leave_request.request_status = 'Accepted'
+
+        # Send data to calendar_app's Calendar models.py
+        Absence_Calendar.objects.create(
+            employee_id = leave_request.employee_id,
+            absent_date_start = leave_request.start_date,
+            absent_date_end = leave_request.end_date,
+        )
+
+        print("I am here")
+
     elif action == 'decline':
+
+        # Check if it has already been Declined
+        # Dont do anything
+        if leave_request.request_status == 'Declined':
+            return redirect('req_leave:manage_request')
+
         leave_request.request_status = 'Declined'
 
     leave_request.save()

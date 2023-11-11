@@ -26,8 +26,7 @@ urlpatterns = [
     path('publication/', include('publication.urls')),
     path('ckeditor/',include('ckeditor_uploader.urls')),
     path('request/', include('req_leave.urls')),
-
-    # path('manage/', manage_leave_request, name='manage_leave_request')
+    path('calendar/', include('calendar_app.urls'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

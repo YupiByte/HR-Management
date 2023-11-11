@@ -26,6 +26,10 @@ def get_employee_id():
 # Still a WIP, needs testing
 def days_requested(start, end):
 
+    # Requested only 1 day
+    if (start == end):
+        return 1
+
     total_days = (end - start).days + 1
 
     # Account for weekend days

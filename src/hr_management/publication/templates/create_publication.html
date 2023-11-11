@@ -35,9 +35,6 @@
     <!-- Showing all Publications -->
     <section>
 
-        <!-- Token can be removed -->
-        {% csrf_token %}
-
         {% for post in publication_post %}
         <h1>{{post.title}} Published: {{post.publication_date}}</h1>
         <p> {{post.body_description|safe}}
@@ -50,7 +47,7 @@
         <form method="post" 
         action="{% url 'publication:remove_publication' id=post.id %}">
 
-            {% csrf_token %}
+            <!-- {% csrf_token %} -->
 
             <button type="submit" class="btn remove-button">Remove</button>
 

@@ -4,6 +4,8 @@ from django.http import Http404, HttpResponse
 from .forms import PublicationMeta
 from .models import *
 
+# For adding publications to Calendar
+from calendar_app.models import Publication_Calendar
 # Create your views here.
 
 
@@ -22,15 +24,33 @@ def view_publications(request):
 # of the Publications class.
 def create_publication(request):
     
+    # This contains all current published posts
     publication_post = Publication.objects.all()
     
+    # This is the creation form
     form = PublicationMeta
 
     if request.method == 'POST':
     
         form = PublicationMeta(request.POST)
+
         if form.is_valid():
-            form.save()
+
+            publication = form.save()
+
+            # Retrieve or create a Publication_Calendar instance
+            publication_calendar, created = Publication_Calendar.objects.get_or_create(
+                date=publication.publication_date,
+                defaults={'title': publication.title}
+            )
+
+            # Call the get_next_count method on the instance
+            count = publication_calendar.get_next_count()
+
+            # Update the count_publications field
+            publication_calendar.count_publications = count
+            publication_calendar.save()
+
             form = PublicationMeta
 
     context = {"publication_post": publication_post, "form": form}
