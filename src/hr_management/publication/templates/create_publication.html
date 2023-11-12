@@ -47,7 +47,7 @@
         <form method="post" 
         action="{% url 'publication:remove_publication' id=post.id %}">
 
-            <!-- {% csrf_token %} -->
+            {% csrf_token %}
 
             <button type="submit" class="btn remove-button">Remove</button>
 

@@ -66,14 +66,18 @@ button {
     background-color: #77b1cb;
 }
 
+.remove-button,
 .decline-button {
     border-color: #fb8500;
     background-color: #fb8500;
     color: #fff;
+    transition: 0.16s;
 }
 
+.remove-button:hover,
 .decline-button:hover {
     background-color: #e07800;
+
 }
 
 
@@ -85,7 +89,7 @@ button {
     max-width: 800px;
     background-color: #033047;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgb(3, 48, 71);
+    box-shadow: 0 0 10px rgb(142, 202, 203);
     border: 1px solid #ddd;
 }
 

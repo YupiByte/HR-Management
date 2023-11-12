@@ -30,3 +30,7 @@ class Publication(models.Model):
 
     def get_absolute_url(self):
         return reverse("publication:view_publications", kwargs={"id": self.id})
+    
+
+    class Meta:
+        ordering = ['-publication_date']

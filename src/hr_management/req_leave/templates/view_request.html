@@ -12,6 +12,10 @@
 <body>
     <h1> View Leave Requests</h1>
 
+    <!-- If incorrect action
+        Obsolete given new 
+        cancel request check condition -->
+        
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -19,9 +23,8 @@
             class="{{ message.tags }}"{% endif %}>{{ message }}</li>
         {% endfor %}
     </ul>
-{% endif %}
 
-
+    {% endif %}
 
     <table>
         <thead>
@@ -32,11 +35,13 @@
                 <th> Days Requested </th>
                 <th>Request Type</th>
                 <th>Status</th>
-                <th>Action</th>  <!-- Added column for the action button -->
+                <th>Action</th> 
             </tr>
         </thead>
         <tbody>
+
             {% for leave_request in view_request %}
+
             <tr>
                 <td>{{ leave_request.employee_id }}</td>
                 <td>{{ leave_request.start_date }}</td>
@@ -47,10 +52,17 @@
                 
                 <!-- Remove Button -->
                 <td>
+
+                    <!-- Only show button if request is pending -->
+                    {% if leave_request.request_status == 'Pending' %}
+
                     <form method="post" action="{% url 'req_leave:cancel_request' id=leave_request.id %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn remove-button"> Remove </button>
+                        <button type="submit" class="btn remove-button"> Cancel </button>
                     </form>
+
+                    {% endif %}
+
                 </td>
             </tr>
             {% empty %}
@@ -60,5 +72,6 @@
             {% endfor %}
         </tbody>
     </table>
+
 </body>
 </html>

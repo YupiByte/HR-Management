@@ -4,24 +4,34 @@ from django.db import models
 
 # Used to keep track of absences
 class Absence_Calendar(models.Model):
+
     employee_id = models.CharField(max_length=64)
-    absent_date_start = models.DateField()
-    absent_date_end = models.DateField()
+    start_date = models.DateField()
+    end_date = models.DateField()
     date = models.DateField(auto_now_add=True)
     absent_counter = models.IntegerField()
 
     def save(self, *args, **kwargs):
         # Check if it's a new instance or an update
         if not self.pk:
-            # New instance, increment absent_counter
-            last_calendar_entry = \
-                Absence_Calendar.objects.filter(\
-                    employee_id=self.employee_id).order_by('-date').first()
-            
-            if last_calendar_entry:
-                self.absent_counter = last_calendar_entry.absent_counter + 1
+            # New instance, increment absent_counter for the date range
+            existing_entries = Absence_Calendar.objects.filter(
+                date__range=[self.start_date, self.end_date]
+            )
+
+            if existing_entries.exists():
+                max_counter = existing_entries.aggregate(\
+                    models.Max('absent_counter'))['absent_counter__max']
+                self.absent_counter = max_counter + 1 if max_counter else 1
             else:
                 self.absent_counter = 1
+        else:
+            # Existing instance, update absent_counter
+            existing_entries = Absence_Calendar.objects.filter(
+                date__range=[self.start_date, self.end_date]
+            ).exclude(pk=self.pk)
+
+            self.absent_counter = existing_entries.count() + 1
 
         super().save(*args, **kwargs)
 
@@ -31,7 +41,7 @@ class Publication_Calendar(models.Model):
 
     date = models.DateField(auto_now_add=True)
     title = models.CharField(max_length=64)
-    count_publications = models.IntegerField(default=1)
+    count_publications = models.IntegerField(default=0)
 
 
     def __str__(self):

@@ -127,8 +127,8 @@ def update_request_status(request, pk):
         # Send data to calendar_app's Calendar models.py
         Absence_Calendar.objects.create(
             employee_id = leave_request.employee_id,
-            absent_date_start = leave_request.start_date,
-            absent_date_end = leave_request.end_date,
+            start_date = leave_request.start_date,
+            end_date = leave_request.end_date,
         )
 
         print("I am here")
