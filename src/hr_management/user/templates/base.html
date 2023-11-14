@@ -23,6 +23,13 @@
 
     <div class="division-2">
         <img src="{% static 'static/auth.png' %}" alt="Authentication" class="login-icon">
+        <div class="dropdown">
+        <img src="{% static 'static/auth.png' %}" alt="Authentication" class="login-icon" type="button" data-bs-toggle="dropdown">
+        <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
+        <li><a class="dropdown-item" href="{% url 'logout_user' %}">Logout</a></li>
+        </ul>
+        </div>
         {% if user.is_authenticated %}
         <p class="nav-item">
             <a class="nav-link" href="{% url 'logout_user' %}">Logout</a>
