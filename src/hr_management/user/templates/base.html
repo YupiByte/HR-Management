@@ -30,9 +30,7 @@
         </ul>
         </div>
         {% if user.is_authenticated %}
-        <p class="nav-item">
-            <a class="nav-link" href="{% url 'logout_user' %}">Logout</a>
-        </p>
+
         {% else %}
         <p class="nav-item">
             <a class="nav-link" href="{% url 'home' %}">Login</a>
