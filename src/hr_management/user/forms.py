@@ -1,18 +1,37 @@
 from .models import Employee
+from django.contrib.auth import get_user_model 
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django import forms
+
+
+EMPLOYEE_TYPE = (
+		('', '----'),
+        ('Chief Executive Officer', 'Chief Executive Officer'),
+        ('Chief Financial Officer', 'Chief Financial Officer'),
+        ('Chief Operating Officer', 'Chief Operating Officer'),
+        ('Chief Marketing Officer', 'Chief Marketing Officer'),
+        ('Chief Technology Officer', 'Chief Technology Officer'),
+        ('Vice President', 'Vice President'),
+        ('Director', 'Director'),
+        ('Manager', 'Manager'),
+		('Administrator', 'Administrator'),
+    )
 
 
 class RegisterEmployeeForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'})) # 'class':'form-control' for bootstrap
-	first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
-	last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
-
+	first_name = forms.CharField(required=True, label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
+	last_name = forms.CharField(required=True, label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
+	phone = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), label="")
+	employee_type = forms.ChoiceField(required=True, choices= EMPLOYEE_TYPE, widget=forms.Select(attrs={"placeholder":"Position", "class":"form-control", }), label="")
+	available_pto = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Available PTO", "class":"form-control"}), label="")
+	available_sickdays = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Available Sick Days", "class":"form-control"}), label="")
 
 	class Meta:
-		model = User
-		fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+		# model = User
+		model = get_user_model()
+		fields = ('email', 'username', 'first_name', 'last_name', 'password1', 'password2', 'phone', 'employee_type', 'available_pto', 'available_sickdays', 'is_staff')
 
 
 	def __init__(self, *args, **kwargs):
@@ -31,19 +50,8 @@ class RegisterEmployeeForm(UserCreationForm):
 		self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'	
 
 
-EMPLOYEE_TYPE = (
-		('', '----'),
-        ('Chief Executive Officer', 'Chief Executive Officer'),
-        ('Chief Financial Officer', 'Chief Financial Officer'),
-        ('Chief Operating Officer', 'Chief Operating Officer'),
-        ('Chief Marketing Officer', 'Chief Marketing Officer'),
-        ('Chief Technology Officer', 'Chief Technology Officer'),
-        ('Vice President', 'Vice President'),
-        ('Director', 'Director'),
-        ('Manager', 'Manager'),
-    )
-# Create Add Employee Form
-class AddEmployeeForm(forms.ModelForm):
+
+class UpdateEmployeeForm(forms.ModelForm):
 	username = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"username", "class":"form-control"}), label="")
 	password = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"password", "class":"form-control"}), label="")
 	first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), label="")
@@ -55,6 +63,8 @@ class AddEmployeeForm(forms.ModelForm):
 	available_sickdays = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Available Sick Days", "class":"form-control"}), label="")
 	
 	class Meta:
-		model = Employee
-		exclude = ("user",)
+		# model = Employee
+		model = get_user_model()
+		exclude = ('user', 'last_login', 'user_permissions', 'is_superuser', 'groups')
+
 

@@ -1,59 +1,98 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from .models import Employee, Parent_User
-from .forms import RegisterEmployeeForm, AddEmployeeForm
 from django.contrib import messages
+from django.contrib.auth import get_user_model, authenticate, login, logout
+from django.contrib.auth.decorators import user_passes_test, login_required
+from .forms import RegisterEmployeeForm, UpdateEmployeeForm
 from django.urls import reverse
-# from .forms import SignUpForm, AddRecordForm
 
+
+
+# Reference custom user model Employee
+Employee = get_user_model()
 
 
 def home(request):
-    # employees = Employee.objects.all()
-	# Check to see if logging in
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-		# Authenticate
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            messages.success(request, "You Have Been Logged In!")
-            return redirect('admin_home')
-        else:
-            messages.success(request, "There Was An Error Logging In, Please Try Again...")
-            return redirect('home')
-    else:
-    	return render(request, '../templates/home.html', {'title':'Login'})
+	# Check if the user is already authenticated
+	if request.user.is_authenticated:
+		if request.user.is_staff:
+			return render(request, '../templates/administrator/admin_home.html', {'title': 'Administrator'})
+		else:
+			return render(request, '../templates/employees/employee_home.html', {'title': 'Employee'})
+
+    # Check if the form is submitted
+	if request.method == 'POST':
+		email = request.POST['email']
+		password = request.POST['password']
+        
+        # Authenticate user
+		user = authenticate(request, email=email, password=password)
+
+		if user is not None:
+            # Log the user in
+			login(request, user)
+
+			if user.is_staff:
+				messages.success(request, "You have been logged in!")
+				# return render(request, '../templates/administrator/admin_home.html', {'title': 'Administrator'})
+				return redirect('admin_home')
+			else:
+				return redirect('employee_home')
+		else:
+			messages.error(request, "Invalid email or password. Please try again.")
+
+	return render(request, '../templates/home.html', {'title': 'Login'})
 
 
-# Dummy page for features under construction
-def tmp(request):
-    return render(request, "tmp.html")
 
+@login_required
+def dashboard(request):
+    return render(request, 'account/dashboard.html')
+
+
+def is_admin(user):
+    return user.is_authenticated and user.is_staff
+
+
+# @user_passes_test(is_admin, login_url='admin_home') # <====== CHECK
 # Admin landing page after authentication
 def admin_home(request):
-	if request.user.is_authenticated:
+	if request.user.is_authenticated and request.user.is_staff:
 		context = {"title": "Dashboard"}
 		return render(request, "../templates/administrator/admin_home.html", context)
 	else:
-		messages.success(request, "You Must Be Logged In To View That Page...")
-		return redirect('home')
+		messages.success(request, "(from admin_home) You Must Be Logged In To View That Page...")
+		return redirect('home')   
+	
+def employee_home(request):
+	if request.user.is_authenticated and not request.user.is_staff:
+		messages.success(request, "(from employee_home) Employee, you Have Been Logged In!")
+		context = {"title": "Employee"}
+		return render(request, "../templates/employees/employee_home.html", context)
+	else:
+		messages.success(request, "(from employee_home) Employee, you Must Be Logged In To View That Page...")
+		return redirect('home')  
+
+
+
+def tmp(request):
+    return render(request, "tmp.html")
+
 
 
 def manage_employees(request):
-	if request.user.is_authenticated:
-		employees = Parent_User.objects.all()
+	# if request.user.is_authenticated:
+	if request.user.is_authenticated and request.user.is_staff:
+		employees = Employee.objects.all()
 		context = {"title": "Manage Employees", 'employees': employees}
 		return render(request, '../templates/administrator/manage_employees.html', context)
 	else:
-			messages.success(request, "You Must Be Logged In To View That Page...")
+			messages.success(request, "(from manage_employees) You must be logged in and have permission to view this page...")
 			return redirect('home')
 
 
 
 
-def logout_user(request): # <================== Work in progress
+def logout_user(request): # erased to explore Login App with tutorial 
 	logout(request)
 	messages.success(request, "You Have Been Logged Out...")
 	return redirect('home')
@@ -61,26 +100,48 @@ def logout_user(request): # <================== Work in progress
 
 
 def register_employee(request):
-	if request.method == 'POST':
-		form = RegisterEmployeeForm(request.POST)
-		if form.is_valid():
-			form.save()
-			# Authenticate and login
-			username = form.cleaned_data['username']
-			password = form.cleaned_data['password1']
-			user = authenticate(username=username, password=password)
-			login(request, user)
-			messages.success(request, "You Have Successfully Registered! Welcome!")
-			return redirect('home')
-	else:
-		form = RegisterEmployeeForm()
-		return render(request, '../templates/administrator/register_employee.html', {'form':form})
+	if request.user.is_authenticated and request.user.is_staff:
+		if request.method == 'POST':
+			form = RegisterEmployeeForm(request.POST)
+			if form.is_valid():
+				form.save()
+				# Authenticate and login
+				email = form.cleaned_data['email']
+				password = form.cleaned_data['password1']
+				# user = authenticate(email=email, password=password)
+				# login(request, user)
+				authenticate(email=email, password=password)
+				messages.success(request, "(from register_employee) Employee Successfully Registered")
+				return redirect('admin_home')
+		else:
+			form = RegisterEmployeeForm()
+			return render(request, '../templates/administrator/register_employee.html', {'form':form})
 
-	return render(request, '../templates/administrator/register_employee.html', {'form':form})
+		return render(request, '../templates/administrator/register_employee.html', {'form':form})
+	else:
+		messages.success(request, "(from register_employee) You Must Be Logged In To View That Page...")
+		return redirect('manage_employees')
+
+
+
+# def add_employee(request):
+# 	form = AddEmployeeForm(request.POST or None)
+# 	if request.user.is_authenticated:
+# 		if request.method == "POST":
+# 			if form.is_valid():
+# 				add_employee = form.save()
+# 				messages.success(request, "Employee Added...")
+# 				return redirect('manage_employees')
+# 		return render(request, '../templates/administrator/add_employee.html', {'title':'Add Employee', 'form':form})
+# 	else:
+# 		messages.success(request, "You Must Be Logged In...")
+# 		return redirect('manage_employees')
+
 
 
 def employee_record(request, pk):
-	if request.user.is_authenticated:
+	# if request.user.is_authenticated:
+	if request.user.is_authenticated and request.user.is_staff:
 		employee_record = Employee.objects.get(id=pk) # Look Up Records
 		return render(request, '../templates/administrator/employee_record.html', {'title': 'Employee Record', 'employee_record':employee_record})
 	else:
@@ -100,27 +161,13 @@ def delete_employee(request, pk):
 		messages.success(request, "You Must Be Logged In To Do That...")
 		return redirect('home')
 
-
-
-def add_employee(request):
-	form = AddEmployeeForm(request.POST or None)
-	if request.user.is_authenticated:
-		if request.method == "POST":
-			if form.is_valid():
-				add_employee = form.save()
-				messages.success(request, "Employee Added...")
-				return redirect('manage_employees')
-		return render(request, '../templates/administrator/add_employee.html', {'title':'Add Employee', 'form':form})
-	else:
-		messages.success(request, "You Must Be Logged In...")
-		return redirect('manage_employees')
       
 
-
+# @user_passes_test(is_admin, login_url='home')
 def update_employee(request, pk):
-	if request.user.is_authenticated:
+	if request.user.is_authenticated and request.user.is_staff:
 		current_employee = Employee.objects.get(id=pk)
-		form = AddEmployeeForm(request.POST or None, instance=current_employee)
+		form = UpdateEmployeeForm(request.POST or None, instance=current_employee)
 		if form.is_valid():
 			form.save()
 			messages.success(request, "Employee Record Has Been Updated!")
@@ -129,103 +176,5 @@ def update_employee(request, pk):
 		return render(request, '../templates/administrator/update_employee.html', {'title':'Update Employee Record', 'form':form})
 	else:
 		messages.success(request, "You Must Be Logged In...")
-		return redirect('manage_employees')
-      
-
-'''
-def home(request):
-	records = Record.objects.all()
-	# Check to see if logging in
-	if request.method == 'POST':
-		username = request.POST['username']
-		password = request.POST['password']
-		# Authenticate
-		user = authenticate(request, username=username, password=password)
-		if user is not None:
-			login(request, user)
-			messages.success(request, "You Have Been Logged In!")
-			return redirect('home')
-		else:
-			messages.success(request, "There Was An Error Logging In, Please Try Again...")
-			return redirect('home')
-	else:
-		return render(request, 'home.html', {'records':records})
-
-
-
-def logout_user(request):
-	logout(request)
-	messages.success(request, "You Have Been Logged Out...")
-	return redirect('home')
-
-
-def register_user(request):
-	if request.method == 'POST':
-		form = SignUpForm(request.POST)
-		if form.is_valid():
-			form.save()
-			# Authenticate and login
-			username = form.cleaned_data['username']
-			password = form.cleaned_data['password1']
-			user = authenticate(username=username, password=password)
-			login(request, user)
-			messages.success(request, "You Have Successfully Registered! Welcome!")
-			return redirect('home')
-	else:
-		form = SignUpForm()
-		return render(request, 'register.html', {'form':form})
-
-	return render(request, 'register.html', {'form':form})
-
-
-
-def customer_record(request, pk):
-	if request.user.is_authenticated:
-		# Look Up Records
-		customer_record = Record.objects.get(id=pk)
-		return render(request, 'record.html', {'customer_record':customer_record})
-	else:
-		messages.success(request, "You Must Be Logged In To View That Page...")
 		return redirect('home')
-
-
-
-def delete_record(request, pk):
-	if request.user.is_authenticated:
-		delete_it = Record.objects.get(id=pk)
-		delete_it.delete()
-		messages.success(request, "Record Deleted Successfully...")
-		return redirect('home')
-	else:
-		messages.success(request, "You Must Be Logged In To Do That...")
-		return redirect('home')
-
-
-def add_record(request):
-	form = AddRecordForm(request.POST or None)
-	if request.user.is_authenticated:
-		if request.method == "POST":
-			if form.is_valid():
-				add_record = form.save()
-				messages.success(request, "Record Added...")
-				return redirect('home')
-		return render(request, 'add_record.html', {'form':form})
-	else:
-		messages.success(request, "You Must Be Logged In...")
-		return redirect('home')
-
-
-def update_record(request, pk):
-	if request.user.is_authenticated:
-		current_record = Record.objects.get(id=pk)
-		form = AddRecordForm(request.POST or None, instance=current_record)
-		if form.is_valid():
-			form.save()
-			messages.success(request, "Record Has Been Updated!")
-			return redirect('home')
-		return render(request, 'update_record.html', {'form':form})
-	else:
-		messages.success(request, "You Must Be Logged In...")
-		return redirect('home')
-'''
 

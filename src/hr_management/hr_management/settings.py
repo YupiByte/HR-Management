@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user', # User module
     'django_tables2', # added by Lilliana during user_module branch development
-    "phonenumber_field",
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -85,6 +85,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Custom Model
+AUTH_USER_MODEL = 'user.Employee'
 
 
 # Default password hasher

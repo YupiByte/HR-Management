@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <!--Dashboard Blocks-->
+    <div class="division-3">
+        <h2 class="division-3-title">{{title}}</h2>
+        <div class="division-4">
+            <div class="division-4-item">
+                <p>Section 1</p>
+                <button class="button"><a href="{% url 'tmp' %}">Account Info</a></button>
+            </div>
+            <div class="division-4-item">
+                <p>Section 2</p>
+                <button class="button"><a href="{% url 'tmp' %}">Request PTO or Sick Days</a></button>
+            </div>
+            <div class="division-4-item">
+                <p>Section 3</p>
+                <button class="button"><a href="{% url 'tmp' %}">Request History</a></button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
