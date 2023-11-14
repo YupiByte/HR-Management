@@ -7,22 +7,27 @@
         <h2 class="division-3-title">{{title}}</h2>
         <div class="division-4">
             <div class="division-4-item">
-                <p>Section 1</p>
-                <button class="button"><a href="{% url 'manage_employees' %}">Manage Employees</a></button>
+                <h4>Manage Employee</h4>
+                <p>We can add, edit and remove employees. See employee information.</p>
+
+                <button class="btn btn-info" type="button"><a href="{% url 'manage_employees' %}">Manage Employees</a></button>
             </div>
             <div class="division-4-item">
-                <p>Section 2</p>
-                <button class="button"><a href="{% url 'tmp' %}">Manage Requests</a></button>
+                <h4>Mange Requests</h4>
+                <p>View and manage employee requests.</p>
+                <button class="btn btn-info" type="button"><a href="{% url 'tmp' %}">Manage Requests</a></button>
             </div>
             <div class="division-4-item">
-                <p>Section 3</p>
-                <button class="button"><a href="{% url 'tmp' %}">View Calendar</a></button>
+                <h4>View Calendar</h4>
+                <p>View the company calendar. See employee PTO and sick days</p>
+                <button class="btn btn-info" type="button"><a href="{% url 'tmp' %}">View Calendar</a></button>
             </div>
             <div class="division-4-item">
-                <p>Section 4</p>
-                <button class="button"><a href="{% url 'tmp' %}">Publications</a></button>
+                <h4>View Publications</h4>
+                <p>View company publications. Add, edit and remove publications</p>
+                <button class="btn btn-info" type="button"><a href="{% url 'tmp' %}">Publications</a></button>
             </div>
         </div>
-    </div>
+   </div>
 
 {% endblock %}

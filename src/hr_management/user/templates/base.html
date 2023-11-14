@@ -19,8 +19,6 @@
     </div>
 
 
- 
-
     <div class="division-2">
         <div class="dropdown">
         <img src="{% static 'static/auth.png' %}" alt="Authentication" class="login-icon" type="button" data-bs-toggle="dropdown">
@@ -51,9 +49,9 @@
             </div>
         {% endfor %}
     {% endif %}
+    <div class="division-3">{% block content %}  {% endblock %}</div>
 
 
-       <div class="division-3">{% block content %}  {% endblock %}</div>
 
 
     </div>
