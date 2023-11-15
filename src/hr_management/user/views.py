@@ -33,7 +33,6 @@ def home(request):
 
 			if user.is_staff:
 				messages.success(request, "You have been logged in!")
-				# return render(request, '../templates/administrator/admin_home.html', {'title': 'Administrator'})
 				return redirect('admin_home')
 			else:
 				return redirect('employee_home')
@@ -43,15 +42,22 @@ def home(request):
 	return render(request, '../templates/home.html', {'title': 'Login'})
 
 
+def logout_user(request): 
+	logout(request)
+	messages.success(request, "You Have Been Logged Out...")
+	return redirect('home')
 
-@login_required
-def dashboard(request):
-    return render(request, 'account/dashboard.html')
+
+def tmp(request):
+    return render(request, "tmp.html")
 
 
 def is_admin(user):
     return user.is_authenticated and user.is_staff
 
+
+
+# ====== Admin Views ======
 
 # @user_passes_test(is_admin, login_url='admin_home') # <====== CHECK
 # Admin landing page after authentication
@@ -61,26 +67,11 @@ def admin_home(request):
 		return render(request, "../templates/administrator/admin_home.html", context)
 	else:
 		messages.success(request, "(from admin_home) You Must Be Logged In To View That Page...")
-		return redirect('home')   
-	
-def employee_home(request):
-	if request.user.is_authenticated and not request.user.is_staff:
-		messages.success(request, "(from employee_home) Employee, you Have Been Logged In!")
-		context = {"title": "Employee"}
-		return render(request, "../templates/employees/employee_home.html", context)
-	else:
-		messages.success(request, "(from employee_home) Employee, you Must Be Logged In To View That Page...")
 		return redirect('home')  
 
 
 
-def tmp(request):
-    return render(request, "tmp.html")
-
-
-
 def manage_employees(request):
-	# if request.user.is_authenticated:
 	if request.user.is_authenticated and request.user.is_staff:
 		employees = Employee.objects.all()
 		context = {"title": "Manage Employees", 'employees': employees}
@@ -88,14 +79,6 @@ def manage_employees(request):
 	else:
 			messages.success(request, "(from manage_employees) You must be logged in and have permission to view this page...")
 			return redirect('home')
-
-
-
-
-def logout_user(request): # erased to explore Login App with tutorial 
-	logout(request)
-	messages.success(request, "You Have Been Logged Out...")
-	return redirect('home')
 
 
 
@@ -108,8 +91,6 @@ def register_employee(request):
 				# Authenticate and login
 				email = form.cleaned_data['email']
 				password = form.cleaned_data['password1']
-				# user = authenticate(email=email, password=password)
-				# login(request, user)
 				authenticate(email=email, password=password)
 				messages.success(request, "(from register_employee) Employee Successfully Registered")
 				return redirect('admin_home')
@@ -178,3 +159,29 @@ def update_employee(request, pk):
 		messages.success(request, "You Must Be Logged In...")
 		return redirect('home')
 
+
+
+
+
+
+# ====== Employee Views ======
+
+def employee_home(request):
+    # Retrieve user attributes from the database
+	user_attributes = Employee.objects.get(id=request.user.id) 
+	
+	# Replace with query to req_leave model
+	requests = [{'request.date':'12/2/23', 'request.reason':'PTO' }] 
+	
+	title = "Employee Page"
+	context = {
+        'user_attributes': user_attributes,
+        'requests': requests,
+		'title': title
+    }
+	return render(request, '../templates/employees/employee_home.html', context)
+
+
+
+def edit_profile(request):
+	return 0

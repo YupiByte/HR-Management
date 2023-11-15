@@ -1,32 +1,48 @@
-
-<!-- <ul class="navbar-section">
-    <li><a href="{% url 'manage_employees' %}">Employees</a></li>
-    <li><a href="{% url 'tmp' %}">Publications</a></li>   
-</ul> -->
 <hr>
 
 <nav class="navbar-section">
     <div class="navbar-section-right">
       <ul>
-      <p class="nav-item">
-        <a class="nav-link" href="{% url 'admin_home' %}">Home</a>
-      </p>
-      <p class="nav-item">
-        <a class="nav-link" href="{% url 'manage_employees' %}">Employees</a>
-      </p>
-      <p class="nav-item">
-        <a class="nav-link" href="{% url 'tmp' %}">Requests</a>
-      </p> 
-      <p class="nav-item">
-        <a class="nav-link" href="{% url 'tmp' %}">Publications</a>
-      </p>      
-      <p class="nav-item">
-        <a class="nav-link" href="{% url 'tmp' %}">Calendar</a>
-      </p>       
+
+        {% if user.is_staff %}
+          <!--Admin Navigartion Bar-->    
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'admin_home' %}">Home</a>
+          </p>
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'manage_employees' %}">Employees</a>
+          </p>
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'tmp' %}">Requests</a>
+          </p> 
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'tmp' %}">Publications</a>
+          </p>      
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'tmp' %}">Calendar</a>
+          </p>   
+
+
+        {% else %}
+          <!-- Employee Navigartion Bar-->    
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'employee_home' %}">Home</a>
+          </p>
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'tmp' %}">Requests</a>
+          </p> 
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'tmp' %}">Publications</a>
+          </p>      
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'tmp' %}">Calendar</a>
+          </p>   
+        {% endif %}
+      
+        
         </ul>
       </div>
 </nav>
 
 <!-- Create a breack line between the two navbars -->
 <hr>
-

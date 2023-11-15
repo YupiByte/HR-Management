@@ -2,23 +2,140 @@
 
 {% block content %}
 
-    <!--Dashboard Blocks-->
-    <div class="division-3">
-        <h2 class="division-3-title">{{title}}</h2>
-        <div class="division-4">
-            <div class="division-4-item">
-                <p>Section 1</p>
-                <button class="button"><a href="{% url 'tmp' %}">Account Info</a></button>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px; /* Adjust padding as needed */
+    }
+
+    /* Container for the two divisions */
+    .side-by-side-container {
+        display: flex;
+    }
+
+    /* Style for each division */
+    .left-division {
+        width: 67%;
+        padding-right: 30px;
+        box-sizing: border-box; /* Include padding in the width calculation */
+    }
+
+
+    .right-division {
+        width: 33%;
+        box-sizing: border-box;
+    }
+
+    .subtitle {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    #subtitle1 {
+        background-color: #D9D9D9;
+        position: relative;
+    }
+
+    #edit-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #8ECAE6;
+        color: #000000;
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    #request-button {
+        background-color: #8ECAE6;
+        color: #000000;
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    #request-status-icon {
+        float: right;
+        margin-right: 5px;
+    }
+</style>
+
+
+<div class="division-3">
+    <br/>
+    <div class="left-division">
+    <h2 class="division-3-title">{{title}}</h2>
+    </div>
+    <br/>
+
+    <div class="side-by-side-container">
+
+        <!-- Content on Left side -->
+        <div class="left-division">
+            <div class="subtitle" id="subtitle1">
+                <h4>Personal Information</h4>
+                <br/>
+                <button id="edit-button">Edit</button>
+                    <div>
+                        <div>
+                            <p class="card-text">
+                            <strong>Full Name: </strong>{{ user_attributes.first_name }} {{ user_attributes.last_name }}</p>
+
+                            <p class="card-text">
+                                <strong>Phone: </strong>{{ user_attributes.phone }}</p>
+
+                            <p class="card-text">
+                            <strong>Email: </strong>{{ user_attributes.email }}</p>
+
+                            <p class="card-text">
+                                <strong>Username: </strong>{{ user_attributes.username }}</p>
+
+                            <p class="card-text">
+                                <strong>Employee ID: </strong>{{ user_attributes.id }}</p>
+
+                            <p class="card-text">
+                            <strong>Position: </strong>{{ user_attributes.employee_type }}</p>
+
+                            <p class="card-text">
+                            <strong>Available PTO: </strong>{{ user_attributes.available_pto }}</p>
+
+                            <p class="card-text">
+                            <strong>Available Paid Sick Days: </strong>{{ user_attributes.available_sickdays }}</p>
+                        </div>
+                    </div>
             </div>
-            <div class="division-4-item">
-                <p>Section 2</p>
-                <button class="button"><a href="{% url 'tmp' %}">Request PTO or Sick Days</a></button>
+
+            <div class="subtitle" id="subtitle3"><br/>
+                <button id="request-button">Request Day Off</button>
+                <br/><br/>
+                <p>Personal Calendar goes here ...</p>
             </div>
-            <div class="division-4-item">
-                <p>Section 3</p>
-                <button class="button"><a href="{% url 'tmp' %}">Request History</a></button>
+        </div> 
+
+
+
+        <!-- Content on Right side -->
+        <div class="right-division">
+            <div class="subtitle" id="subtitle1">
+                <h4>Requests History</h4>
+
+                <!-- Loop over request objects -->
+                {% for request in requests %}
+                    <p>
+                        {{ request.date }}
+                        <span id="request-status-icon">{% if request.status == 'approved' %}✔{% elif request.status == 'rejected' %}✘{% else %}📋{% endif %}</span>
+                    </p>
+                    <p>
+                        {{ request.reason }}
+                    </p>
+                {% endfor %}
             </div>
         </div>
-    </div>
+
+
+</div>
+
 
 {% endblock %}
