@@ -3,12 +3,6 @@
 {% block content %}
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px; /* Adjust padding as needed */
-    }
-
     /* Container for the two divisions */
     .side-by-side-container {
         display: flex;
@@ -20,7 +14,6 @@
         padding-right: 30px;
         box-sizing: border-box; /* Include padding in the width calculation */
     }
-
 
     .right-division {
         width: 33%;
@@ -77,7 +70,8 @@
             <div class="subtitle" id="subtitle1">
                 <h4>Personal Information</h4>
                 <br/>
-                <button id="edit-button">Edit</button>
+
+                <a href="{% url 'edit_profile' %}" class="btn btn-warning" id="edit-button">Edit</a>
                     <div>
                         <div>
                             <p class="card-text">
@@ -122,19 +116,19 @@
                 <h4>Requests History</h4>
 
                 <!-- Loop over request objects -->
-                {% for request in requests %}
+                {% for emp_request in emp_requests %}
                     <p>
-                        {{ request.date }}
-                        <span id="request-status-icon">{% if request.status == 'approved' %}✔{% elif request.status == 'rejected' %}✘{% else %}📋{% endif %}</span>
+                        {{ emp_request.date }}
+                        <span id="request-status-icon">{% if emp_request.status == 'approved' %}✔{% elif emp_request.status == 'rejected' %}✘{% else %}📋{% endif %}</span>
                     </p>
                     <p>
-                        {{ request.reason }}
+                        {{ emp_request.reason }}
                     </p>
                 {% endfor %}
             </div>
         </div>
 
-
+        </div>
 </div>
 
 

@@ -16,6 +16,7 @@ urlpatterns = [
 
     # Employee Pages
     path('employee_home', views.employee_home, name='employee_home'),
-    path('edit_profile', views.edit_profile, name='edit_profile'),
+    # path('edit_profile/<int:pk>', views.edit_profile, name='edit_profile'),
+    path('edit_profile/', views.edit_profile, name='edit_profile')
     
 ]

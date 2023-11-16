@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test, login_required
-from .forms import RegisterEmployeeForm, UpdateEmployeeForm
+from .forms import RegisterEmployeeForm, UpdateEmployeeForm, EditProfileForm
 from django.urls import reverse
 
 
@@ -121,7 +121,6 @@ def register_employee(request):
 
 
 def employee_record(request, pk):
-	# if request.user.is_authenticated:
 	if request.user.is_authenticated and request.user.is_staff:
 		employee_record = Employee.objects.get(id=pk) # Look Up Records
 		return render(request, '../templates/administrator/employee_record.html', {'title': 'Employee Record', 'employee_record':employee_record})
@@ -129,6 +128,25 @@ def employee_record(request, pk):
 		messages.success(request, "You Must Be Logged In To View That Page...")
 		return redirect('home')
 
+
+# @user_passes_test(is_admin, login_url='home')
+def update_employee(request, pk):
+	if request.user.is_authenticated and request.user.is_staff:
+		current_employee = Employee.objects.get(id=pk)
+
+		form = UpdateEmployeeForm(request.POST or None, instance=current_employee)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Employee Record Has Been Updated by Administrator.")
+			url = reverse('employee_record', args=[pk]) # generate the URL for the employee record page
+			return redirect(url)
+		return render(request, '../templates/administrator/update_employee.html', {'title': 'Update Employee Record', 'form':form})
+	else:
+		messages.success(request, "You Must Be Logged In...")
+		return redirect('home')
+	
+
+	
 
 
 def delete_employee(request, pk):
@@ -142,22 +160,6 @@ def delete_employee(request, pk):
 		messages.success(request, "You Must Be Logged In To Do That...")
 		return redirect('home')
 
-      
-
-# @user_passes_test(is_admin, login_url='home')
-def update_employee(request, pk):
-	if request.user.is_authenticated and request.user.is_staff:
-		current_employee = Employee.objects.get(id=pk)
-		form = UpdateEmployeeForm(request.POST or None, instance=current_employee)
-		if form.is_valid():
-			form.save()
-			messages.success(request, "Employee Record Has Been Updated!")
-			url = reverse('employee_record', args=[pk]) # generate the URL for the employee record page
-			return redirect(url)
-		return render(request, '../templates/administrator/update_employee.html', {'title':'Update Employee Record', 'form':form})
-	else:
-		messages.success(request, "You Must Be Logged In...")
-		return redirect('home')
 
 
 
@@ -169,19 +171,37 @@ def update_employee(request, pk):
 def employee_home(request):
     # Retrieve user attributes from the database
 	user_attributes = Employee.objects.get(id=request.user.id) 
-	
+	first_name = user_attributes.first_name
+	last_name = user_attributes.last_name
+
 	# Replace with query to req_leave model
-	requests = [{'request.date':'12/2/23', 'request.reason':'PTO' }] 
+	emp_requests = [{'emp_request.date':'12/2/23', 'emp_request.reason':'PTO' }] 
 	
-	title = "Employee Page"
+	title = f"Welcome {first_name}!"
 	context = {
         'user_attributes': user_attributes,
-        'requests': requests,
+        'emp_requests': emp_requests,
 		'title': title
     }
 	return render(request, '../templates/employees/employee_home.html', context)
 
 
-
+# Employee view for editing first name, last name, email, and phone number
+# def edit_profile(request, pk):
 def edit_profile(request):
-	return 0
+	if request.user.is_authenticated:
+		current_employee = Employee.objects.get(id=request.user.id)
+
+		form = EditProfileForm(request.POST or None, instance=current_employee)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Employee Record Has Been Updated by Employee.")
+			# url = reverse('employee_record', args=[pk]) # generate the URL for the employee record page
+			# return redirect(url)
+			return redirect('employee_home')
+		return render(request, '../templates/employees/edit_profile.html', {'title': 'Edit My Profile', 'form':form})
+	else:
+		messages.success(request, "You Must Be Logged In...")
+		return redirect('home')
+
+
