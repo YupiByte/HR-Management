@@ -105,3 +105,8 @@ db.sqlite3
 
 # Virtual environment #
 venv/
+
+# images #
+*.jpg
+*.png
+static/images/uploads/
