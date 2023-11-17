@@ -9,7 +9,7 @@ height: 100%;
 /* Division 1 - Navigation bar styles */
 .division-1 {
     /* position: fixed; */
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100%;
@@ -124,55 +124,3 @@ height: 100%;
 
 
 
-/* Styling added for employee_home.html */
-
-/* Container for the two divisions */
-.side-by-side-container {
-    display: flex;
-}
-
-/* Style for each division */
-.left-division {
-    width: 67%;
-    padding-right: 30px;
-    box-sizing: border-box; /* Include padding in the width calculation */
-}
-
-.right-division {
-    width: 33%;
-    box-sizing: border-box;
-}
-
-.subtitle {
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-#subtitle1 {
-    background-color: #D9D9D9;
-    position: relative;
-}
-
-#edit-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #8ECAE6;
-    color: #000000;
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-}
-
-#request-button {
-    background-color: #8ECAE6;
-    color: #000000;
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-}
-
-#request-status-icon {
-    float: right;
-    margin-right: 5px;
-}

@@ -123,13 +123,6 @@ class UpdateEmployeeForm(forms.ModelForm):
         ),
         label="Username",
     )
-    password = forms.CharField(
-        required=True,
-        widget=forms.widgets.TextInput(
-            attrs={"placeholder": "password", "class": "form-control"}
-        ),
-        label="Password",
-    )
     first_name = forms.CharField(
         required=True,
         widget=forms.widgets.TextInput(
@@ -187,7 +180,7 @@ class UpdateEmployeeForm(forms.ModelForm):
     class Meta:
         # model = Employee
         model = get_user_model()
-        exclude = ("user", "last_login", "user_permissions", "is_superuser", "groups")
+        exclude = ("user", "password", "last_login", "user_permissions", "is_superuser", "groups")
 
 
 class EditProfileForm(forms.ModelForm):
