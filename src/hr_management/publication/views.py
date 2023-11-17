@@ -9,6 +9,9 @@ from calendar_app.models import Publication_Calendar
 # Create your views here.
 
 
+# TODO Synchronize time from UTC to Cur Time Zone
+
+
 # Renders the Publication Post as requested by the url
 def view_publications(request):
 
