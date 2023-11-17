@@ -26,7 +26,8 @@ urlpatterns = [
     path('publication/', include('publication.urls')),
     path('ckeditor/',include('ckeditor_uploader.urls')),
     path('request/', include('req_leave.urls')),
-    path('calendar/', include('calendar_app.urls'))
+    path('calendar/', include('calendar_app.urls')),
+    path('', include('user.urls')), #authentication for the future
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

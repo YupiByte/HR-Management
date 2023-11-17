@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'req_leave',
+    'user', # User module
+    'django_tables2', # added by Lilliana during user_module branch development
+    'crispy_bootstrap5',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
@@ -78,7 +81,7 @@ ROOT_URLCONF = 'hr_management.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [], # change to '[os.path.join(BASE_DIR, "templates")],'
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,6 +106,17 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Custom Model
+AUTH_USER_MODEL = 'user.Employee'
+
+
+# Default password hasher
+# https://docs.djangoproject.com/en/4.2/topics/auth/passwords/#auth-password-storage 
+
+PASSWORD_HASHERS = [
+'django.contrib.auth.hashers.PBKDF2PasswordHasher'
+]
 
 
 # Password validation
@@ -146,6 +160,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # For images
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR / "static")]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
