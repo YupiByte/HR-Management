@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="division-3">
+    <br/>
+    <h2 class="division-3-title">{{title}}</h2>
+    <br/>
+
+    <form method="POST">
+        {% csrf_token %}
+    
+        {{ form.as_p }}
+    
+    <br/>
+    <button type="submit" class="btn btn-warning">Update Employee</button>
+    
+    </form>
+    
+</div>
+
+{% endblock %}

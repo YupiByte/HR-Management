@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <!--Dashboard Blocks-->
+    <div class="division-3">
+        <h2 class="division-3-title">{{title}}</h2>
+        <div class="division-4">
+            <div class="division-4-item">
+                <h4>Manage Employee</h4>
+                <p>We can add, edit and remove employees. See employee information.</p>
+                <a href="{% url 'manage_employees' %}"><button class="btn btn-info" type="button">Manage Employees</button></a>
+            </div>
+            <div class="division-4-item">
+                <h4>Mange Requests</h4>
+                <p>View and manage employee requests.</p>
+                <a href="{% url 'tmp' %}"><button class="btn btn-info" type="button">Manage Requests</button></a>
+            </div>
+            <div class="division-4-item">
+                <h4>View Calendar</h4>
+                <p>View the company calendar. See employee PTO and sick days</p>
+                <a href="{% url 'tmp' %}"><button class="btn btn-info" type="button">View Calendar</button></a>
+            </div>
+            <div class="division-4-item">
+                <h4>View Publications</h4>
+                <p>View company publications. Add, edit and remove publications</p>
+                <a href="{% url 'tmp' %}"><button class="btn btn-info" type="button">Publications</button></a>
+            </div>
+        </div>
+   </div>
+
+{% endblock %}

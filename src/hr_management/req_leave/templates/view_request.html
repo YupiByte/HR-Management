@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> View Leave Requests</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'req_leave/style.css' %}">
+
+</head>
+<body>
+    <h1> View Leave Requests</h1>
+
+    <!-- If incorrect action
+        Obsolete given new 
+        cancel request check condition -->
+        
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} 
+            class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+
+    {% endif %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th> Days Requested </th>
+                <th>Request Type</th>
+                <th>Status</th>
+                <th>Action</th> 
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for leave_request in view_request %}
+
+            <tr>
+                <td>{{ leave_request.employee_id }}</td>
+                <td>{{ leave_request.start_date }}</td>
+                <td>{{ leave_request.end_date }}</td>
+                <td>{{ leave_request.days_requested }}</td>
+                <td>{{ leave_request.request_type }}</td>
+                <td>{{ leave_request.request_status }}</td>
+                
+                <!-- Remove Button -->
+                <td>
+
+                    <!-- Only show button if request is pending -->
+                    {% if leave_request.request_status == 'Pending' %}
+
+                    <form method="post" action="{% url 'req_leave:cancel_request' id=leave_request.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn remove-button"> Cancel </button>
+                    </form>
+
+                    {% endif %}
+
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No leave requests found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

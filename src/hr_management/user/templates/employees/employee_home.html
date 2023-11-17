@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+<!-- Stylesheet created specifically for Employee Home Layout-->
+{% block extra_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'employee_home.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="division-3">
+    <br/>
+    <div class="left-division">
+    <h2 class="division-3-title">{{title}}</h2>
+    </div>
+    <br/>
+
+    <div class="side-by-side-container">
+
+        <!-- Content on Left side -->
+        <div class="left-division">
+            <div class="subtitle" id="subtitle1">
+                <h4>Personal Information</h4>
+                <br/>
+
+                <a href="{% url 'edit_profile' %}" class="btn btn-warning" id="edit-button">Edit</a>
+                    <div>
+                        <div>
+                            <p class="card-text">
+                            <strong>Full Name: </strong>{{ user_attributes.first_name }} {{ user_attributes.last_name }}</p>
+
+                            <p class="card-text">
+                                <strong>Phone: </strong>{{ user_attributes.phone }}</p>
+
+                            <p class="card-text">
+                            <strong>Email: </strong>{{ user_attributes.email }}</p>
+
+                            <p class="card-text">
+                                <strong>Username: </strong>{{ user_attributes.username }}</p>
+
+                            <p class="card-text">
+                                <strong>Employee ID: </strong>{{ user_attributes.id }}</p>
+
+                            <p class="card-text">
+                            <strong>Position: </strong>{{ user_attributes.employee_type }}</p>
+
+                            <p class="card-text">
+                            <strong>Available PTO: </strong>{{ user_attributes.available_pto }}</p>
+
+                            <p class="card-text">
+                            <strong>Available Paid Sick Days: </strong>{{ user_attributes.available_sickdays }}</p>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="subtitle" id="subtitle3"><br/>
+                <button id="request-button">Request Day Off</button>
+                <br/><br/>
+                <p>Personal Calendar goes here ...</p>
+            </div>
+        </div> 
+
+
+
+        <!-- Content on Right side -->
+        <div class="right-division">
+            <div class="subtitle" id="subtitle1">
+                <h4>Requests History</h4>
+
+                <!-- Loop over request objects -->
+                {% for emp_request in emp_requests %}
+                    <p>
+                        {{ emp_request.date }}
+                        <span id="request-status-icon">{% if emp_request.status == 'approved' %}✔{% elif emp_request.status == 'rejected' %}✘{% else %}📋{% endif %}</span>
+                    </p>
+                    <p>
+                        {{ emp_request.reason }}
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+</div>
+{% endblock %}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<!-- TODO Append + 1 day towards the end of submitted pubs & reqs -->
+
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> Calendar </title>
+
+    <!-- Tables Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{% static 'calendar_app/style.css' %}">
+    
+    <!-- Calendar's Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{% static 'fullcalendar/lib/main.css' %}">
+
+    <!-- Setting fixed size -->
+    <style>
+        #calendar {
+            max-width: 1000px; /* Set your desired max-width */
+            margin: 0 auto; /* Center the calendar on the page */
+            height: 800px; /* Set your desired height */
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1> Hello Calendar </h1>
+
+    <h2> Absence </h2>
+
+    <section>
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Date</th>
+                    <th>Absent Counter</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for absence in absence_calendar %}
+                <tr>
+                    <td>{{ absence.employee_id }}</td>
+                    <td>{{ absence.start_date|date:"F j, Y" }}</td>
+                    <td>{{ absence.absent_counter }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+            </tbody>
+        </table>
+    </section>
+
+    <h2> Publication </h2>
+
+    <section>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Count Publications</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in publication_calendar %}
+                <tr>
+                    <td>{{ post.date|date:"F j, Y" }}</td>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.count_publications }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+
+    <!-- Calendar Section -->
+    <div id="calendar" class="card" style="padding: 10px;"></div>
+
+
+</body>
+
+<script src="{% static 'fullcalendar/lib/main.js' %}"></script>
+
+<!-- Instanciate Full Calendar -->
+<script>
+
+    document.addEventListener('DOMContentLoaded', function(){
+        var calendarUI = document.getElementById("calendar")
+        var calendar = new FullCalendar.Calendar(calendarUI, {
+            // Show list of events (absent days)
+            events: [
+                // Obtaining absent employees
+                {% for absence in absence_calendar %}
+                    {
+                        title: 'Absent: {{ absence.employee_id }}',
+                        start: '{{ absence.start_date | date:"Y-m-d" }}',
+                        end: '{{ absence.end_date | date:"Y-m-d" }}',
+                    }, // Don't forget the comma!
+
+                {% endfor %}
+
+                // Obtaining publicated posts
+                {% for post in publication_calendar %}
+                    {
+                        title: '{{ post.count_publications }} new publication(s)!',
+                        date: '{{ post.date | date:"Y-m-d" }}',
+                    },
+
+                {% endfor %}
+            ]
+
+        });
+
+        calendar.render();
+    });
+
+
+</script>
+
+
+</script>
+
+</html>

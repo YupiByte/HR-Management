@@ -88,6 +88,7 @@ local_settings.py
 .env
 db.sqlite3
 
+
 # PyCharm #
 .idea/
 
@@ -104,3 +105,6 @@ db.sqlite3
 
 # Virtual environment #
 venv/
+
+# images #
+static/images/uploads/
