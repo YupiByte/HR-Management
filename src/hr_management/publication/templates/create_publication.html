@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <title> Publications - Create </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'publication/style.css' %}">
+
+</head>
+
+<body>
+    <h1> Create Publication </h1>
+
+    <!-- Posting Publications Field -->
+    <section>
+
+        <h2> Create Publication </h2>
+        
+        <form method="post">
+            
+            {{form.media}}
+            {{form.as_p}}
+
+            {% csrf_token %}
+
+            <button type="submit"> Post </button>
+
+        </form>
+
+    </section>
+
+    <!-- Showing all Publications -->
+    <section>
+
+        {% for post in publication_post %}
+        <h1>{{post.title}} Published: {{post.publication_date}}</h1>
+        <p> {{post.body_description|safe}}
+
+        <!-- Edit Button -->    <!-- Text Decoration none to remove underline -->
+        <a class="btn edit-button" style="text-decoration:none;"
+        href="{% url 'publication:edit_publication' id=post.id %}">Edit </a>
+
+        <!-- Remove Button -->
+        <form method="post" 
+        action="{% url 'publication:remove_publication' id=post.id %}">
+
+            {% csrf_token %}
+
+            <button type="submit" class="btn remove-button">Remove</button>
+
+        </form>
+
+        {% endfor %}
+
+    </section>
+
+
+
+
+</body>
+
+
+</html>

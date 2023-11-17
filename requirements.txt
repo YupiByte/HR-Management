@@ -1,6 +1,7 @@
 Django
 Pillow
 django-crispy-forms
+crispy-bootstrap4
 django-formtools
 django-ckeditor
 django-imagekit

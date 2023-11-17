@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <title> Publications </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'publication/style.css' %}">
+
+</head>
+
+<body>
+    <h1> Publications Page 🐙</h1>
+
+    <section>
+
+        {% for post in publication_post %}
+        <h1>{{post.title}} Published: {{post.publication_date}}</h1>
+        <p> {{post.body_description|safe}}
+
+        {% endfor %}
+
+    </section>
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <title>Edit Publication</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'publication/style.css' %}">
+
+</head>
+
+<body>
+    <h1> Edit Publication </h1>
+
+    <section>
+        <h2>Edit Publication</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.media }}
+            {{ form.as_p }}
+
+            
+            <button type="submit">Save Changes</button>
+        </form>
+    </section>
+</body>
+</html>
