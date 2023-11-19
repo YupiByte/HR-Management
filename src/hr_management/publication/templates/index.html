@@ -7,7 +7,7 @@
 <head>
 
     <meta charset="UTF-8">
-    <title> Publications </title>
+    <title> {% block title %} Publications {% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'publication/style.css' %}">
 
 </head>
@@ -18,13 +18,13 @@
     <section>
 
         {% for post in publication_post %}
-        <h1>{{post.title}} Published: {{post.publication_date}}</h1>
+        <h1>{{post.title}}</h1>
         <p> {{post.body_description|safe}}
-
+        <p style="text-align: right; color: rgb(49, 49, 49);">
+            <i> Published: {{post.publication_date}} </i></p>
         {% endfor %}
 
     </section>
-
 
 </body>
 

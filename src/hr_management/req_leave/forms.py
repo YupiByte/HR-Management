@@ -55,21 +55,14 @@ class RequestCreateForm(forms.ModelForm):
         self.helper.form_action = reverse_lazy('request_submit')
         self.helper.form_method = 'GET'
         self.helper.add_input(Submit('submit', 'Submit'))
+        # Field hidden
+        self.fields['employee_id'].widget = forms.HiddenInput()
 
 
     REQ_CHOICES = (
         ('PTO', 'Paid Time Off'),
         ('Sick Day', 'Sick Day'),
     )
-
-    # Must be read-only, value given by getting current user's employee_id
-    employee_id = forms.CharField(required=True, initial=get_employee_id(), \
-                                label='employee_id',
-                                widget=forms.TextInput(
-                                attrs={"placeholder": "id", \
-                                       "read-only": "read-only"}
-                                )
-                                )
 
 
     # Must be read-only

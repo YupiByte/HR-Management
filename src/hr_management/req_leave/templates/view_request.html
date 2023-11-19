@@ -1,11 +1,13 @@
-<!DOCTYPE html>
 
+{% extends "base.html" %}
 {% load static %}
+
+{% block content %}
 
 <html>
 <head>
     <meta charset="UTF-8">
-    <title> View Leave Requests</title>
+    <title> {% block title %} View Leave Requests {% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'req_leave/style.css' %}">
 
 </head>
@@ -75,3 +77,5 @@
 
 </body>
 </html>
+
+{% endblock %}

@@ -1,12 +1,13 @@
-<!DOCTYPE html>
 
+{% extends "base.html" %}
 {% load static %}
 
+{% block content %}
 <html>
 <head>
 
     <meta charset="UTF-8">
-    <title> Publications - Create </title>
+    <title> {% block content %} Create Publication {% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'publication/style.css' %}">
 
 </head>
@@ -36,8 +37,9 @@
     <section>
 
         {% for post in publication_post %}
-        <h1>{{post.title}} Published: {{post.publication_date}}</h1>
-        <p> {{post.body_description|safe}}
+        <h1>{{post.title}}</h1>
+        <p> {{post.body_description|safe}} </p>
+        <p>  Published: {{post.publication_date}} </p>
 
         <!-- Edit Button -->    <!-- Text Decoration none to remove underline -->
         <a class="btn edit-button" style="text-decoration:none;"
@@ -57,10 +59,8 @@
 
     </section>
 
-
-
-
 </body>
 
 
 </html>
+{% endblock %}

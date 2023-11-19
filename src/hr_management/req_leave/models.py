@@ -17,7 +17,8 @@ class Request(models.Model):
     )
 
     request_id = models.CharField(max_length=8)
-    employee_id = models.CharField(max_length=64)
+    # Same as User's username
+    employee_id = models.CharField(max_length=150)
 
     request_type = models.CharField(max_length=8, choices=REQ_CHOICES)
     request_status = models.CharField(max_length=8, choices=STATUS_CHOICES,\

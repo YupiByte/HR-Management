@@ -1,11 +1,14 @@
-<!DOCTYPE html>
 
+
+{% extends "base.html" %}
 {% load static %}
+
+{% block content %}
 
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Manage</title>
+    <title> {% block title %} Manage {% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'req_leave/style.css' %}">
 </head>
 <body>
@@ -60,3 +63,6 @@
     </table>
 </body>
 </html>
+
+
+{% endblock %}

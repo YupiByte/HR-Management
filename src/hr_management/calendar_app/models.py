@@ -1,7 +1,5 @@
 from django.db import models
 
-# Don't Create your models here.
-
 # Used to keep track of absences
 class Absence_Calendar(models.Model):
 
@@ -19,6 +17,8 @@ class Absence_Calendar(models.Model):
                 date__range=[self.start_date, self.end_date]
             )
 
+            # This is for counting the absence volume for a given date
+            # Note, this is not up for date range in total
             if existing_entries.exists():
                 max_counter = existing_entries.aggregate(\
                     models.Max('absent_counter'))['absent_counter__max']
