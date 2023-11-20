@@ -3,8 +3,13 @@ from . import views
 from calendar_app import views as calendar_view
 from req_leave import views as req_leave
 from publication import views as publications_view
+from authentication import views as auth_views
 
 urlpatterns = [
+
+    # Authentication 
+    path('', auth_views.login_user, name='login'),
+    path('logout/', auth_views.logout_user, name='logout'),
 
     # Admin Pages
     path('admin_home/', views.admin_home, name='admin_home'), 
