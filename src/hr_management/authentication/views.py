@@ -7,12 +7,13 @@ from django.contrib import messages
 Employee = get_user_model()
 
 def login_user(request):
-	# Check if the user is already authenticated
+	# Check if the user is already authenticated and redirect them to their corresponding home page
 	if request.user.is_authenticated:
 		if request.user.is_staff:
-			return render(request, '../templates/administrator/admin_home.html', {'title': 'Administrator'})
+			return redirect('admin_home')
 		else:
-			return render(request, '../templates/employees/employee_home.html', {'title': 'Employee'})
+			return redirect('employee_home')
+
 
     # Check if the form is submitted
 	if request.method == 'POST':
