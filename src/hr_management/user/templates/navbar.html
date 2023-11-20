@@ -13,13 +13,13 @@
             <a class="nav-link" href="{% url 'manage_employees' %}">Employees</a>
           </p>
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Requests</a>
+            <a class="nav-link" href="{% url 'req_leave:manage_request' %}">Requests</a>
           </p> 
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Publications</a>
+            <a class="nav-link" href="{% url 'publication:view_publications' %}">Publications</a>
           </p>      
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Calendar</a>
+            <a class="nav-link" href="{% url 'calendar_app:view_calendar' %}">Calendar</a>
           </p>   
 
 
@@ -29,13 +29,13 @@
             <a class="nav-link" href="{% url 'employee_home' %}">Home</a>
           </p>
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Requests</a>
+            <a class="nav-link" href="{% url 'req_leave:submit_request' %}">Requests</a>
           </p> 
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Publications</a>
+            <a class="nav-link" href="{% url 'publication:view_publications' %}">Publications</a>
           </p>      
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Calendar</a>
+            <a class="nav-link" href="{% url 'calendar_app:view_calendar' %}">Calendar</a>
           </p>   
         {% endif %}
       
