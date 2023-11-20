@@ -5,13 +5,6 @@ from req_leave import views as req_leave
 from publication import views as publications_view
 
 urlpatterns = [
-    path("", 
-         views.home, 
-         name="home"),
-
-    path('logout_user/', 
-         views.logout_user, 
-         name='logout_user'),
 
     path('tmp/', 
          views.tmp, 
