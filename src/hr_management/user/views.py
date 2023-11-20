@@ -11,9 +11,6 @@ from django.urls import reverse
 Employee = get_user_model()
 
 
-def tmp(request):
-    return render(request, "tmp.html")
-
 
 def is_admin(user):
     return user.is_authenticated and user.is_staff
@@ -29,8 +26,8 @@ def admin_home(request):
 		context = {"title": "Dashboard"}
 		return render(request, "../templates/administrator/admin_home.html", context)
 	else:
-		messages.success(request, "(from admin_home) You Must Be Logged In To View That Page...")
-		return redirect('home')  
+		messages.success(request, "(from admin_home) You must be Admin and be Logged In To View That Page...")
+		return redirect('login')  
 
 
 
@@ -40,7 +37,7 @@ def manage_employees(request):
 		context = {"title": "Manage Employees", 'employees': employees}
 		return render(request, '../templates/administrator/manage_employees.html', context)
 	else:
-			messages.success(request, "(from manage_employees) You must be logged in and have permission to view this page...")
+			messages.success(request, "(from manage_employees) You must be Admin and be logged in and have permission to view this page...")
 			return redirect('home')
 
 
