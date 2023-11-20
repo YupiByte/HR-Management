@@ -28,6 +28,7 @@ urlpatterns = [
     path ('manage_req/', req_leave.view_request, name='manage_req'),
 
     #Publications
-    path('publications/', publications_view.view_publications, name='publications'),
+    path('publications/', publications_view.view_publications, name='publications'), # For Employee to only view publications
+    path('create/', publications_view.create_publication, name='create_publication'), # For Admin to create and view publications
 
 ]
