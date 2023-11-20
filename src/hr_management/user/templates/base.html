@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
-    <title>Human Resources Inc.</title> 
+    <title>{{title}} - Human Resources Inc.</title> 
 
     {% block extra_styles %}
     <!-- Stylesheet created specifically for Employee Home Layout in employee_home.html --> 
@@ -29,8 +29,8 @@
         <div class="dropdown">
         <img src="{% static 'images/auth.png' %}" alt="Authentication" class="login-icon" type="button" data-bs-toggle="dropdown">
         <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
-        <li><a class="dropdown-item" href="{% url 'logout_user' %}">Logout</a></li>
+        <li><a class="dropdown-item" href="{% url 'authentication:login' %}">Home</a></li>
+        <li><a class="dropdown-item" href="{% url 'authentication:logout' %}">Logout</a></li>
         </ul>
         </div>
         {% if user.is_authenticated %}
