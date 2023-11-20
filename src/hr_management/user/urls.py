@@ -6,8 +6,6 @@ from publication import views as publications_view
 
 urlpatterns = [
 
-    path('tmp/', views.tmp, name='tmp'),
-
     # Admin Pages
     path('admin_home/', views.admin_home, name='admin_home'), 
     path("manage_employees/", views.manage_employees, name="manage_employees"),
@@ -25,7 +23,9 @@ urlpatterns = [
 
     # Leave Request
     # path('req_leave/', req_leave, name='req_leave'),
-    path ('manage_req/', req_leave.view_request, name='manage_req'),
+    path ('manage_req/', req_leave.manage_request, name='manage_req'),
+    path ('submit_req/', req_leave.submit_request, name='submit_req'),
+    path ('view_req/', req_leave.view_request, name='view_req'), # For Empoyee to view request history
 
     #Publications
     path('publications/', publications_view.view_publications, name='publications'), # For Employee to only view publications
