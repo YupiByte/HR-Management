@@ -29,8 +29,8 @@
         <div class="dropdown">
         <img src="{% static 'images/auth.png' %}" alt="Authentication" class="login-icon" type="button" data-bs-toggle="dropdown">
         <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="{% url 'authentication:login' %}">Home</a></li>
-        <li><a class="dropdown-item" href="{% url 'authentication:logout' %}">Logout</a></li>
+        <li><a class="dropdown-item" href="{% url 'login' %}">Home</a></li>
+        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
         </ul>
         </div>
         {% if user.is_authenticated %}

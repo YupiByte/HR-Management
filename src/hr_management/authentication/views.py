@@ -40,4 +40,4 @@ def login_user(request):
 def logout_user(request): 
 	logout(request)
 	messages.success(request, "You Have Been Logged Out...")
-	return redirect('authentication:login')
+	return redirect('login')
