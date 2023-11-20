@@ -119,13 +119,13 @@ def employee_home(request):
 	first_name = user_attributes.first_name
 	last_name = user_attributes.last_name
 
-	# Replace with query to req_leave model
-	emp_requests = [{'emp_request.date':'12/2/23', 'emp_request.reason':'PTO' }] 
+	
+	# emp_requests = # Function query to req_leave history
 	
 	title = f"Welcome {first_name}!"
 	context = {
         'user_attributes': user_attributes,
-        'emp_requests': emp_requests,
+        # 'emp_requests': emp_requests,
 		'title': title
     }
 	return render(request, '../templates/employees/employee_home.html', context)
