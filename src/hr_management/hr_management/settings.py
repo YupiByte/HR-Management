@@ -144,6 +144,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+# If this is modified, 
+# modify calendar_app's 
+# fullcalendar timeZone: 'UTC' to current TZ
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
