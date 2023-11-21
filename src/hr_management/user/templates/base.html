@@ -11,6 +11,7 @@
     
     <title> {% block title %} Human Resources Inc. {% endblock %} </title> 
 
+
     {% block extra_styles %}
     <!-- Stylesheet created specifically for Employee Home Layout in employee_home.html --> 
     {% endblock %}
@@ -30,8 +31,8 @@
         <div class="dropdown">
         <img src="{% static 'images/auth.png' %}" alt="Authentication" class="login-icon" type="button" data-bs-toggle="dropdown">
         <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
-        <li><a class="dropdown-item" href="{% url 'logout_user' %}">Logout</a></li>
+        <li><a class="dropdown-item" href="{% url 'login' %}">Home</a></li>
+        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
         </ul>
         </div>
         {% if user.is_authenticated %}

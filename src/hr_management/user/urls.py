@@ -3,19 +3,13 @@ from . import views
 from calendar_app import views as calendar_view
 from req_leave import views as req_leave
 from publication import views as publications_view
+from authentication import views as auth_views
 
 urlpatterns = [
-    path("", 
-         views.home, 
-         name="home"),
 
-    path('logout_user/', 
-         views.logout_user, 
-         name='logout_user'),
-
-    path('tmp/', 
-         views.tmp, 
-         name='tmp'),
+    # Authentication 
+    path('', auth_views.login_user, name='login'),
+    path('logout/', auth_views.logout_user, name='logout'),
 
     # Admin Pages
     path('admin_home/', 
@@ -68,4 +62,18 @@ urlpatterns = [
          name='publications'),
 
     
+    path ('submit_req/', 
+          req_leave.submit_request, 
+          name='submit_req'),
+    path ('view_req/', 
+          req_leave.view_request, 
+          name='view_req'), # For Empoyee to view request history
+
+    #Publications
+    
+    path('create/', 
+         publications_view.create_publication, 
+         name='create_publication'), # For Admin to create and view publications
+
+
 ]

@@ -11,53 +11,13 @@ from django.urls import reverse
 Employee = get_user_model()
 
 
-def home(request):
-	# Check if the user is already authenticated
-	if request.user.is_authenticated:
-		if request.user.is_staff:
-			return render(request, '../templates/administrator/admin_home.html', {'title': 'Administrator'})
-		else:
-			return render(request, '../templates/employees/employee_home.html', {'title': 'Employee'})
-
-    # Check if the form is submitted
-	if request.method == 'POST':
-		email = request.POST['email']
-		password = request.POST['password']
-        
-        # Authenticate user
-		user = authenticate(request, email=email, password=password)
-
-		if user is not None:
-            # Log the user in
-			login(request, user)
-
-			if user.is_staff:
-				messages.success(request, "You have been logged in!")
-				return redirect('admin_home')
-			else:
-				return redirect('employee_home')
-		else:
-			messages.error(request, "Invalid email or password. Please try again.")
-
-	return render(request, '../templates/home.html', {'title': 'Login'})
-
-
-def logout_user(request): 
-	logout(request)
-	messages.success(request, "You Have Been Logged Out...")
-	return redirect('home')
-
-
-def tmp(request):
-    return render(request, "tmp.html")
-
 
 def is_admin(user):
     return user.is_authenticated and user.is_staff
 
 
 
-# ====== Admin Views ======
+# ======> Admin Views <======
 
 # @user_passes_test(is_admin, login_url='admin_home') # <====== CHECK
 # Admin landing page after authentication
@@ -66,8 +26,8 @@ def admin_home(request):
 		context = {"title": "Dashboard"}
 		return render(request, "../templates/administrator/admin_home.html", context)
 	else:
-		messages.success(request, "(from admin_home) You Must Be Logged In To View That Page...")
-		return redirect('home')  
+		messages.success(request, "(from admin_home) You must be Admin and be Logged In To View That Page...")
+		return redirect('login')  
 
 
 
@@ -77,7 +37,7 @@ def manage_employees(request):
 		context = {"title": "Manage Employees", 'employees': employees}
 		return render(request, '../templates/administrator/manage_employees.html', context)
 	else:
-			messages.success(request, "(from manage_employees) You must be logged in and have permission to view this page...")
+			messages.success(request, "(from manage_employees) You must be Admin and be logged in and have permission to view this page...")
 			return redirect('home')
 
 
@@ -105,21 +65,6 @@ def register_employee(request):
 
 
 
-# def add_employee(request):
-# 	form = AddEmployeeForm(request.POST or None)
-# 	if request.user.is_authenticated:
-# 		if request.method == "POST":
-# 			if form.is_valid():
-# 				add_employee = form.save()
-# 				messages.success(request, "Employee Added...")
-# 				return redirect('manage_employees')
-# 		return render(request, '../templates/administrator/add_employee.html', {'title':'Add Employee', 'form':form})
-# 	else:
-# 		messages.success(request, "You Must Be Logged In...")
-# 		return redirect('manage_employees')
-
-
-
 def employee_record(request, pk):
 	if request.user.is_authenticated and request.user.is_staff:
 		employee_record = Employee.objects.get(id=pk) # Look Up Records
@@ -127,6 +72,7 @@ def employee_record(request, pk):
 	else:
 		messages.success(request, "You Must Be Logged In To View That Page...")
 		return redirect('home')
+
 
 
 # @user_passes_test(is_admin, login_url='home')
@@ -146,8 +92,6 @@ def update_employee(request, pk):
 		return redirect('home')
 	
 
-	
-
 
 def delete_employee(request, pk):
 	if request.user.is_authenticated:
@@ -163,10 +107,8 @@ def delete_employee(request, pk):
 
 
 
+# ======> Employee Views <======
 
-
-
-# ====== Employee Views ======
 
 def employee_home(request):
     # Retrieve user attributes from the database
@@ -174,20 +116,21 @@ def employee_home(request):
 	first_name = user_attributes.first_name
 	last_name = user_attributes.last_name
 
-	# Replace with query to req_leave model
-	emp_requests = [{'emp_request.date':'12/2/23', 'emp_request.reason':'PTO' }] 
+	
+	# emp_requests = # Function query to req_leave history
 	
 	title = f"Welcome {first_name}!"
 	context = {
         'user_attributes': user_attributes,
-        'emp_requests': emp_requests,
+        # 'emp_requests': emp_requests,
 		'title': title
     }
 	return render(request, '../templates/employees/employee_home.html', context)
 
 
+
+
 # Employee view for editing first name, last name, email, and phone number
-# def edit_profile(request, pk):
 def edit_profile(request):
 	if request.user.is_authenticated:
 		current_employee = Employee.objects.get(id=request.user.id)
@@ -196,12 +139,8 @@ def edit_profile(request):
 		if form.is_valid():
 			form.save()
 			messages.success(request, "Employee Record Has Been Updated by Employee.")
-			# url = reverse('employee_record', args=[pk]) # generate the URL for the employee record page
-			# return redirect(url)
 			return redirect('employee_home')
 		return render(request, '../templates/employees/edit_profile.html', {'title': 'Edit My Profile', 'form':form})
 	else:
 		messages.success(request, "You Must Be Logged In...")
 		return redirect('home')
-
-

@@ -23,11 +23,12 @@ from req_leave import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('authentication.urls', namespace='authentication')),
     path('publication/', include('publication.urls')),
     path('ckeditor/',include('ckeditor_uploader.urls')),
     path('request/', include('req_leave.urls')),
     path('calendar/', include('calendar_app.urls')),
-    path('', include('user.urls')), #authentication for the future
+    path('user/', include('user.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

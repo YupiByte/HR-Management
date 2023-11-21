@@ -49,8 +49,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'req_leave',
-    'user', # User module
-    'django_tables2', # added by Lilliana during user_module branch development
+    'authentication',
+    'user',
+    'django_tables2',
     'crispy_bootstrap5',
 ]
 
