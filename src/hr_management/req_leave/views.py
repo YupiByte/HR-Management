@@ -18,7 +18,6 @@ def view_request(request):
     # Utilize this alongside a function to obtain the current
     # logged in employee's ID (MAKE SURE TO GET CORRECT EMPLOYEE_ID)
     get_logged_employee = request.user
-    # get_logged_employee = "Cowman"
     request_query = Request.objects.filter(employee_id=get_logged_employee)
 
     # This will present all the current requests, of all users

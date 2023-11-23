@@ -95,6 +95,7 @@ def remove_publication(request, id):
     return render(request, "create_publication.html", context)
 
 
+
 # Some other views that could be used if
 # we desired to ever render posts individually
 def publication_view(request):

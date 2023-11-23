@@ -8,9 +8,23 @@
 <head>
     <meta charset="UTF-8">
     <title> {% block title %} View Leave Requests {% endblock %} </title>
+
     <link rel="stylesheet" type="text/css" href="{% static 'req_leave/style.css' %}">
 
+    <!-- Calendar's Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{% static 'fullcalendar/lib/main.css' %}">
+    
+    <!-- Setting fixed size -->
+    <style>
+        #calendar {
+            max-width: 1000px; /* Set your desired max-width */
+            margin: 0 auto; /* Center the calendar on the page */
+            height: 800px; /* Set your desired height */
+        }
+    </style>
+
 </head>
+
 <body>
     <h1> View Leave Requests</h1>
 
@@ -28,6 +42,7 @@
 
     {% endif %}
 
+<section>
     <table>
         <thead>
             <tr>
@@ -74,10 +89,15 @@
             {% endfor %}
         </tbody>
     </table>
+</section>
+
+
+<div id="calendar" class="card" style="padding: 10px;"></div>
+
 
 </body>
 
-<script src="{% static '../calendar_app/static/fullcalendar/lib/main.js' %}"></script>
+<script src="{% static 'fullcalendar/lib/main.js' %}"></script>
 
 <!-- Instanciate Full Calendar -->
 <script>
@@ -86,20 +106,23 @@
         var calendarUI = document.getElementById("calendar")
         var calendar = new FullCalendar.Calendar(calendarUI, {
 
-            // Set all day true so it includes final (end) date fully
-            // instead of [start, end) -> [start, end]
             // Set Time Zone to use the same as Django's settings:
             timeZone: 'UTC',
 
-            
             // Show list of events (absent days)
             events: [
                 // Obtaining absent employees
-                {% for absence in leave_request %}
+                {% for absence in view_request %}
                     {
-                        title: 'Absent: {{ absence.employee_id }}',
+
+                        {% if absence.request_status == 'Pending' %}
+                            title: 'Pending: {{ absence.employee_id }}',
+                        {% else %}
+                            title: 'Approved: {{ absence.employee_id }}',
+                        {% endif %}
+
                         start: '{{ absence.start_date | date:"Y-m-d" }}',
-                        end: '{{ absence.end_date | date:"Y-m-d" }}',
+                        end: '{{ absence.end_date | date:"Y-m-d" }}T23:59:59',
                     }, // Don't forget the comma!
 
                 {% endfor %}
@@ -111,7 +134,7 @@
         calendar.render();
     });
 
-
+</script>
 
 </html>
 
