@@ -5,15 +5,14 @@
 {% block content %}
 <html>
 <head>
-
     <meta charset="UTF-8">
     <title> {% block title %} Create Publication {% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'publication/style.css' %}">
+    
 
 </head>
 
 <body>
-    <h1> Create Publication </h1>
 
     <!-- Posting Publications Field -->
     <section>
@@ -32,32 +31,43 @@
         </form>
 
     </section>
-
+    <br>
+    
     <!-- Showing all Publications -->
     <section>
-
+        <h1> Past Publications</h1>
+    </section>
+    <br>
         {% for post in publication_post %}
-        <h1>{{post.title}}</h1>
+        <section>
+        <h2>{{post.title}}</h1>
         <p> {{post.body_description|safe}} </p>
         <p>  Published: {{post.publication_date}} </p>
+        
 
         <!-- Edit Button -->    <!-- Text Decoration none to remove underline -->
-        <a class="btn edit-button" style="text-decoration:none;"
-        href="{% url 'publication:edit_publication' id=post.id %}">Edit </a>
-
+        <button class="btn btn-warning" 
+        href="{% url 'publication:edit_publication' id=post.id %}">Edit </button>
+        
+        <br>
+        <hr>
         <!-- Remove Button -->
         <form method="post" 
         action="{% url 'publication:remove_publication' id=post.id %}">
 
             {% csrf_token %}
 
-            <button type="submit" class="btn remove-button">Remove</button>
+            <a type="submit" class="btn btn-danger">Remove</a>
 
         </form>
-
+        
+        
+        </section>
+        <br>
         {% endfor %}
 
-    </section>
+    
+
 
 </body>
 

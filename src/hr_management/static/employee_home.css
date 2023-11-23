@@ -9,12 +9,14 @@
 .left-division {
     width: 67%;
     padding-right: 30px;
-    box-sizing: border-box; /* Include padding in the width calculation */
+    box-sizing: border-box;/* Include padding in the width calculation */
+    border-radius: 5px; 
 }
 
 .right-division {
     width: 33%;
     box-sizing: border-box;
+    border-radius: 5px;
 }
 
 .subtitle {
