@@ -46,9 +46,8 @@
         
 
         <!-- Edit Button -->    <!-- Text Decoration none to remove underline -->
-        <button class="btn btn-warning" 
-        href="{% url 'publication:edit_publication' id=post.id %}">Edit </button>
-        
+        <button class="btn btn-warning"  id= "edit-button"
+        href="{% url 'publication:edit_publication' id=post.id %}">Edit</button>   
         <br>
         <hr>
         <!-- Remove Button -->
@@ -56,8 +55,8 @@
         action="{% url 'publication:remove_publication' id=post.id %}">
 
             {% csrf_token %}
+            <a type="submit" class="btn btn-danger" id="remove-button">Remove</a>
 
-            <a type="submit" class="btn btn-danger">Remove</a>
 
         </form>
         

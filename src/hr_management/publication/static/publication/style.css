@@ -50,9 +50,10 @@ p {
 /* Buttons */
 
 
-.edit-button {
-    border: 1px solid #ffb703;
+#edit-button {
+    /* border: 1px solid #ffb703; */
     background-color: #ffb703;
+    color: black;
     display: inline-block;
     width: 48px;
     margin-top: 3px;
@@ -60,15 +61,16 @@ p {
     transition: 0.16s;
 }
 
-.edit-button:hover {
+/* .edit-button:hover {
     background-color: #e1a201;
     
 
-}
+} */
 
-.remove-button {
-    border: 1px solid #fb8500;
+#remove-button {
+    /* border: 1px solid #fb8500; */
     background-color: #fb8500;
+    color: black;
     display: inline-block;
     width: 107px;
     margin-top: 5px;
@@ -76,8 +78,8 @@ p {
     transition: 0.16s;
 }
 
-.remove-button:hover {
+/* .remove-button:hover {
     background-color: #e07800;
 
-}
+} */
 
