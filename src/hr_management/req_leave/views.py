@@ -17,24 +17,26 @@ def view_request(request):
 
     # Utilize this alongside a function to obtain the current
     # logged in employee's ID (MAKE SURE TO GET CORRECT EMPLOYEE_ID)
-    # get_logged_employee = ... (Use Django's method)
+    get_logged_employee = request.user
     # get_logged_employee = "Cowman"
-    # request_query = Request.objects.filter(employee_id=get_logged_employee)
+    request_query = Request.objects.filter(employee_id=get_logged_employee)
 
-    # Comment / Remove this
-    view_request = Request.objects.all()
+    # This will present all the current requests, of all users
+    # Leave it only for development purposes
+    # view_request = Request.objects.all()
 
     # Change view_request to request_query
     # Calculating days requested per request
-    for leave_request in view_request:
+    for leave_request in request_query:
         leave_request.days_requested = \
             days_requested(leave_request.start_date, leave_request.end_date)
 
-    # Comment / Remove this
-    context = {"view_request": view_request}
 
-    # Uncomment this
-    # context = {"view_request": request_query}
+    # For development purposes
+    # context = {"view_request": view_request}
+
+    # Uncomment this for current logged user only
+    context = {"view_request": request_query}
     return render(request, "view_request.html", context)
 
 
@@ -44,12 +46,24 @@ def submit_request(request):
     request_form = RequestCreateForm(request.POST or None)
 
     if request_form.is_valid():
-        
-        request_form.save()
-        request_form = RequestCreateForm()
+
+        # Creates but doesn't saves yet
+        new_request_form = request_form.save(commit=False)
+
+        # Assign to employee_id currently logged user:
+        new_request_form.employee_id = request.user.username
+
+        # Save instance with the employee's username added
+        new_request_form.save()
 
         return redirect(reverse("req_leave:submit_request"))
 
+    # Getting the request
+    # This is so we can present the requests received in Admin
+    # and the manage panel(s) 
+    else:
+        initial = {'employee_id': request.user.username}
+        request_form = RequestCreateForm(initial=initial)
 
     context = {"request_form": request_form}
     return render(request, "request.html", context)
@@ -131,6 +145,7 @@ def update_request_status(request, pk):
             end_date = leave_request.end_date,
         )
 
+        # Amateur debugging U_U
         print("I am here")
 
     elif action == 'decline':

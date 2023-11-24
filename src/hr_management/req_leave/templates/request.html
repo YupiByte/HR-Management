@@ -1,13 +1,15 @@
-<!DOCTYPE html>
 
+{% extends "base.html" %}
 {% load static %}
+
+{% block content %}
 {% load crispy_forms_tags %}
 
 <html>
 <head>
 
     <meta charset="UTF-8">
-    <title> Leave Request </title>
+    <title> {% block title %} Leave Request {% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'req_leave/request.css' %}">
 
 </head>
@@ -27,3 +29,5 @@
 
 
 </html>
+
+{% endblock %}

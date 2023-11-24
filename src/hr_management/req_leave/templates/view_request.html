@@ -1,11 +1,13 @@
-<!DOCTYPE html>
 
+{% extends "base.html" %}
 {% load static %}
+
+{% block content %}
 
 <html>
 <head>
     <meta charset="UTF-8">
-    <title> View Leave Requests</title>
+    <title> {% block title %} View Leave Requests {% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'req_leave/style.css' %}">
 
 </head>
@@ -74,4 +76,43 @@
     </table>
 
 </body>
+
+<script src="{% static '../calendar_app/static/fullcalendar/lib/main.js' %}"></script>
+
+<!-- Instanciate Full Calendar -->
+<script>
+
+    document.addEventListener('DOMContentLoaded', function(){
+        var calendarUI = document.getElementById("calendar")
+        var calendar = new FullCalendar.Calendar(calendarUI, {
+
+            // Set all day true so it includes final (end) date fully
+            // instead of [start, end) -> [start, end]
+            // Set Time Zone to use the same as Django's settings:
+            timeZone: 'UTC',
+
+            
+            // Show list of events (absent days)
+            events: [
+                // Obtaining absent employees
+                {% for absence in leave_request %}
+                    {
+                        title: 'Absent: {{ absence.employee_id }}',
+                        start: '{{ absence.start_date | date:"Y-m-d" }}',
+                        end: '{{ absence.end_date | date:"Y-m-d" }}',
+                    }, // Don't forget the comma!
+
+                {% endfor %}
+
+            ]
+
+        });
+
+        calendar.render();
+    });
+
+
+
 </html>
+
+{% endblock %}

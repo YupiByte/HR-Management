@@ -5,7 +5,7 @@
       <ul>
 
         {% if user.is_staff %}
-          <!--Admin Navigartion Bar-->    
+          <!--Admin Navigation Bar-->    
           <p class="nav-item">
             <a class="nav-link" href="{% url 'admin_home' %}">Home</a>
           </p>
@@ -13,29 +13,29 @@
             <a class="nav-link" href="{% url 'manage_employees' %}">Employees</a>
           </p>
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Requests</a>
+            <a class="nav-link" href="{% url 'manage_req' %}">Requests</a>
           </p> 
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Publications</a>
+            <a class="nav-link" href="{% url 'create_publication' %}">Publications</a>
           </p>      
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Calendar</a>
+            <a class="nav-link" href="{% url 'calendar' %}">Calendar</a>
           </p>   
 
 
         {% else %}
-          <!-- Employee Navigartion Bar-->    
+          <!-- Employee Navigation Bar-->    
           <p class="nav-item">
             <a class="nav-link" href="{% url 'employee_home' %}">Home</a>
           </p>
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Requests</a>
+            <a class="nav-link" href="{% url 'submit_req' %}">Requests</a>
           </p> 
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Publications</a>
+            <a class="nav-link" href="{% url 'publications' %}">Publications</a>
           </p>      
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'tmp' %}">Calendar</a>
+            <a class="nav-link" href="{% url 'calendar' %}">Calendar</a>
           </p>   
         {% endif %}
       
@@ -44,5 +44,5 @@
       </div>
 </nav>
 
-<!-- Create a breack line between the two navbars -->
+<!-- Create a break line between the two navbars -->
 <hr>

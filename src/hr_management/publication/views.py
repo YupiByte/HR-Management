@@ -9,7 +9,7 @@ from calendar_app.models import Publication_Calendar
 # Create your views here.
 
 
-# TODO Synchronize time from UTC to Cur Time Zone
+# TODO Synchronize time from UTC to Cur Time Zone (D)
 
 
 # Renders the Publication Post as requested by the url

@@ -49,8 +49,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'req_leave',
-    'user', # User module
-    'django_tables2', # added by Lilliana during user_module branch development
+    'authentication',
+    'user',
+    'django_tables2',
     'crispy_bootstrap5',
 ]
 
@@ -143,6 +144,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+# If this is modified, 
+# modify calendar_app's 
+# fullcalendar timeZone: 'UTC' to current TZ
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
