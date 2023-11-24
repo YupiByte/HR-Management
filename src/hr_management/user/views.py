@@ -136,7 +136,7 @@ def employee_home(request):
 
 # Employee view for editing first name, last name, email, and phone number
 def edit_profile(request):
-	if request.user.is_authenticated:
+	if request.user.is_authenticated and not(request.user.is_staff):
 		current_employee = Employee.objects.get(id=request.user.id)
 
 		form = EditProfileForm(request.POST or None, instance=current_employee)
