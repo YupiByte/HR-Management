@@ -112,21 +112,25 @@ def delete_employee(request, pk):
 
 def employee_home(request):
     # Retrieve user attributes from the database
-	user_attributes = Employee.objects.get(id=request.user.id) 
-	first_name = user_attributes.first_name
-	last_name = user_attributes.last_name
+	if request.user.is_authenticated and not(request.user.is_staff):
 
-	
-	# emp_requests = # Function query to req_leave history
-	
-	title = f"Welcome {first_name}!"
-	context = {
-        'user_attributes': user_attributes,
-        # 'emp_requests': emp_requests,
-		'title': title
-    }
-	return render(request, '../templates/employees/employee_home.html', context)
+		user_attributes = Employee.objects.get(id=request.user.id) 
+		first_name = user_attributes.first_name
+		last_name = user_attributes.last_name
 
+		
+		# emp_requests = # Function query to req_leave history
+		
+		title = f"Welcome {first_name}!"
+		context = {
+			'user_attributes': user_attributes,
+			# 'emp_requests': emp_requests,
+			'title': title
+		}
+		return render(request, '../templates/employees/employee_home.html', context)
+	else:
+		messages.success(request, "You must be Employee and be Logged In To View That Page...")
+		return redirect('login')  
 
 
 
