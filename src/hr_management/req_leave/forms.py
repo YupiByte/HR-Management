@@ -99,6 +99,8 @@ class RequestCreateForm(forms.ModelForm):
         fields = ['employee_id', 'request_id', \
                 'request_type', 'start_date', 'end_date']
 
+
+
     def clean(self):
         cleaned_data = super().clean()
         start_date = cleaned_data.get('start_date')
@@ -109,7 +111,8 @@ class RequestCreateForm(forms.ModelForm):
 
         d_req = days_requested(start_date, end_date)
         
-
+        # This has to be tested manually due to its error type
+        # As of latest build - Works as expected
         if d_req > 15:
             raise forms.ValidationError(f"Cannot request more than 15 days at once!\
                                         You requested {d_req} days")
