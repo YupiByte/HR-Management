@@ -1,4 +1,5 @@
 from django.test import TestCase
+# from django.test import SimpleTestCase
 from django.contrib.auth import get_user_model # for referencing the custom user model
 
 class UserAccountTests(TestCase):

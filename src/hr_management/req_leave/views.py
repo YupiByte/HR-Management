@@ -91,34 +91,39 @@ def cancel_request(request, id):
 # For managing requests
 def manage_request(request):
 
-    if request.method == 'POST':
+    if request.user.is_authenticated and request.user.is_staff:
 
-        form = RequestCreateForm(request.POST)
+        if request.method == 'POST':
 
-        if form.is_valid():
+            form = RequestCreateForm(request.POST)
 
-            action = form.cleaned_data.get('manage_request')
-            pk = form.cleaned_data.get('request_id')
-            leave_request = get_object_or_404(Request, pk=pk)
+            if form.is_valid():
 
-            if action == 'Accept':
-                leave_request.request_status = 'Accepted'
+                action = form.cleaned_data.get('manage_request')
+                pk = form.cleaned_data.get('request_id')
+                leave_request = get_object_or_404(Request, pk=pk)
 
-            elif action == 'Decline':
-                leave_request.request_status = 'Declined'
+                if action == 'Accept':
+                    leave_request.request_status = 'Accepted'
 
-            leave_request.save()
+                elif action == 'Decline':
+                    leave_request.request_status = 'Declined'
+
+                leave_request.save()
+        else:
+            form = RequestCreateForm()
+
+        view_request = Request.objects.all()
+        
+        for leave_request in view_request:
+            leave_request.days_requested = \
+                days_requested(leave_request.start_date, leave_request.end_date)
+
+        context = {"view_request": view_request, "form": form}
+        return render(request, "manage_request.html", context)
     else:
-        form = RequestCreateForm()
-
-    view_request = Request.objects.all()
-    
-    for leave_request in view_request:
-        leave_request.days_requested = \
-            days_requested(leave_request.start_date, leave_request.end_date)
-
-    context = {"view_request": view_request, "form": form}
-    return render(request, "manage_request.html", context)
+        messages.success(request, "You Must Be Logged In To View That Page...")
+        return redirect('login')
 
 
 
