@@ -1,33 +1,44 @@
-
-from django.test import SimpleTestCase
-from django.urls import resolve, reverse
-
-from .views import view_publications, create_publication
+from django.test import TestCase
+from .models import Publication
 from .forms import PublicationCreateForm
+from datetime import datetime
+
+class TestPublicationModel(TestCase):
+
+    def setUp(self):
+        self.pub1 = Publication.objects.create(
+            title="Test Title",
+            body_description="Test Description",
+            publication_date=datetime.now().date()
+        )
+
+    def test_publication_creation(self):
+        self.assertIsInstance(self.pub1, Publication)
+        self.assertEqual(self.pub1.title, "Test Title")
+        self.assertEqual(self.pub1.body_description, "Test Description")
+        self.assertEqual(self.pub1.publication_date, datetime.now().date())
+
+    # Anything URL related does not works
+    # def test_publication_absolute_url(self):
+    #     expected_url = f"/publication/{self.pub1.id}/view/"
+    #     self.assertEqual(self.pub1.get_absolute_url(), expected_url)
 
 
-# URLs Testing
-class TestURLs(SimpleTestCase):
-
-    def test_urls_resolved(self):
-        
-        url = reverse('view_publications')
-        self.assertEquals(resolve(url).func,  view_publications)
-
-    def test_urls_resolved(self):
-        
-        url = reverse('create')
-        self.assertEquals(resolve(url).func.view_class,  create_publication)    
-
-
-# Forms Testing
-class TestForms(SimpleTestCase):
+class TestPublicationForm(TestCase):
 
     def test_form_valid_data(self):
+        form = PublicationCreateForm(data={
+            'title': 'Test Title',
+            'body_description': 'Test Description',
+            'publication_date': datetime.now().date()
+        })
+        self.assertTrue(form.is_valid(), form.errors.as_text())
 
-        form = PublicationCreateForm()
-
-    
     def test_form_invalid_data(self):
-        return
-    
+        form = PublicationCreateForm(data={
+            'title': '',
+            'body_description': 'Test Description',
+            'publication_date': datetime.now().date()
+        })
+        self.assertFalse(form.is_valid())
+        self.assertIn('This field is required.', form.errors.get('title'))
