@@ -1,3 +1,10 @@
+{% load static %}
+
+<div class="navbar-title">Human Resources Inc.</div>
+        <div class="logo-container">
+            <img src="{% static 'images/penguin_logo.png' %}" alt="Application Logo" class="navbar-logo">
+        </div>
+
 <hr>
 
 <nav class="navbar-section">
@@ -7,13 +14,13 @@
         {% if user.is_staff %}
           <!--Admin Navigation Bar-->    
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'admin_home' %}">Dashboard</a>
+            <a class="nav-link" href="{% url 'admin_home' %}">Admin Dashboard</a>
           </p>
           <p class="nav-item">
             <a class="nav-link" href="{% url 'manage_employees' %}">Employees</a>
           </p>
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'manage_req' %}">Requests</a>
+            <a class="nav-link" href="{% url 'manage_req' %}">Manage Requests</a>
           </p> 
           <p class="nav-item">
             <a class="nav-link" href="{% url 'create_publication' %}">Publications</a>
@@ -29,7 +36,7 @@
             <a class="nav-link" href="{% url 'employee_home' %}">Home</a>
           </p>
           <p class="nav-item">
-            <a class="nav-link" href="{% url 'submit_req' %}">Requests</a>
+            <a class="nav-link" href="{% url 'submit_req' %}">Send Requests</a>
           </p> 
           <p class="nav-item">
             <a class="nav-link" href="{% url 'publications' %}">Publications</a>

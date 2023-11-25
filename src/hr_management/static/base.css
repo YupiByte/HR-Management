@@ -25,6 +25,8 @@ height: 100%;
 .navbar-title {
     padding: 15px;
     font-size: 100%;
+    font-weight: bold;
+    font-family: sans-serif;
     margin-bottom: 10px;
 }
 .logo-container {
