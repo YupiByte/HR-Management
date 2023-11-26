@@ -107,4 +107,5 @@ db.sqlite3
 venv/
 
 # images #
-static/images/uploads/
+src/hr_management/static/images/uploads/
+```
