@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from .forms import RegisterEmployeeForm, UpdateEmployeeForm, EditProfileForm
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 
 
@@ -36,21 +37,25 @@ def manage_employees(request):
     if request.user.is_authenticated and request.user.is_staff:
         employees_list = Employee.objects.all()
 
-        # Set the default number of employees per page
-        default_employees_per_page = 10
-
         # Get the selected number of employees per page from the request
-        employees_per_page = int(request.GET.get('employees_per_page', default_employees_per_page))
+        employees_per_page = request.GET.get('employees_per_page', 'all')
 
-        paginator = Paginator(employees_list, employees_per_page)
+        # Check if the selected option is "All"
+        if employees_per_page == 'all':
+            employees = employees_list
+        else:
+            # Convert the selected value to an integer (default to 10 if not specified)
+            employees_per_page = int(employees_per_page) if employees_per_page.isdigit() else 10
 
-        page = request.GET.get('page', 1)
-        try:
-            employees = paginator.page(page)
-        except PageNotAnInteger:
-            employees = paginator.page(1)
-        except EmptyPage:
-            employees = paginator.page(paginator.num_pages)
+            paginator = Paginator(employees_list, employees_per_page)
+
+            page = request.GET.get('page', 1)
+            try:
+                employees = paginator.page(page)
+            except PageNotAnInteger:
+                employees = paginator.page(1)
+            except EmptyPage:
+                employees = paginator.page(paginator.num_pages)
 
         context = {
             "title": "Manage Employees",
