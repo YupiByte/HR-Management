@@ -59,12 +59,12 @@ def submit_request(request):
         if new_request_form.request_type == 'PTO'\
               and days_req > employee.available_pto:
             messages.error(request, "Insufficient PTO days available")
-            print("Fuck You")
+
 
         elif new_request_form.request_type == 'Sick Day'\
               and days_req > employee.available_sickdays:
             messages.error(request, "Insufficient Sick Days available")
-            print("Fuck you")
+
 
         # Assign to employee_id currently logged user:
         new_request_form.employee_id = request.user.username
@@ -115,11 +115,11 @@ def manage_request(request):
 
             if form.is_valid():
 
-            # Gets a cleaned form 
-            # (raw data stripped from Django's widget)
-            action = form.cleaned_data.get('manage_request')
-            pk = form.cleaned_data.get('request_id')
-            leave_request = get_object_or_404(Request, pk=pk)
+                # Gets a cleaned form 
+                # (raw data stripped from Django's widget)
+                action = form.cleaned_data.get('manage_request')
+                pk = form.cleaned_data.get('request_id')
+                leave_request = get_object_or_404(Request, pk=pk)
 
                 if action == 'Accept':
                     leave_request.request_status = 'Accepted'
@@ -131,17 +131,18 @@ def manage_request(request):
                 if leave_request.request_type == 'PTO':
                     employee.available_pto -= \
                         days_requested(leave_request.start_date, \
-                                       leave_request.end_date)
+                                        leave_request.end_date)
 
                 elif leave_request.request_type == 'Sick Day':
                     employee.available_sickdays -= \
                         days_requested(leave_request.start_date, \
-                                       leave_request.end_date)
+                                        leave_request.end_date)
 
-            elif action == 'Decline':
-                leave_request.request_status = 'Declined'
+                elif action == 'Decline':
+                    leave_request.request_status = 'Declined'
 
-                leave_request.save()
+                    leave_request.save()
+        
         else:
             form = RequestCreateForm()
 
@@ -153,6 +154,7 @@ def manage_request(request):
 
         context = {"view_request": view_request, "form": form}
         return render(request, "manage_request.html", context)
+    
     else:
         messages.success(request, "You Must Be Logged In To View That Page...")
         return redirect('login')
