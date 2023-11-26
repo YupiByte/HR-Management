@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import get_user_model, authenticate, login, logout
-from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth.decorators import user_passes_test
 from .forms import RegisterEmployeeForm, UpdateEmployeeForm, EditProfileForm
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
