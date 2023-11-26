@@ -100,8 +100,13 @@ class RequestCreateForm(forms.ModelForm):
                 'request_type', 'start_date', 'end_date']
 
 
-
+    # We clean the form
+    # in order to have the data
+    # stripped from the widget.
+    # Now we can perform the necessary
+    # operations for input validation.
     def clean(self):
+
         cleaned_data = super().clean()
         start_date = cleaned_data.get('start_date')
         end_date = cleaned_data.get('end_date')

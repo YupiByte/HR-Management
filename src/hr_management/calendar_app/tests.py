@@ -3,6 +3,8 @@ from django.test import TestCase
 from django.urls import reverse
 from .models import Absence_Calendar, Publication_Calendar
 
+# Test the Calendar Models
+
 class TestAbsenceCalendarModel(TestCase):
 
     def test_absence_calendar_save_new_instance(self):
@@ -33,6 +35,7 @@ class TestAbsenceCalendarModel(TestCase):
         # Check if absent_counter is updated correctly
         self.assertEqual(existing_instance.absent_counter, 1)
 
+# Test the Publication Model
 
 class TestPublicationCalendarModel(TestCase):
 
@@ -51,8 +54,9 @@ class TestPublicationCalendarModel(TestCase):
         self.assertEqual(next_count, 6)
 
 
+# Testing the view urls
 
-class TestCalendarAppUrls(TestCase):
+class TestCalendarUrls(TestCase):
 
     def test_view_calendar_url_resolves(self):
         # Try to reverse the URL name and check if it resolves correctly

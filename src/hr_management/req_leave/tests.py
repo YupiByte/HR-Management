@@ -20,8 +20,7 @@ from datetime import datetime
 from req_leave.forms import RequestCreateForm
 
 
-
-# Create your tests here.
+# Test the view urls
 
 class TestUrls(SimpleTestCase):
 
@@ -29,45 +28,26 @@ class TestUrls(SimpleTestCase):
         url = reverse('req_leave:submit_request')
         self.assertEquals(url, '/request/submit/')
 
+    
     def test_view_request_url_is_resolved(self):
         url = reverse('req_leave:view_request')
         self.assertEquals(url, '/request/view/')
 
+    
     def test_manage_request_url_is_resolved(self):
         url = reverse('req_leave:manage_request')
         self.assertEquals(url, '/request/manage/')
 
+    
     def test_update_request_status_url_is_resolved(self):
         url = reverse('req_leave:update_request_status', args=[1])  # Replace 1 with an appropriate integer for testing
         self.assertEquals(url, '/request/update_request_status/1/')
 
+    
     def test_cancel_request_url_is_resolved(self):
         url = reverse('req_leave:cancel_request', args=[1])  # Replace 1 with an appropriate integer for testing
         self.assertEquals(url, '/request/1/cancel/')
         
-
-# Testing Views
-
-# class TestViews(TestCase):
-#     def setUp(self):
-#         self.client = Client()
-
-#     def test_request_view_GET(self):
-#         view_url = reverse("req_leave:view_request")
-#         response = self.client.get(view_url)
-#         # self.assertEqual(response.status_code, 200)
-
-#         print(view_url)
-
-        # print(f"meow\n\n\n\{response}\n\n\nmeowwwwwwww    ")
-
-        # self.assertTemplateUsed(response, 'req_leave/view_request.html')
-
-    # def test_request_submit_GET(self):
-    #     submit_url = reverse("req_leave:submit_request")
-    #     response = self.client.get(submit_url)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'request.html')
 
 
 # Testing Models
