@@ -146,12 +146,26 @@ def manage_request(request):
         else:
             form = RequestCreateForm()
 
+        # Don't send Declined request status (To show all Request.objects.all())
+        # view_request = Request.objects.exclude(request_status='Declined')
         view_request = Request.objects.all()
         
+        # Status for filtering options
+        # obtained by URL query parameter
+        status = request.GET.get('status')
+
+        if status == 'pending':
+            view_request = view_request.filter(request_status='Pending')
+        elif status == 'accepted':
+            view_request = view_request.filter(request_status='Accepted')
+        elif status == 'declined':
+            view_request = view_request.filter(request_status='Declined')
+
+
         for leave_request in view_request:
             leave_request.days_requested = \
                 days_requested(leave_request.start_date, leave_request.end_date)
-
+        
         context = {"view_request": view_request, "form": form}
         return render(request, "manage_request.html", context)
     
@@ -194,6 +208,19 @@ def update_request_status(request, pk):
             return redirect('req_leave:manage_request')
 
         leave_request.request_status = 'Declined'
+
+        # Check if an entry with the same details exists and delete it
+        # this is utilized in case it was accepted previously
+        # then reverted.
+        existing_entry = Absence_Calendar.objects.filter(
+            employee_id=leave_request.employee_id,
+            start_date=leave_request.start_date,
+            end_date=leave_request.end_date,
+        ).first()
+
+        if existing_entry:
+            existing_entry.delete()
+
 
     leave_request.save()
 

@@ -13,6 +13,22 @@
 </head>
 <body>
     <h1>Manage Requests</h1>
+
+    <!-- Add buttons to filter requests -->
+    <div>
+        <button onclick="filterRequests('pending')">Pending</button>
+        <button onclick="filterRequests('accepted')">Accepted</button>
+        <button onclick="filterRequests('declined')">Declined</button>
+        <button onclick="filterRequests('all')">All</button>
+    </div>
+
+    <script>
+        function filterRequests(status) {
+            // Redirect to the URL with the selected status as a query parameter
+            window.location.href = "{% url 'req_leave:manage_request' %}?status=" + status;
+        }
+    </script>
+
     <table>
         <thead>
             <tr>
