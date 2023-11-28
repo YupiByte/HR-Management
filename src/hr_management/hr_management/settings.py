@@ -112,6 +112,11 @@ DATABASES = {
 # Custom Model
 AUTH_USER_MODEL = 'user.Employee'
 
+# Custom Model Phone Number Format
+PHONENUMBER_DB_FORMAT = "NATIONAL"
+PHONENUMBER_DEFAULT_REGION = "PR"
+
+
 
 # Default password hasher
 # https://docs.djangoproject.com/en/4.2/topics/auth/passwords/#auth-password-storage 
