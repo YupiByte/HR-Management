@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test, login_required
 from .forms import RegisterEmployeeForm, UpdateEmployeeForm, EditProfileForm
 from django.urls import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 
 
@@ -31,13 +33,38 @@ def admin_home(request):
 
 
 def manage_employees(request):
-	if request.user.is_authenticated and request.user.is_staff:
-		employees = Employee.objects.all()
-		context = {"title": "Manage Employees", 'employees': employees}
-		return render(request, '../templates/administrator/manage_employees.html', context)
-	else:
-			messages.success(request, "(from manage_employees) You must be Admin and be logged in and have permission to view this page...")
-			return redirect('home')
+    if request.user.is_authenticated and request.user.is_staff:
+        employees_list = Employee.objects.all()
+
+        # Get the selected number of employees per page from the request
+        employees_per_page = request.GET.get('employees_per_page', 'all')
+
+        # Check if the selected option is "All"
+        if employees_per_page == 'all':
+            employees = employees_list
+        else:
+            # Convert the selected value to an integer (default to 10 if not specified)
+            employees_per_page = int(employees_per_page) if employees_per_page.isdigit() else 10
+
+            paginator = Paginator(employees_list, employees_per_page)
+
+            page = request.GET.get('page', 1)
+            try:
+                employees = paginator.page(page)
+            except PageNotAnInteger:
+                employees = paginator.page(1)
+            except EmptyPage:
+                employees = paginator.page(paginator.num_pages)
+
+        context = {
+            "title": "Manage Employees",
+            'employees': employees,
+            'employees_per_page': employees_per_page
+        }
+        return render(request, 'administrator/manage_employees.html', context)
+    else:
+        messages.success(request, "(from manage_employees) You must be an Admin, be logged in, and have permission to view this page...")
+        return redirect('home')
 
 
 
