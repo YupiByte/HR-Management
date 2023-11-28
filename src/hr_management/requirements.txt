@@ -11,3 +11,4 @@ python-dotenv
 crispy_bootstrap4
 crispy_bootstrap5
 coverage 7.3.2
+django-phonenumber-field 7.2.0
