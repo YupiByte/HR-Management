@@ -11,6 +11,8 @@ from .models import *
 from calendar_app.models import Absence_Calendar
 from .forms import *
 
+# Used for validating available days off request(s)
+from user.models import Employee
 
 # View all requests
 def view_request(request):
@@ -18,7 +20,6 @@ def view_request(request):
     # Utilize this alongside a function to obtain the current
     # logged in employee's ID (MAKE SURE TO GET CORRECT EMPLOYEE_ID)
     get_logged_employee = request.user
-    # get_logged_employee = "Cowman"
     request_query = Request.objects.filter(employee_id=get_logged_employee)
 
     # This will present all the current requests, of all users
@@ -49,6 +50,21 @@ def submit_request(request):
 
         # Creates but doesn't saves yet
         new_request_form = request_form.save(commit=False)
+
+        # Validating requested days are available for user
+        employee = Employee.objects.get(username=request.user)
+        days_req = days_requested(new_request_form.start_date, \
+                                  new_request_form.end_date)
+
+        if new_request_form.request_type == 'PTO'\
+              and days_req > employee.available_pto:
+            messages.error(request, "Insufficient PTO days available")
+
+
+        elif new_request_form.request_type == 'Sick Day'\
+              and days_req > employee.available_sickdays:
+            messages.error(request, "Insufficient Sick Days available")
+
 
         # Assign to employee_id currently logged user:
         new_request_form.employee_id = request.user.username
@@ -99,6 +115,8 @@ def manage_request(request):
 
             if form.is_valid():
 
+                # Gets a cleaned form 
+                # (raw data stripped from Django's widget)
                 action = form.cleaned_data.get('manage_request')
                 pk = form.cleaned_data.get('request_id')
                 leave_request = get_object_or_404(Request, pk=pk)
@@ -106,21 +124,51 @@ def manage_request(request):
                 if action == 'Accept':
                     leave_request.request_status = 'Accepted'
 
+                # Update employees available days
+                employee = Employee.objects.get(\
+                    username=leave_request.employee_id)
+
+                if leave_request.request_type == 'PTO':
+                    employee.available_pto -= \
+                        days_requested(leave_request.start_date, \
+                                        leave_request.end_date)
+
+                elif leave_request.request_type == 'Sick Day':
+                    employee.available_sickdays -= \
+                        days_requested(leave_request.start_date, \
+                                        leave_request.end_date)
+
                 elif action == 'Decline':
                     leave_request.request_status = 'Declined'
 
-                leave_request.save()
+                    leave_request.save()
+        
         else:
             form = RequestCreateForm()
 
+        # Don't send Declined request status (To show all Request.objects.all())
+        # view_request = Request.objects.exclude(request_status='Declined')
         view_request = Request.objects.all()
         
+        # Status for filtering options
+        # obtained by URL query parameter
+        status = request.GET.get('status')
+
+        if status == 'pending':
+            view_request = view_request.filter(request_status='Pending')
+        elif status == 'accepted':
+            view_request = view_request.filter(request_status='Accepted')
+        elif status == 'declined':
+            view_request = view_request.filter(request_status='Declined')
+
+
         for leave_request in view_request:
             leave_request.days_requested = \
                 days_requested(leave_request.start_date, leave_request.end_date)
-
+        
         context = {"view_request": view_request, "form": form}
         return render(request, "manage_request.html", context)
+    
     else:
         messages.success(request, "You Must Be Logged In To View That Page...")
         return redirect('login')
@@ -131,6 +179,7 @@ def manage_request(request):
 # that is when a form is updated (POST)
 @require_POST
 def update_request_status(request, pk):
+
     leave_request = get_object_or_404(Request, pk=pk)
     action = request.POST.get('action')
 
@@ -150,8 +199,6 @@ def update_request_status(request, pk):
             end_date = leave_request.end_date,
         )
 
-        # Amateur debugging U_U
-        print("I am here")
 
     elif action == 'decline':
 
@@ -161,6 +208,19 @@ def update_request_status(request, pk):
             return redirect('req_leave:manage_request')
 
         leave_request.request_status = 'Declined'
+
+        # Check if an entry with the same details exists and delete it
+        # this is utilized in case it was accepted previously
+        # then reverted.
+        existing_entry = Absence_Calendar.objects.filter(
+            employee_id=leave_request.employee_id,
+            start_date=leave_request.start_date,
+            end_date=leave_request.end_date,
+        ).first()
+
+        if existing_entry:
+            existing_entry.delete()
+
 
     leave_request.save()
 

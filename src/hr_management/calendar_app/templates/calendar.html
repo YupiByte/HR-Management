@@ -30,7 +30,7 @@
 </head>
 
 <body>
-    <h1> Hello Calendar </h1>
+    <h1> Calendar </h1>
 
     <h2> Absence </h2>
 
@@ -40,15 +40,17 @@
                 <tr>
                     <th>Employee</th>
                     <th>Date</th>
-                    <th>Absent Counter</th>
+                    <!-- <th>Absent Counter</th> -->
                 </tr>
             </thead>
             <tbody>
+
+                <!-- Optional Change to a "Absent Today" check -->
                 {% for absence in absence_calendar %}
                 <tr>
                     <td>{{ absence.employee_id }}</td>
                     <td>{{ absence.start_date|date:"F j, Y" }}</td>
-                    <td>{{ absence.absent_counter }}</td>
+                    <!-- <td>{{ absence.absent_counter }}</td> -->
                 </tr>
                 {% endfor %}
                 <tr>
@@ -86,7 +88,8 @@
 
 </body>
 
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+<!-- <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script> -->
+<script src="{% static 'fullcalendar/lib/main.js' %}"></script>
 
 <!-- Instanciate Full Calendar -->
 <script>
@@ -95,8 +98,6 @@
         var calendarUI = document.getElementById("calendar")
         var calendar = new FullCalendar.Calendar(calendarUI, {
 
-            // Set all day true so it includes final (end) date fully
-            // instead of [start, end) -> [start, end]
             // Set Time Zone to use the same as Django's settings:
             timeZone: 'UTC',
 
@@ -108,7 +109,7 @@
                     {
                         title: 'Absent: {{ absence.employee_id }}',
                         start: '{{ absence.start_date | date:"Y-m-d" }}',
-                        end: '{{ absence.end_date | date:"Y-m-d" }}',
+                        end: '{{ absence.end_date | date:"Y-m-d" }}T23:59:59',
                     }, // Don't forget the comma!
 
                 {% endfor %}

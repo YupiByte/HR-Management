@@ -111,6 +111,7 @@ def remove_publication(request, id):
         return redirect('login')
 
 
+
 # Some other views that could be used if
 # we desired to ever render posts individually
 def publication_view(request):

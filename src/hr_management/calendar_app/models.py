@@ -35,6 +35,17 @@ class Absence_Calendar(models.Model):
 
         super().save(*args, **kwargs)
 
+    # To avoid duplicates in case of 
+    # approving previously managed employees,
+    # mark these as unique identifiers.
+
+    # Note, opted to simply remove
+    # previously declined requests
+    # from the Absence_Calendar
+
+    # class Meta:
+    #     unique_together = ["employee_id", "start_date", "end_date"]
+
 
 #  Used to count whenever a publication is published by date :)
 class Publication_Calendar(models.Model):
