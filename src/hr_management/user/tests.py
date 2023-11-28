@@ -2,6 +2,16 @@ from django.test import TestCase
 # from django.test import SimpleTestCase
 from django.contrib.auth import get_user_model # for referencing the custom user model
 
+'''
+Coverage 7.3.2 Documentation: https://coverage.readthedocs.io/en/7.3.2/cmd.html
+
+Run coverage:
+$ coverage run --omit='*/venv/*' manage.py test
+
+Create report on local machine:
+$ coverage html
+'''
+
 class UserAccountTests(TestCase):
 
     def test_new_superuser(self):
