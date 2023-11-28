@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'user',
     'django_tables2',
     'crispy_bootstrap5',
+    'phonenumber_field',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
@@ -110,6 +111,11 @@ DATABASES = {
 
 # Custom Model
 AUTH_USER_MODEL = 'user.Employee'
+
+# Custom Model Phone Number Format
+PHONENUMBER_DB_FORMAT = "NATIONAL"
+PHONENUMBER_DEFAULT_REGION = "PR"
+
 
 
 # Default password hasher
