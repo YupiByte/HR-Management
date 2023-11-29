@@ -101,10 +101,11 @@ button {
 }
 
 section {
-    max-width: auto;
-    margin: 10 auto;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgb(220, 220, 220);
+    
 }
