@@ -28,7 +28,7 @@ class Request(models.Model):
 
     def __str__(self):
         return f"{self.employee_id} - {self.request_type}\
-              {self.start_date} to {self.end_date}"
+            {self.start_date} to {self.end_date}"
 
     def get_absolute_url(self):
         return reverse("request:view_request", kwargs={"id": self.id})

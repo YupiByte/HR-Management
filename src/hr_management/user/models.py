@@ -1,7 +1,7 @@
 from django.db import models
-# from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class CustomAccountManager(BaseUserManager): # Manager for the custom user model
@@ -40,7 +40,7 @@ class Employee(AbstractBaseUser, PermissionsMixin): # Extend Application's User 
     username = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
-    phone = models.CharField(max_length=15)
+    phone = PhoneNumberField(region="PR")
 
     EMPLOYEE_TYPE = (
          ('Chief Executive Officer', 'Chief Executive Officer'),
