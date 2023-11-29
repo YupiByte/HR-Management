@@ -6,8 +6,8 @@ body {
 }
 
 h1 {
-    background-color: #033047;
-    color: #fff;
+    background-color: #e9e9f1;
+    color: #033047;
     padding: 20px;
     text-align: center;
 }
@@ -98,4 +98,13 @@ button {
     color: white;
     text-align: center;
     border-bottom: 1px solid #fb8500;
+}
+
+section {
+    max-width: auto;
+    margin: 10 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(220, 220, 220);
 }
