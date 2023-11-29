@@ -27,7 +27,11 @@
           </p>      
           <p class="nav-item">
             <a class="nav-link" href="{% url 'calendar' %}">Calendar</a>
-          </p>   
+          </p>
+          <hr>
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'help' %}">Help Center</a>
+          </p>
 
 
         {% else %}
@@ -45,11 +49,8 @@
             <a class="nav-link" href="{% url 'calendar' %}">Calendar</a>
           </p>   
         {% endif %}
-      
         
-        </ul>
       </div>
 </nav>
 
 <!-- Create a break line between the two navbars -->
-<hr>

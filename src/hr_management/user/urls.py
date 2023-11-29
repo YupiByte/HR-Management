@@ -36,5 +36,8 @@ urlpatterns = [
     path('publications/', publications_view.view_publications, name='publications'), 
     path('create/', publications_view.create_publication, name='create_publication'), # For Admin to create and view publications
 
+    # Help
+    path('help/', views.help, name='help'),
+
 
 ]
