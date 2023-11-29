@@ -29,6 +29,8 @@
         <img src="{% static 'images/auth.png' %}" alt="Authentication" class="login-icon" type="button" data-bs-toggle="dropdown">
         <ul class="dropdown-menu">
         <li><a class="dropdown-item" href="{% url 'login' %}">Home</a></li>
+        <hr>
+        <li><a class="dropdown-item" href="{% url 'help' %}">Help</a></li>
         <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
         </ul>
         </div>
@@ -53,7 +55,6 @@
     <div class="division-3">{% block content %}  {% endblock %}</div>
 
     <!-- Button on the bottom of page opens user manual-->
-    <button class="help-button">?</button>
     
     </div>
 
