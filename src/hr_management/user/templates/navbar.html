@@ -2,7 +2,16 @@
 
 <div class="navbar-title">Human Resources Inc.</div>
         <div class="logo-container">
-            <img src="{% static 'images/penguin_logo.png' %}" alt="Application Logo" class="navbar-logo">
+            {% if user.is_staff %}
+            <a href="{% url 'admin_home' %}">
+              <img src="{% static 'images/penguin_logo.png' %}" alt="Application Logo" class="navbar-logo">
+          </a>
+                
+            {% else %}
+            <a href="{% url 'employee_home' %}">
+              <img src="{% static 'images/penguin_logo.png' %}" alt="Application Logo" class="navbar-logo">
+          </a>
+            {% endif %}
         </div>
 
 <hr>
