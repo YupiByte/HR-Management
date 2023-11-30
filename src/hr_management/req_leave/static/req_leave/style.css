@@ -6,15 +6,13 @@ body {
 }
 
 h1 {
-    background-color: #033047;
-    color: #fff;
-    padding: 20px;
+    padding: 0;
     text-align: center;
 }
 
 /* Viewing Requests */
 table {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 20px auto;
     background-color: #fff;
     border-radius: 5px;
@@ -98,4 +96,13 @@ button {
     color: white;
     text-align: center;
     border-bottom: 1px solid #fb8500;
+}
+
+section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(220, 220, 220);
 }

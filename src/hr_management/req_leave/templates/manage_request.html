@@ -12,14 +12,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'req_leave/style.css' %}">
 </head>
 <body>
+    <section>
     <h1>Manage Requests</h1>
-
+    </section>
     <!-- Add buttons to filter requests -->
-    <div>
-        <button onclick="filterRequests('pending')">Pending</button>
-        <button onclick="filterRequests('accepted')">Accepted</button>
-        <button onclick="filterRequests('declined')">Declined</button>
-        <button onclick="filterRequests('all')">All</button>
+    
     </div>
 
     <script>
@@ -28,7 +25,12 @@
             window.location.href = "{% url 'req_leave:manage_request' %}?status=" + status;
         }
     </script>
-
+        <section>
+        <button class="button accept-button" type="button" onclick="filterRequests('pending')">Pending</button>
+        <button class="button accept-button" type="button" onclick="filterRequests('accepted')">Accepted</button>
+        <button class="button accept-button" type="button" onclick="filterRequests('declined')">Declined</button>
+        <button class="button accept-button" type="button" onclick="filterRequests('all')">All</button>
+        </section>
     <table>
         <thead>
             <tr>
