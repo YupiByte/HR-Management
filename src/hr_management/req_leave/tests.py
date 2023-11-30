@@ -94,7 +94,7 @@ class TestRequestForm(TestCase):
             'request_type': 'PTO',
             'start_date': date.today(),
             'end_date': date.today() + timedelta(days=5),
-            'request_status': 'Pending'  # Include additional required fields
+            'request_status': 'Pending'
         })
 
         self.assertTrue(form.is_valid(), form.errors.as_text())
@@ -106,7 +106,7 @@ class TestRequestForm(TestCase):
             'request_type': 'PTO',
             'start_date': date.today(),
             'end_date': date.today() - timedelta(days=5),
-            'request_status': 'Pending'  # Include additional required fields
+            'request_status': 'Pending'
         })
 
         self.assertFalse(form.is_valid())
