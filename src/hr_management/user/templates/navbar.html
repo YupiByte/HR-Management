@@ -2,7 +2,16 @@
 
 <div class="navbar-title">Human Resources Inc.</div>
         <div class="logo-container">
-            <img src="{% static 'images/penguin_logo.png' %}" alt="Application Logo" class="navbar-logo">
+            {% if user.is_staff %}
+            <a href="{% url 'admin_home' %}">
+              <img src="{% static 'images/penguin_logo.png' %}" alt="Application Logo" class="navbar-logo">
+          </a>
+                
+            {% else %}
+            <a href="{% url 'employee_home' %}">
+              <img src="{% static 'images/penguin_logo.png' %}" alt="Application Logo" class="navbar-logo">
+          </a>
+            {% endif %}
         </div>
 
 <hr>
@@ -27,7 +36,11 @@
           </p>      
           <p class="nav-item">
             <a class="nav-link" href="{% url 'calendar' %}">Calendar</a>
-          </p>   
+          </p>
+          <hr>
+          <p class="nav-item">
+            <a class="nav-link" href="{% url 'help' %}">Help Center</a>
+          </p>
 
 
         {% else %}
@@ -45,11 +58,8 @@
             <a class="nav-link" href="{% url 'calendar' %}">Calendar</a>
           </p>   
         {% endif %}
-      
         
-        </ul>
       </div>
 </nav>
 
 <!-- Create a break line between the two navbars -->
-<hr>

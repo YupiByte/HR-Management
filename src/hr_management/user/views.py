@@ -174,3 +174,12 @@ def edit_profile(request):
 	else:
 		messages.success(request, "You Must Be Logged In...")
 		return redirect('home')
+
+
+# ======> Help Views <======
+def help(request):
+	if request.user.is_authenticated:
+		return render(request, '../templates/help/admin_home_help.html', {'title': 'Help'})
+	else:
+		messages.success(request, "You Must Be Logged In...")
+		return redirect('home')
