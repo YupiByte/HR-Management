@@ -124,20 +124,6 @@ def manage_request(request):
                 if action == 'Accept':
                     leave_request.request_status = 'Accepted'
 
-                # Update employees available days
-                employee = Employee.objects.get(\
-                    username=leave_request.employee_id)
-
-                if leave_request.request_type == 'PTO':
-                    employee.available_pto -= \
-                        days_requested(leave_request.start_date, \
-                                        leave_request.end_date)
-
-                elif leave_request.request_type == 'Sick Day':
-                    employee.available_sickdays -= \
-                        days_requested(leave_request.start_date, \
-                                        leave_request.end_date)
-
                 elif action == 'Decline':
                     leave_request.request_status = 'Declined'
 
@@ -146,7 +132,8 @@ def manage_request(request):
         else:
             form = RequestCreateForm()
 
-        # Don't send Declined request status (To show all Request.objects.all())
+        # Don't send Declined request status 
+        # (To show all Request.objects.all())
         # view_request = Request.objects.exclude(request_status='Declined')
         view_request = Request.objects.all()
         
@@ -191,6 +178,25 @@ def update_request_status(request, pk):
             return redirect('req_leave:manage_request')
 
         leave_request.request_status = 'Accepted'
+
+        # Obtain currently managed employee
+        # to update corresponding day off field
+        employee = Employee.objects.get(\
+            username=leave_request.employee_id)
+
+        # Update available day(s)
+        if leave_request.request_type == 'PTO':
+            employee.available_pto -= \
+                days_requested(leave_request.start_date, \
+                                leave_request.end_date)
+
+        elif leave_request.request_type == 'Sick Day':
+            employee.available_sickdays -= \
+                days_requested(leave_request.start_date, \
+                                leave_request.end_date)
+
+        # Save the current instance
+        employee.save()
 
         # Send data to calendar_app's Calendar models.py
         Absence_Calendar.objects.create(

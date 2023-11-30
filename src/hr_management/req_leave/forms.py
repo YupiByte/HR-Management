@@ -11,15 +11,6 @@ from crispy_forms.layout import Submit
 def generate_request_id():
     return str(uuid1())[:8]
 
-# Get from user page
-def get_employee_id():
-    '''
-    '''
-    get_id = "1324"
-
-    return get_id
-
-
 
 # Calculating for total requested days,
 # subtracting the weekend days
