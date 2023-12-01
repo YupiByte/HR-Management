@@ -28,11 +28,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
-
+CSRF_TRUSTED_ORIGINS = ['https://*.ngrok-free.app']
 # Application definition
 
 INSTALLED_APPS = [
@@ -76,7 +76,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'hr_management.urls'
 
@@ -153,7 +156,7 @@ LANGUAGE_CODE = 'en-us'
 # If this is modified, 
 # modify calendar_app's 
 # fullcalendar timeZone: 'UTC' to current TZ
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Puerto_Rico'
 
 USE_I18N = True
 
@@ -166,6 +169,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # For images
 MEDIA_URL = '/images/'
