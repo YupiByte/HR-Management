@@ -42,7 +42,7 @@
             <strong>ID: </strong>{{ employee_record.id }}</p>
 
             <div class="d-grid gap-2 d-md-block">
-                <a href="{% url 'manage_employees' %}" class="btn btn-info">Back</a>
+                <a href="{% url 'manage_employees' %}" class="btn btn-secondary">Back</a>
                 <a href="{% url 'update_employee' employee_record.id%}" class="btn btn-warning">Update Record</a>
                 <a href="{% url 'delete_employee' employee_record.id %}" class="btn btn-danger">Delete</a>
             </div>

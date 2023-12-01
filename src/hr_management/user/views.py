@@ -19,9 +19,8 @@ def is_admin(user):
 
 # ======> Admin Views <======
 
-# @user_passes_test(is_admin, login_url='admin_home') # <====== CHECK
-# Admin landing page after authentication
 
+# Admin landing page after authentication
 def admin_home(request):
 	if request.user.is_authenticated and request.user.is_staff:
 		context = {"title": "Dashboard"}
