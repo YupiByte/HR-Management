@@ -1,3 +1,7 @@
+'''
+ This file is meant to create fake users for testing purposes.
+
+'''
 from django.core.management.base import BaseCommand
 from django.utils.crypto import get_random_string
 from user.models import Employee
