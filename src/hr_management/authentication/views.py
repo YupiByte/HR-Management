@@ -7,7 +7,8 @@ from django.contrib import messages
 Employee = get_user_model()
 
 def login_user(request):
-	# Check if the user is already authenticated and redirect them to their corresponding home page
+	# Check if the user is already authenticated and redirect them 
+	# to their corresponding home page
 	if request.user.is_authenticated:
 		if request.user.is_staff:
 			return redirect('admin_home')
