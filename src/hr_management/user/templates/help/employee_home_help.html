@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+    
+
+{% block content%}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Help Center for Employees</title>
+</head>
+
+<section>
+    <h1 class="code-line" data-line-start="0" data-line-end="1">
+    <a id="Help_Center_Admin_0"></a>Help Center for Admininitrator
+    </h1>
+
+    <p class="has-line-data" data-line-start="2" data-line-end="3">
+        <strong> Welcome to your home page: </strong>
+        </p>
+        <img src="{% static 'images/Employee_home.png' %}">
+        <br>
+        <p>
+            Here is your homepage, You can see your personal details here.<br/>
+            <h4>How to edit your details:</h4>
+            If you would like to edit these details to change Your email your phone number or even your name.<br/>
+            You can do that by clicking on the edit button.<br/>
+            <br>
+            <h4>How to request days off:</h4>
+            If you want to request days off, you can do that by clicking on the <strong>request days off </strong> button.<br/>
+            If You want to see request made, and their status, Click on <strong>view requests history</strong>.<br/>
+            <br>
+            <hr>
+            <h3> Publications:</h3>
+            <p>
+            If you want to see the publications made by the admin, click on <strong> publications</strong>. in the navigation bar<br/>
+            <br>
+            Publications are important for employees to read to be up-to-date with the latest news related to the workplace.<br/>
+            </p>
+            <img src="{% static 'images/publications_page.png' %}">
+            <br>
+            <hr>
+            <h3> View Calendar </h3>
+            <p>
+            If you want to see the calendar, click on <strong> view calendar</strong>. in the navigation bar<br/>
+            <br>
+            Calendars are important for employees to view, not only there days off, but to view others and posted publications.
+            </p>
+            <img src="{% static 'images/calendar.png' %}">
+
+</section>
+
+{% endblock content%}
+
+    
