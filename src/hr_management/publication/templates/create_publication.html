@@ -44,13 +44,15 @@
         <p> {{post.body_description|safe}} </p>
         <p>  Published: {{post.publication_date}} </p>
         
-
+        <!-- Do not change these tags! -->
         <!-- Edit Button -->    <!-- Text Decoration none to remove underline -->
         <a class="btn"  id= "edit-button"
         href="{% url 'publication:edit_publication' id=post.id %}">Edit</a>   
         <br>
         <hr>
+        
         <!-- Remove Button -->
+        <!-- Do not change these tags! -->
         <form method="post" 
         action="{% url 'publication:remove_publication' id=post.id %}">
 
