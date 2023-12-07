@@ -103,14 +103,19 @@ def employee_record(request, pk):
 def update_employee(request, pk):
 	if request.user.is_authenticated and request.user.is_staff:
 		current_employee = Employee.objects.get(id=pk)
-
+		
 		form = UpdateEmployeeForm(request.POST or None, instance=current_employee)
 		if form.is_valid():
 			form.save()
 			messages.success(request, "Employee Record Has Been Updated by Administrator.")
 			url = reverse('employee_record', args=[pk]) # generate the URL for the employee record page
 			return redirect(url)
-		return render(request, '../templates/administrator/update_employee.html', {'title': 'Update Employee Record', 'form':form})
+		context = {
+            "title": "Update Employee Record",
+			'form':form,
+			'employee': current_employee
+        }
+		return render(request, '../templates/administrator/update_employee.html', context)
 	else:
 		messages.success(request, "You Must Be Logged In...")
 		return redirect('home')
