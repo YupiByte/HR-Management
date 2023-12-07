@@ -100,7 +100,6 @@ def employee_record(request, pk):
 
 
 
-# @user_passes_test(is_admin, login_url='home')
 def update_employee(request, pk):
 	if request.user.is_authenticated and request.user.is_staff:
 		current_employee = Employee.objects.get(id=pk)
@@ -121,7 +120,6 @@ def update_employee(request, pk):
 def delete_employee(request, pk):
 	if request.user.is_authenticated:
 		delete_it = Employee.objects.get(id=pk)
-		#  Add conditional to confirm deletion of employee <=================================
 		delete_it.delete()
 		messages.success(request, "Employee Deleted Successfully")
 		return redirect('manage_employees')
@@ -143,13 +141,10 @@ def employee_home(request):
 		first_name = user_attributes.first_name
 		last_name = user_attributes.last_name
 
-		
-		# emp_requests = # Function query to req_leave history
-		
+				
 		title = f"Welcome {first_name}!"
 		context = {
 			'user_attributes': user_attributes,
-			# 'emp_requests': emp_requests,
 			'title': title
 		}
 		return render(request, '../templates/employees/employee_home.html', context)
