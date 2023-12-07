@@ -116,9 +116,7 @@ DATABASES = {
 AUTH_USER_MODEL = 'user.Employee'
 
 # Custom Model Phone Number Format
-PHONENUMBER_DB_FORMAT = "NATIONAL"
-PHONENUMBER_DEFAULT_REGION = "PR"
-
+PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
 
 
 # Default password hasher

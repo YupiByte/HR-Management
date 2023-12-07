@@ -100,18 +100,22 @@ def employee_record(request, pk):
 
 
 
-# @user_passes_test(is_admin, login_url='home')
 def update_employee(request, pk):
 	if request.user.is_authenticated and request.user.is_staff:
 		current_employee = Employee.objects.get(id=pk)
-
+		
 		form = UpdateEmployeeForm(request.POST or None, instance=current_employee)
 		if form.is_valid():
 			form.save()
 			messages.success(request, "Employee Record Has Been Updated by Administrator.")
 			url = reverse('employee_record', args=[pk]) # generate the URL for the employee record page
 			return redirect(url)
-		return render(request, '../templates/administrator/update_employee.html', {'title': 'Update Employee Record', 'form':form})
+		context = {
+            "title": "Update Employee Record",
+			'form':form,
+			'employee': current_employee
+        }
+		return render(request, '../templates/administrator/update_employee.html', context)
 	else:
 		messages.success(request, "You Must Be Logged In...")
 		return redirect('home')
@@ -121,7 +125,6 @@ def update_employee(request, pk):
 def delete_employee(request, pk):
 	if request.user.is_authenticated:
 		delete_it = Employee.objects.get(id=pk)
-		#  Add conditional to confirm deletion of employee <=================================
 		delete_it.delete()
 		messages.success(request, "Employee Deleted Successfully")
 		return redirect('manage_employees')
@@ -143,13 +146,10 @@ def employee_home(request):
 		first_name = user_attributes.first_name
 		last_name = user_attributes.last_name
 
-		
-		# emp_requests = # Function query to req_leave history
-		
+				
 		title = f"Welcome {first_name}!"
 		context = {
 			'user_attributes': user_attributes,
-			# 'emp_requests': emp_requests,
 			'title': title
 		}
 		return render(request, '../templates/employees/employee_home.html', context)
