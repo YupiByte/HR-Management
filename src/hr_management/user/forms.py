@@ -39,12 +39,14 @@ class RegisterEmployeeForm(UserCreationForm):
         ),
     )
     email = forms.EmailField(
+        required=True,
         label="",
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Email Address"}
         ),
     )
     phone = PhoneNumberField(
+        required=True,
         widget=forms.TextInput(
             attrs={"placeholder": "Phone", "class": "form-control"}
         ),
@@ -57,20 +59,23 @@ class RegisterEmployeeForm(UserCreationForm):
         widget=forms.Select(
             attrs={"placeholder": "Position", "class": "form-control"}
         ),
+        help_text ="<span class='form-text text-muted'><small>Choose the employee's position.</small></span>",
         label="",
     )
     available_pto = forms.IntegerField(
         required=True,
         widget=forms.widgets.TextInput(
-            attrs={"placeholder": "Available PTO", "class": "form-control"}
+            attrs={"placeholder": "Assigned PTO", "class": "form-control"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Enter the amount of Paid Time Off assigned to the employee.</small></span>',
         label="",
     )
     available_sickdays = forms.IntegerField(
         required=True,
         widget=forms.widgets.TextInput(
-            attrs={"placeholder": "Available Sick Days", "class": "form-control"}
+            attrs={"placeholder": "Assigned Sick Days", "class": "form-control"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Enter the amount of Paid Sick Days assigned to the employee.</small></span>',
         label="",
     )
 
@@ -95,9 +100,6 @@ class RegisterEmployeeForm(UserCreationForm):
         self.fields["username"].widget.attrs["class"] = "form-control"
         self.fields["username"].widget.attrs["placeholder"] = "User Name"
         self.fields["username"].label = ""
-        self.fields[
-            "username"
-        ].help_text = '<span class="form-text text-muted"><small>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small></span>'
         self.fields["password1"].widget.attrs["class"] = "form-control"
         self.fields["password1"].widget.attrs["placeholder"] = "Password"
         self.fields["password1"].label = ""
