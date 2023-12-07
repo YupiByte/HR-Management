@@ -40,7 +40,8 @@ class Employee(AbstractBaseUser, PermissionsMixin): # Extend Application's User 
     username = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
-    phone = PhoneNumberField(region="PR")
+    # phone = PhoneNumberField(region="PR")
+    phone = PhoneNumberField()
 
     EMPLOYEE_TYPE = (
          ('Chief Executive Officer', 'Chief Executive Officer'),

@@ -1,6 +1,7 @@
 from .models import Employee
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
+from phonenumber_field.formfields import PhoneNumberField
 
 # from django.contrib.auth.models import User
 from django import forms
@@ -42,33 +43,30 @@ class RegisterEmployeeForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Email Address"}
         ),
-    )  # 'class':'form-control' for bootstrap
-    phone = forms.CharField(
-        required=True,
-        widget=forms.widgets.TextInput(
+    )
+    phone = PhoneNumberField(
+        widget=forms.TextInput(
             attrs={"placeholder": "Phone", "class": "form-control"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Enter a valid phone number (e.g. +12125552368).</small></span>',
         label="",
     )
     employee_type = forms.ChoiceField(
         required=True,
         choices=EMPLOYEE_TYPE,
         widget=forms.Select(
-            attrs={
-                "placeholder": "Position",
-                "class": "form-control",
-            }
+            attrs={"placeholder": "Position", "class": "form-control"}
         ),
         label="",
     )
-    available_pto = forms.CharField(
+    available_pto = forms.IntegerField(
         required=True,
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Available PTO", "class": "form-control"}
         ),
         label="",
     )
-    available_sickdays = forms.CharField(
+    available_sickdays = forms.IntegerField(
         required=True,
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Available Sick Days", "class": "form-control"}
@@ -77,7 +75,6 @@ class RegisterEmployeeForm(UserCreationForm):
     )
 
     class Meta:
-        # model = User
         model = get_user_model()
         fields = (
             "email",
@@ -137,19 +134,18 @@ class UpdateEmployeeForm(forms.ModelForm):
         ),
         label="Last Name",
     )
-    email = forms.CharField(
+    email = forms.EmailField(
         required=True,
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Email", "class": "form-control"}
         ),
         label="Email",
     )
-    phone = forms.CharField(
-        required=True,
-        widget=forms.widgets.TextInput(
+    phone = PhoneNumberField(
+        widget=forms.TextInput(
             attrs={"placeholder": "Phone", "class": "form-control"}
         ),
-        label="Phone",
+        label="Phone Number",
     )
     employee_type = forms.ChoiceField(
         required=True,
@@ -162,14 +158,14 @@ class UpdateEmployeeForm(forms.ModelForm):
         ),
         label="Employee Type",
     )
-    available_pto = forms.CharField(
+    available_pto = forms.IntegerField(
         required=True,
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Available PTO", "class": "form-control"}
         ),
         label="Available PTO",
     )
-    available_sickdays = forms.CharField(
+    available_sickdays = forms.IntegerField(
         required=True,
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Available Sick Days", "class": "form-control"}
@@ -199,20 +195,20 @@ class EditProfileForm(forms.ModelForm):
         ),
         label="Last Name",
     )
-    email = forms.CharField(
+    email = forms.EmailField(
         required=True,
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Email", "class": "form-control"}
         ),
         label="Email",
     )
-    phone = forms.CharField(
-        required=True,
-        widget=forms.widgets.TextInput(
+    phone = PhoneNumberField(
+        widget=forms.TextInput(
             attrs={"placeholder": "Phone", "class": "form-control"}
         ),
-        label="Phone",
+        label="Phone Number",
     )
+
     
     class Meta:
         # model = Employee
