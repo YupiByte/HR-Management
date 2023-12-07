@@ -44,7 +44,20 @@
             <div class="d-grid gap-2 d-md-block">
                 <a href="{% url 'manage_employees' %}" class="btn btn-secondary">Back</a>
                 <a href="{% url 'update_employee' employee_record.id%}" class="btn btn-warning">Update Record</a>
-                <a href="{% url 'delete_employee' employee_record.id %}" class="btn btn-danger">Delete</a>
+                {% if employee_record.id != request.user.id %}
+                    <a href="#" class="btn btn-danger" onclick="confirmDelete('{{ employee_record.id }}')">Delete</a>
+                {% endif %}
+
+                <!-- JavaScript function for confirmation -->
+                <script>
+                    function confirmDelete(employeeId) {
+                        var result = confirm("Are you sure you want to delete this employee?");
+                        if (result) {
+                            // If user clicks 'OK', proceed with the deletion
+                            window.location.href = "{% url 'delete_employee' employee_record.id %}";
+                        }
+                    }
+                </script>
             </div>
         </div>
     </div>
