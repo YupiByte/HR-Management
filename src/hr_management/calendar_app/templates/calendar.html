@@ -109,23 +109,28 @@
             // Show list of events (absent days)
             events: [
                 // Obtaining absent employees
-                {% for absence in absence_calendar %}
-                    {
-                        title: 'Absent: {{ absence.employee_id }}',
-                        start: '{{ absence.start_date | date:"Y-m-d" }}',
-                        end: '{{ absence.end_date | date:"Y-m-d" }}T23:59:59',
-                    }, // Don't forget the comma!
 
-                {% endfor %}
+                {% if absence_calendar %}
+                    {% for absence in absence_calendar %}
+                        {
+                            title: 'Absent: {{ absence.employee_id }}',
+                            start: '{{ absence.start_date | date:"Y-m-d" }}',
+                            end: '{{ absence.end_date | date:"Y-m-d" }}T23:59:59',
+                        }, // Don't forget the comma!
 
+                    {% endfor %}
+                {% endif %}
+                
                 // Obtaining publicated posts
-                {% for post in publication_calendar %}
-                    {
-                        title: '{{ post.count_publications }} new publication(s)!',
-                        date: '{{ post.date | date:"Y-m-d" }}',
-                    },
+                {% if publication_calendar %}
+                    {% for post in publication_calendar %}
+                        {
+                            title: '{{ post.count_publications }} new publication(s)!',
+                            date: '{{ post.date | date:"Y-m-d" }}',
+                        },
 
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
             ]
 
         });
