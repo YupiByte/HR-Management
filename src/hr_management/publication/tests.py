@@ -66,3 +66,17 @@ class TestPublicationUrls(TestCase):
         # Try to reverse the URL name and check if it resolves correctly
         url = reverse('publication:remove_publication', args=[1])
         self.assertEqual(url, '/publication/1/remove/')
+
+
+
+class TestPublicationEditView(TestCase):
+
+    def setUp(self):
+        self.pub = Publication.objects.create(
+            title="Test Title",
+            body_description="Test Description",
+            publication_date=datetime.now().date()
+        )
+        self.url = reverse('publication:edit_publication', args=[1])
+        self.response = self.client.get(self.url)
+        self.assertEqual(self.url, '/publication/edit/1/')
