@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
+from django.core.validators import RegexValidator
 
 
 class CustomAccountManager(BaseUserManager): # Manager for the custom user model
@@ -38,8 +39,14 @@ class Employee(AbstractBaseUser, PermissionsMixin): # Extend Application's User 
     # Following the existing Django model
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(max_length=150, unique=True)
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
+    first_name = models.CharField(
+        max_length=150, 
+        validators=[RegexValidator('^[a-zA-ZñÑáéíóúüÁÉÍÓÚÜ\s]+$')] # Accept only Latin letters
+        )
+    last_name = models.CharField(
+        max_length=150,
+        validators=[RegexValidator('^[a-zA-ZñÑáéíóúüÁÉÍÓÚÜ\s]+$')] # Accept only Latin letters
+        )
     phone = PhoneNumberField()
 
     EMPLOYEE_TYPE = (
