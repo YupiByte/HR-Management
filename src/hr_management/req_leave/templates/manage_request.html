@@ -50,7 +50,11 @@
                 <td>{{ leave_request.days_requested }}</td>
                 <td>{{ leave_request.request_type }}</td>
                 <td>{{ leave_request.request_status }}</td>
+                
+                {% if leave_request.request_status == "Pending"%}
+                
                 <td>
+                                    
                     <form method="post"
                     action="{% url 'req_leave:update_request_status' pk=leave_request.pk %}">
 
@@ -69,6 +73,9 @@
 
                     </form>
                 </td>
+
+                {% endif %}
+
             </tr>
             {% empty %}
             <tr>
