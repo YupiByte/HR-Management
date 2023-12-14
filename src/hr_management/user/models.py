@@ -43,15 +43,16 @@ class Employee(AbstractBaseUser, PermissionsMixin): # Extend Application's User 
     phone = PhoneNumberField()
 
     EMPLOYEE_TYPE = (
-         ('Chief Executive Officer', 'Chief Executive Officer'),
-         ('Chief Financial Officer', 'Chief Financial Officer'),
-         ('Chief Operating Officer', 'Chief Operating Officer'),
-         ('Chief Marketing Officer', 'Chief Marketing Officer'),
-         ('Chief Technology Officer', 'Chief Technology Officer'),
-         ('Vice President', 'Vice President'),
-         ('Director', 'Director'),
-         ('Manager', 'Manager'),
-         ('Administrator', 'Administrator'),
+        ('CEO', 'Chief Executive Officer'),
+        ('Vice President', 'Vice President'),
+        ('Software Engineer', 'Software Engineer'),
+        ('System Administrator', 'System Administrator'),
+        ('QA Engineer', 'QA Engineer'),
+        ('Director', 'Director'),
+        ('Manager', 'Manager'),
+        ('Administrator', 'Administrator'),
+        ('HR Administrator', 'HR Administrator'),
+        ('Intern', 'Intern'),
     )
 
     employee_type = models.CharField(max_length=30, choices=EMPLOYEE_TYPE)
