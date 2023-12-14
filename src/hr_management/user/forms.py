@@ -16,6 +16,9 @@ EMPLOYEE_TYPE = (
     ("Director", "Director"),
     ("Manager", "Manager"),
     ("Administrator", "Administrator"),
+    ('Engineer', 'Engineer'),
+    ('Sales', 'Sales'),
+    ('Other', 'Other')
 )
 
 

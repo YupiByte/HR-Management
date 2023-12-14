@@ -52,6 +52,9 @@ class Employee(AbstractBaseUser, PermissionsMixin): # Extend Application's User 
          ('Director', 'Director'),
          ('Manager', 'Manager'),
          ('Administrator', 'Administrator'),
+         ('Engineer', 'Engineer'),
+         ('Sales', 'Sales'),
+         ('Other', 'Other')
     )
 
     employee_type = models.CharField(max_length=30, choices=EMPLOYEE_TYPE)

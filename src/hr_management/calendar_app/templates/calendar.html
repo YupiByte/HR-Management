@@ -51,7 +51,7 @@
                 {% for absence in absence_calendar %}
                 <tr>
                     <td>{{ absence.employee_id }}</td>
-                    <td>{{ absence.start_date|date:"F j, Y" }}</td>
+                    <td>{{ absence.start_date|date:"F j, Y" }} - {{ absence.end_date|date:"F j, Y" }} </td>
                     <!-- <td>{{ absence.absent_counter }}</td> -->
                 </tr>
                 {% endfor %}

@@ -65,3 +65,13 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #02213f;
 }
+
+
+section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(220, 220, 220);
+}
