@@ -27,7 +27,7 @@ class RegisterEmployeeForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "First Name"}
         ),
-        help_text ='<span class="form-text text-muted"><small>Enter Only Latin Alphabet Characters</small></span>',
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
     )
     last_name = forms.CharField(
         required=True,
@@ -36,7 +36,7 @@ class RegisterEmployeeForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Last Name"}
         ),
-        help_text ='<span class="form-text text-muted"><small>Enter Only Latin Alphabet Characters</small></span>',
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
     )
     email = forms.EmailField(
         required=True,
@@ -127,7 +127,7 @@ class UpdateEmployeeForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "First Name", "class": "form-control"}
         ),
-        help_text ='<span class="form-text text-muted"><small>Enter Only Latin Alphabet Characters</small></span>',
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
         label="First Name",
     )
     last_name = forms.CharField(
@@ -135,7 +135,7 @@ class UpdateEmployeeForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Last Name", "class": "form-control"}
         ),
-        help_text ='<span class="form-text text-muted"><small>Enter Only Latin Alphabet Characters</small></span>',
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
         label="Last Name",
     )
     email = forms.EmailField(
@@ -190,7 +190,7 @@ class EditProfileForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "First Name", "class": "form-control"}
         ),
-        help_text ='<span class="form-text text-muted"><small>Enter Only Latin Alphabet Characters</small></span>',
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
         label="First Name",
     )
     last_name = forms.CharField(
@@ -198,7 +198,7 @@ class EditProfileForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Last Name", "class": "form-control"}
         ),
-        help_text ='<span class="form-text text-muted"><small>Enter Only Latin Alphabet Characters</small></span>',
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
         label="Last Name",
     )
     email = forms.EmailField(
