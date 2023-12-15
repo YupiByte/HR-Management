@@ -6,20 +6,17 @@ from django import forms
 
 
 EMPLOYEE_TYPE = (
-    ("", "----"),
-    ("Chief Executive Officer", "Chief Executive Officer"),
-    ("Chief Financial Officer", "Chief Financial Officer"),
-    ("Chief Operating Officer", "Chief Operating Officer"),
-    ("Chief Marketing Officer", "Chief Marketing Officer"),
-    ("Chief Technology Officer", "Chief Technology Officer"),
-    ("Vice President", "Vice President"),
-    ("Director", "Director"),
-    ("Manager", "Manager"),
-    ("Administrator", "Administrator"),
-    ('Engineer', 'Engineer'),
-    ('Sales', 'Sales'),
-    ('Other', 'Other')
-)
+        ('CEO', 'Chief Executive Officer'),
+        ('Vice President', 'Vice President'),
+        ('Software Engineer', 'Software Engineer'),
+        ('System Administrator', 'System Administrator'),
+        ('QA Engineer', 'QA Engineer'),
+        ('Director', 'Director'),
+        ('Manager', 'Manager'),
+        ('Administrator', 'Administrator'),
+        ('HR Administrator', 'HR Administrator'),
+        ('Intern', 'Intern'),
+    )
 
 
 class RegisterEmployeeForm(UserCreationForm):
@@ -165,25 +162,18 @@ class UpdateEmployeeForm(forms.ModelForm):
         ),
         label="Employee Type",
     )
-    available_pto = forms.IntegerField(
-        required=True,
-        widget=forms.widgets.TextInput(
-            attrs={"placeholder": "Available PTO", "class": "form-control"}
-        ),
-        label="Available PTO",
-    )
-    available_sickdays = forms.IntegerField(
-        required=True,
-        widget=forms.widgets.TextInput(
-            attrs={"placeholder": "Available Sick Days", "class": "form-control"}
-        ),
-        label="Available Sick Days",
-    )
 
     class Meta:
         # model = Employee
         model = get_user_model()
-        exclude = ("user", "password", "last_login", "user_permissions", "is_superuser", "groups")
+        exclude = ("user", "password", 
+                   "available_pto",
+                   "available_sickdays",
+                   "last_login", 
+                   "user_permissions", 
+                   "is_superuser", 
+                   "groups"
+                   )
 
 
 class EditProfileForm(forms.ModelForm):

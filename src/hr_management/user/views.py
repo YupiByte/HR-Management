@@ -78,7 +78,7 @@ def register_employee(request):
 				password = form.cleaned_data['password1']
 				authenticate(email=email, password=password)
 				messages.success(request, "(from register_employee) Employee Successfully Registered")
-				return redirect('admin_home')
+				return redirect('manage_employees')
 		else:
 			form = RegisterEmployeeForm()
 			return render(request, '../templates/administrator/register_employee.html', {'form':form})
