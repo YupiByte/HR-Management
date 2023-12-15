@@ -165,25 +165,18 @@ class UpdateEmployeeForm(forms.ModelForm):
         ),
         label="Employee Type",
     )
-    available_pto = forms.IntegerField(
-        required=True,
-        widget=forms.widgets.TextInput(
-            attrs={"placeholder": "Available PTO", "class": "form-control"}
-        ),
-        label="Available PTO",
-    )
-    available_sickdays = forms.IntegerField(
-        required=True,
-        widget=forms.widgets.TextInput(
-            attrs={"placeholder": "Available Sick Days", "class": "form-control"}
-        ),
-        label="Available Sick Days",
-    )
 
     class Meta:
         # model = Employee
         model = get_user_model()
-        exclude = ("user", "password", "last_login", "user_permissions", "is_superuser", "groups")
+        exclude = ("user", "password", 
+                   "available_pto",
+                   "available_sickdays",
+                   "last_login", 
+                   "user_permissions", 
+                   "is_superuser", 
+                   "groups"
+                   )
 
 
 class EditProfileForm(forms.ModelForm):
