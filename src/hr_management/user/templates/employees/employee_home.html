@@ -11,15 +11,12 @@
 {% block content %}
 <div class="division-3">
     <br/>
-    <div class="left-division">
     <h2 class="division-3-title">{{title}}</h2>
-    </div>
     <br/>
 
-    <div class="side-by-side-container">
-
+    <div>
         <!-- Content on Left side -->
-        <div class="left-division">
+        <div>
             <div class="subtitle" id="subtitle1">
                 <h4>Personal Information</h4>
                 <br/>
@@ -52,35 +49,13 @@
                             <strong>Available Paid Sick Days: </strong>{{ user_attributes.available_sickdays }}</p>
                         </div>
                     </div>
-            </div>
+        </div>
 
-            <div class="subtitle" id="subtitle3"><br/>
-                <a href="{% url 'submit_req' %}" class="btn btn-warning" id="request-button">Request Day Off</a>
-                
-                <br/><br/>
-                <p>Personal Calendar goes here ...</p>
+            <div id="subtitle3"><br/>
+                <p><a href="{% url 'submit_req' %}" class="btn btn-warning">Request Day Off</a></p>
+                <p><a href="{% url 'view_req' %}" class="btn btn-info" id="request-button">View Request History</a></p>
             </div>
         </div> 
-
-
-
-        <!-- Content on Right side -->
-        <div class="right-division">
-            <div class="subtitle" id="subtitle1">
-                <h4>Requests History</h4>
-
-                <!-- Loop over request objects -->
-                {% for emp_request in emp_requests %}
-                    <p>
-                        {{ emp_request.date }}
-                        <span id="request-status-icon">{% if emp_request.status == 'approved' %}✔{% elif emp_request.status == 'rejected' %}✘{% else %}📋{% endif %}</span>
-                    </p>
-                    <p>
-                        {{ emp_request.reason }}
-                    </p>
-                {% endfor %}
-            </div>
-        </div>
-        </div>
+    </div>
 </div>
 {% endblock %}

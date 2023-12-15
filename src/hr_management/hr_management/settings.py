@@ -30,9 +30,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
-
+CSRF_TRUSTED_ORIGINS = ['https://*.ngrok-free.app', 'https://*.remote.it']
 # Application definition
 
 INSTALLED_APPS = [
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'user',
     'django_tables2',
     'crispy_bootstrap5',
+    'phonenumber_field',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
@@ -75,7 +76,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'hr_management.urls'
 
@@ -110,6 +114,9 @@ DATABASES = {
 
 # Custom Model
 AUTH_USER_MODEL = 'user.Employee'
+
+# Custom Model Phone Number Format
+PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
 
 
 # Default password hasher
@@ -147,7 +154,7 @@ LANGUAGE_CODE = 'en-us'
 # If this is modified, 
 # modify calendar_app's 
 # fullcalendar timeZone: 'UTC' to current TZ
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Puerto_Rico'
 
 USE_I18N = True
 
@@ -160,6 +167,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # For images
 MEDIA_URL = '/images/'

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+    
+
+{% block content%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Help Center for Admininitrator</title>
+</head>
+
+<section>
+    <h1 class="code-line" data-line-start="0" data-line-end="1">
+    <a id="Help_Center_Admin_0"></a>Help Center for Admininitrator
+    </h1>
+    <p class="has-line-data" data-line-start="2" data-line-end="3">
+    <strong> Welcome to your home page: </strong>
+    </p>
+
+
+    <h3> Administrator Dashboard </h3>
+    <p class="has-line-data" data-line-start="4" data-line-end="5">
+    Here we have 4 panels, each will send you to another place
+    </p>
+    <div class='class="w-25' >
+    <img src={% static 'images/Dashboard_admin.png' %} class="object-fit-scale border rounded" alt="HelpCenterAdmin"/>
+    </div>
+    <br>
+    <hr>
+
+
+    <h3 class="code-line" data-line-start="6" data-line-end="7">
+    <a id="Mange_Employees_6"></a>Mange Employees
+    </h3>
+    <p class="has-line-data" data-line-start="7" data-line-end="9">
+    Here it will be able to create a user.<br />
+    You will have to register each and every employee that you have. <br />
+    You as admin should create their account and will notify them later with an
+    email. <br />
+    Here you can create, edit and delete employees.
+    </p>
+    <h4> Search for an employee</h4>
+    <p class="has-line-data" data-line-start="10" data-line-end="11">
+    You can search for an employee by their name, email, or phone number.<br />
+    Please make sure you have all emplyees selected in the dropdown menu. If you don't you will not be able to search for all employees.
+    </p>
+
+    <br>
+    <img src={% static 'images/manage_employees.png' %} class="object-fit-scale border rounded" alt="HelpCenterAdmin"/>
+    <hr>
+
+
+    <h3 class="code-line" data-line-start="14" data-line-end="15">
+    <a id="Manage_Requests_14"></a>Manage Requests
+    </h3>
+    <p class="has-line-data" data-line-start="15" data-line-end="17">
+    Employees will be able to send you request for PTO and sick days.<br />
+    You will able to see who request and accept or deny their request
+    </p>
+    <img src={% static 'images/manage_requests.png' %} class="object-fit-scale border rounded" alt="HelpCenterAdmin"/>
+    <hr>
+
+
+    <h3 class="code-line" data-line-start="18" data-line-end="19">
+    <a id="Create_Publications_18"></a>Create Publications
+    </h3>
+    <p class="has-line-data" data-line-start="19" data-line-end="21">
+    Here you will have the ability to compose your publication.<br />
+    You have your title, your content, and the ability to upload an images.
+    </p>
+    <p class="has-line-data" data-line-start="22" data-line-end="23">
+    In this section, you will be able to create, edit and delete publications you
+    make.
+    </p>
+    <hr>
+    <h3 class="code-line" data-line-start="24" data-line-end="25">
+    <a id="View_Calendar_24"></a>View Calendar
+    </h3>
+    <p class="has-line-data" data-line-start="25" data-line-end="26">
+    In the view calendar section you’ll be able to view a an overview of all the
+    absent employees and publications made.
+    </p>
+    <p class="has-line-data" data-line-start="27" data-line-end="28">
+    Here you will have a much more visual understanding of your staff and your
+    publications that you’ve made.
+    </p>
+    <p class="has-line-data" data-line-start="29" data-line-end="30">
+    Feel free to use this when determining employees request for PTO or sick days.
+    </p>
+</section>
+
+{% endblock%}
+```

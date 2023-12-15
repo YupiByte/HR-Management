@@ -10,3 +10,6 @@ django-celery-beat
 python-dotenv
 crispy_bootstrap4
 crispy_bootstrap5
+coverage
+django-phonenumber-field[phonenumberslite]
+whitenoise

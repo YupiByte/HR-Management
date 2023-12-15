@@ -5,15 +5,14 @@
 {% block content %}
 <html>
 <head>
-
     <meta charset="UTF-8">
     <title> {% block title %} Create Publication {% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'publication/style.css' %}">
+    
 
 </head>
 
 <body>
-    <h1> Create Publication </h1>
 
     <!-- Posting Publications Field -->
     <section>
@@ -27,37 +26,47 @@
 
             {% csrf_token %}
 
-            <button type="submit"> Post </button>
+            <button class="btn btn-warning"type="submit"> Post </button>
 
         </form>
 
     </section>
-
+    <br>
+    
     <!-- Showing all Publications -->
     <section>
-
+        <h1> Past Publications</h1>
+    </section>
+    <br>
         {% for post in publication_post %}
-        <h1>{{post.title}}</h1>
+        <section>
+        <h2>{{post.title}}</h1>
         <p> {{post.body_description|safe}} </p>
         <p>  Published: {{post.publication_date}} </p>
+        
 
         <!-- Edit Button -->    <!-- Text Decoration none to remove underline -->
-        <a class="btn edit-button" style="text-decoration:none;"
-        href="{% url 'publication:edit_publication' id=post.id %}">Edit </a>
-
+        <a class="btn"  id= "edit-button"
+        href="{% url 'publication:edit_publication' id=post.id %}">Edit</a>   
+        <br>
+        <hr>
         <!-- Remove Button -->
         <form method="post" 
         action="{% url 'publication:remove_publication' id=post.id %}">
 
             {% csrf_token %}
 
-            <button type="submit" class="btn remove-button">Remove</button>
+            <input type="submit" value="Remove" class="btn btn-danger">
 
         </form>
-
+        
+        
+        </section>
+        <br>
         {% endfor %}
 
-    </section>
+    
+
 
 </body>
 

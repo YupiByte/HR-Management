@@ -1,23 +1,22 @@
 from .models import Employee
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
-
-# from django.contrib.auth.models import User
+from phonenumber_field.formfields import PhoneNumberField
 from django import forms
 
 
 EMPLOYEE_TYPE = (
-    ("", "----"),
-    ("Chief Executive Officer", "Chief Executive Officer"),
-    ("Chief Financial Officer", "Chief Financial Officer"),
-    ("Chief Operating Officer", "Chief Operating Officer"),
-    ("Chief Marketing Officer", "Chief Marketing Officer"),
-    ("Chief Technology Officer", "Chief Technology Officer"),
-    ("Vice President", "Vice President"),
-    ("Director", "Director"),
-    ("Manager", "Manager"),
-    ("Administrator", "Administrator"),
-)
+        ('CEO', 'Chief Executive Officer'),
+        ('Vice President', 'Vice President'),
+        ('Software Engineer', 'Software Engineer'),
+        ('System Administrator', 'System Administrator'),
+        ('QA Engineer', 'QA Engineer'),
+        ('Director', 'Director'),
+        ('Manager', 'Manager'),
+        ('Administrator', 'Administrator'),
+        ('HR Administrator', 'HR Administrator'),
+        ('Intern', 'Intern'),
+    )
 
 
 class RegisterEmployeeForm(UserCreationForm):
@@ -28,6 +27,7 @@ class RegisterEmployeeForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "First Name"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
     )
     last_name = forms.CharField(
         required=True,
@@ -36,48 +36,50 @@ class RegisterEmployeeForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Last Name"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
     )
     email = forms.EmailField(
+        required=True,
         label="",
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Email Address"}
         ),
-    )  # 'class':'form-control' for bootstrap
-    phone = forms.CharField(
+    )
+    phone = PhoneNumberField(
         required=True,
-        widget=forms.widgets.TextInput(
+        widget=forms.TextInput(
             attrs={"placeholder": "Phone", "class": "form-control"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Enter a valid phone number (e.g. +12125552368).</small></span>',
         label="",
     )
     employee_type = forms.ChoiceField(
         required=True,
         choices=EMPLOYEE_TYPE,
         widget=forms.Select(
-            attrs={
-                "placeholder": "Position",
-                "class": "form-control",
-            }
+            attrs={"placeholder": "Position", "class": "form-control"}
         ),
+        help_text ="<span class='form-text text-muted'><small>Choose the employee's position.</small></span>",
         label="",
     )
-    available_pto = forms.CharField(
+    available_pto = forms.IntegerField(
         required=True,
         widget=forms.widgets.TextInput(
-            attrs={"placeholder": "Available PTO", "class": "form-control"}
+            attrs={"placeholder": "Assigned PTO", "class": "form-control"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Enter the amount of Paid Time Off assigned to the employee.</small></span>',
         label="",
     )
-    available_sickdays = forms.CharField(
+    available_sickdays = forms.IntegerField(
         required=True,
         widget=forms.widgets.TextInput(
-            attrs={"placeholder": "Available Sick Days", "class": "form-control"}
+            attrs={"placeholder": "Assigned Sick Days", "class": "form-control"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Enter the amount of Paid Sick Days assigned to the employee.</small></span>',
         label="",
     )
 
     class Meta:
-        # model = User
         model = get_user_model()
         fields = (
             "email",
@@ -98,9 +100,6 @@ class RegisterEmployeeForm(UserCreationForm):
         self.fields["username"].widget.attrs["class"] = "form-control"
         self.fields["username"].widget.attrs["placeholder"] = "User Name"
         self.fields["username"].label = ""
-        self.fields[
-            "username"
-        ].help_text = '<span class="form-text text-muted"><small>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small></span>'
         self.fields["password1"].widget.attrs["class"] = "form-control"
         self.fields["password1"].widget.attrs["placeholder"] = "Password"
         self.fields["password1"].label = ""
@@ -128,6 +127,7 @@ class UpdateEmployeeForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "First Name", "class": "form-control"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
         label="First Name",
     )
     last_name = forms.CharField(
@@ -135,21 +135,21 @@ class UpdateEmployeeForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Last Name", "class": "form-control"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
         label="Last Name",
     )
-    email = forms.CharField(
+    email = forms.EmailField(
         required=True,
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Email", "class": "form-control"}
         ),
         label="Email",
     )
-    phone = forms.CharField(
-        required=True,
-        widget=forms.widgets.TextInput(
+    phone = PhoneNumberField(
+        widget=forms.TextInput(
             attrs={"placeholder": "Phone", "class": "form-control"}
         ),
-        label="Phone",
+        label="Phone Number",
     )
     employee_type = forms.ChoiceField(
         required=True,
@@ -162,25 +162,18 @@ class UpdateEmployeeForm(forms.ModelForm):
         ),
         label="Employee Type",
     )
-    available_pto = forms.CharField(
-        required=True,
-        widget=forms.widgets.TextInput(
-            attrs={"placeholder": "Available PTO", "class": "form-control"}
-        ),
-        label="Available PTO",
-    )
-    available_sickdays = forms.CharField(
-        required=True,
-        widget=forms.widgets.TextInput(
-            attrs={"placeholder": "Available Sick Days", "class": "form-control"}
-        ),
-        label="Available Sick Days",
-    )
 
     class Meta:
         # model = Employee
         model = get_user_model()
-        exclude = ("user", "password", "last_login", "user_permissions", "is_superuser", "groups")
+        exclude = ("user", "password", 
+                   "available_pto",
+                   "available_sickdays",
+                   "last_login", 
+                   "user_permissions", 
+                   "is_superuser", 
+                   "groups"
+                   )
 
 
 class EditProfileForm(forms.ModelForm):
@@ -190,6 +183,7 @@ class EditProfileForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "First Name", "class": "form-control"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
         label="First Name",
     )
     last_name = forms.CharField(
@@ -197,22 +191,23 @@ class EditProfileForm(forms.ModelForm):
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Last Name", "class": "form-control"}
         ),
+        help_text ='<span class="form-text text-muted"><small>Valid characters (upper and lower case):  a-z, ñ, á é í ó ú ü</small></span>',
         label="Last Name",
     )
-    email = forms.CharField(
+    email = forms.EmailField(
         required=True,
         widget=forms.widgets.TextInput(
             attrs={"placeholder": "Email", "class": "form-control"}
         ),
         label="Email",
     )
-    phone = forms.CharField(
-        required=True,
-        widget=forms.widgets.TextInput(
+    phone = PhoneNumberField(
+        widget=forms.TextInput(
             attrs={"placeholder": "Phone", "class": "form-control"}
         ),
-        label="Phone",
+        label="Phone Number",
     )
+
     
     class Meta:
         # model = Employee

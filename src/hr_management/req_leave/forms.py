@@ -11,15 +11,6 @@ from crispy_forms.layout import Submit
 def generate_request_id():
     return str(uuid1())[:8]
 
-# Get from user page
-def get_employee_id():
-    '''
-    '''
-    get_id = "1324"
-
-    return get_id
-
-
 
 # Calculating for total requested days,
 # subtracting the weekend days
@@ -41,7 +32,6 @@ def days_requested(start, end):
     return total_days - weekend_days
 
 
-# TO-DO: Make immutable fields!
 # Admin page, view requests, can only change status fields.
 # Admin can click on a box, accept or decline which then updates
 # the Request's status field.
@@ -99,7 +89,14 @@ class RequestCreateForm(forms.ModelForm):
         fields = ['employee_id', 'request_id', \
                 'request_type', 'start_date', 'end_date']
 
+
+    # We clean the form
+    # in order to have the data
+    # stripped from the widget.
+    # Now we can perform the necessary
+    # operations for input validation.
     def clean(self):
+
         cleaned_data = super().clean()
         start_date = cleaned_data.get('start_date')
         end_date = cleaned_data.get('end_date')
@@ -109,7 +106,8 @@ class RequestCreateForm(forms.ModelForm):
 
         d_req = days_requested(start_date, end_date)
         
-
+        # This has to be tested manually due to its error type
+        # As of latest build - Works as expected
         if d_req > 15:
             raise forms.ValidationError(f"Cannot request more than 15 days at once!\
                                         You requested {d_req} days")

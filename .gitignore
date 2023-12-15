@@ -108,4 +108,5 @@ venv/
 
 # images #
 src/hr_management/static/images/uploads/
-```
+
+src/hr_management/staticfiles/

@@ -8,11 +8,29 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title> {% block title %} Manage {% endblock %} </title>
+    <title> {% block title %} Manage Requests {% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'req_leave/style.css' %}">
 </head>
 <body>
+    <section>
     <h1>Manage Requests</h1>
+    </section>
+    <!-- Add buttons to filter requests -->
+    
+    </div>
+
+    <script>
+        function filterRequests(status) {
+            // Redirect to the URL with the selected status as a query parameter
+            window.location.href = "{% url 'req_leave:manage_request' %}?status=" + status;
+        }
+    </script>
+        <section>
+        <button class="button accept-button" type="button" onclick="filterRequests('pending')">Pending</button>
+        <button class="button accept-button" type="button" onclick="filterRequests('accepted')">Accepted</button>
+        <button class="button accept-button" type="button" onclick="filterRequests('declined')">Declined</button>
+        <button class="button accept-button" type="button" onclick="filterRequests('all')">All</button>
+        </section>
     <table>
         <thead>
             <tr>
@@ -34,6 +52,9 @@
                 <td>{{ leave_request.days_requested }}</td>
                 <td>{{ leave_request.request_type }}</td>
                 <td>{{ leave_request.request_status }}</td>
+                
+                {% if leave_request.request_status == "Pending" %}
+                
                 <td>
                     <form method="post"
                     action="{% url 'req_leave:update_request_status' pk=leave_request.pk %}">
@@ -53,6 +74,9 @@
 
                     </form>
                 </td>
+
+            {% endif %}
+
             </tr>
             {% empty %}
             <tr>

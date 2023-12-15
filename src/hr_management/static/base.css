@@ -21,10 +21,13 @@ height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    position: fixed;
 }
 .navbar-title {
     padding: 15px;
     font-size: 100%;
+    font-weight: bold;
+    font-family: sans-serif;
     margin-bottom: 10px;
 }
 .logo-container {
@@ -122,5 +125,17 @@ height: 100%;
     cursor: pointer;
 }
 
+img {
+    width: 750px;
+    height: auto;
+    object-fit: scale-down;
+  }
 
-
+section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(220, 220, 220);
+}

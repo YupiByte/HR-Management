@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404, HttpResponse
+from django.contrib import messages
 
 from .forms import PublicationMeta
 from .models import *
@@ -26,73 +27,102 @@ def view_publications(request):
 # This utilizes the Meta variant
 # of the Publications class.
 def create_publication(request):
+
+    if request.user.is_authenticated and request.user.is_staff:
     
-    # This contains all current published posts
-    publication_post = Publication.objects.all()
-    
-    # This is the creation form
-    form = PublicationMeta
+        # This contains all current published posts
+        publication_post = Publication.objects.all()
+        
+        # This is the creation form
+        form = PublicationMeta
 
-    if request.method == 'POST':
-    
-        form = PublicationMeta(request.POST)
+        if request.method == 'POST':
+        
+            form = PublicationMeta(request.POST)
 
-        if form.is_valid():
+            if form.is_valid():
 
-            publication = form.save()
+                publication = form.save()
 
-            # Retrieve or create a Publication_Calendar instance
-            publication_calendar, created = Publication_Calendar.objects.get_or_create(
-                date=publication.publication_date,
-                defaults={'title': publication.title}
-            )
+                # Retrieve or create a Publication_Calendar instance
+                publication_calendar, created = Publication_Calendar.objects.get_or_create(
+                    date=publication.publication_date,
+                    defaults={'title': publication.title}
+                )
 
-            # Call the get_next_count method on the instance
-            count = publication_calendar.get_next_count()
+                # Call the get_next_count method on the instance
+                count = publication_calendar.get_next_count()
 
-            # Update the count_publications field
-            publication_calendar.count_publications = count
-            publication_calendar.save()
+                # Update the count_publications field
+                publication_calendar.count_publications = count
+                publication_calendar.save()
 
-            form = PublicationMeta
+                form = PublicationMeta
 
-    context = {"publication_post": publication_post, "form": form}
+        context = {"publication_post": publication_post, "form": form}
 
-    return render(request, "create_publication.html", context)
+        return render(request, "create_publication.html", context)
+    else:
+        messages.success(request, "You Must Be Logged In To View That Page...")
+        return redirect('login')
+
 
 
 
 # Edit publication
 def edit_publication(request, id):
 
-    publication = get_object_or_404(Publication, id=id)
+    if request.user.is_authenticated and request.user.is_staff:
 
-    if request.method == "POST":
-        form = PublicationMeta(request.POST, instance=publication)
-        if form.is_valid():
-            form.save()
-            return redirect("../../create/")
+        publication = get_object_or_404(Publication, id=id)
+
+        if request.method == "POST":
+            form = PublicationMeta(request.POST, instance=publication)
+            if form.is_valid():
+                form.save()
+                return redirect("../../create/")
+        else:
+            form = PublicationMeta(instance=publication)
+
+        context = {"form": form}
+        return render(request, "edit_publication.html", context)
     else:
-        form = PublicationMeta(instance=publication)
-
-    context = {"form": form}
-    return render(request, "edit_publication.html", context)
+        messages.success(request, "You Must Be Logged In To View That Page...")
+        return redirect('login')
 
 
 
 # Removes the post identified by each iteration
 def remove_publication(request, id):
-     
-    publication = get_object_or_404(Publication, id=id)
-
-    if request.method == "POST":
-        # Confirming delete OwO
-        publication.delete()
-        return redirect("../../create/")
     
-    context = {"publication": publication}
+    if request.user.is_authenticated and request.user.is_staff:
+        publication = get_object_or_404(Publication, id=id)
 
-    return render(request, "create_publication.html", context)
+        if request.method == "POST":
+            # Confirming delete OwO
+            publication.delete()
+
+            try:
+                # Delete from the Publication Calendar
+                publication_calendar = Publication_Calendar.\
+                    objects.get(title=publication.title)
+
+                publication_calendar.delete()
+            # Maintain same conditional logic
+            # as used in the Calendar's template
+            # to avoid page crashing
+            except Publication_Calendar.DoesNotExist:
+                pass
+
+            return redirect("../../create/")
+        
+        context = {"publication": publication}
+
+        return render(request, "create_publication.html", context)
+    else:
+        messages.success(request, "You Must Be Logged In To View That Page...")
+        return redirect('login')
+
 
 
 # Some other views that could be used if

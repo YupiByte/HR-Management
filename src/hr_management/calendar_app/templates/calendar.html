@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'calendar_app/style.css' %}">
     
     <!-- Calendar's Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="{% static 'fullcalendar/lib/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'calendar_app/fullcalendar/lib/main.css' %}">
 
     <!-- Setting fixed size -->
     <style>
@@ -30,25 +30,29 @@
 </head>
 
 <body>
-    <h1> Hello Calendar </h1>
-
-    <h2> Absence </h2>
-
     <section>
+    <h1> Calendar </h1>
+    </section>
+    <br>
+    <section>
+
+        <h2> Absence </h2>
         <table>
             <thead>
                 <tr>
                     <th>Employee</th>
                     <th>Date</th>
-                    <th>Absent Counter</th>
+                    <!-- <th>Absent Counter</th> -->
                 </tr>
             </thead>
             <tbody>
+
+                <!-- Optional Change to a "Absent Today" check -->
                 {% for absence in absence_calendar %}
                 <tr>
                     <td>{{ absence.employee_id }}</td>
-                    <td>{{ absence.start_date|date:"F j, Y" }}</td>
-                    <td>{{ absence.absent_counter }}</td>
+                    <td>{{ absence.start_date|date:"F j, Y" }} - {{ absence.end_date|date:"F j, Y" }} </td>
+                    <!-- <td>{{ absence.absent_counter }}</td> -->
                 </tr>
                 {% endfor %}
                 <tr>
@@ -56,9 +60,10 @@
         </table>
     </section>
 
-    <h2> Publication </h2>
+    <br>    
 
     <section>
+        <h2> Publication </h2>
         <table>
             <thead>
                 <tr>
@@ -78,6 +83,7 @@
             </tbody>
         </table>
     </section>
+    <br>
 
 
     <!-- Calendar Section -->
@@ -86,7 +92,8 @@
 
 </body>
 
-<script src="{% static 'fullcalendar/lib/main.js' %}"></script>
+<!-- <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script> -->
+<script src="{% static 'calendar_app/fullcalendar/lib/main.js' %}"></script>
 
 <!-- Instanciate Full Calendar -->
 <script>
@@ -95,8 +102,6 @@
         var calendarUI = document.getElementById("calendar")
         var calendar = new FullCalendar.Calendar(calendarUI, {
 
-            // Set all day true so it includes final (end) date fully
-            // instead of [start, end) -> [start, end]
             // Set Time Zone to use the same as Django's settings:
             timeZone: 'UTC',
 
@@ -104,23 +109,28 @@
             // Show list of events (absent days)
             events: [
                 // Obtaining absent employees
-                {% for absence in absence_calendar %}
-                    {
-                        title: 'Absent: {{ absence.employee_id }}',
-                        start: '{{ absence.start_date | date:"Y-m-d" }}',
-                        end: '{{ absence.end_date | date:"Y-m-d" }}',
-                    }, // Don't forget the comma!
 
-                {% endfor %}
+                {% if absence_calendar %}
+                    {% for absence in absence_calendar %}
+                        {
+                            title: 'Absent: {{ absence.employee_id }}',
+                            start: '{{ absence.start_date | date:"Y-m-d" }}',
+                            end: '{{ absence.end_date | date:"Y-m-d" }}T23:59:59',
+                        }, // Don't forget the comma!
 
+                    {% endfor %}
+                {% endif %}
+                
                 // Obtaining publicated posts
-                {% for post in publication_calendar %}
-                    {
-                        title: '{{ post.count_publications }} new publication(s)!',
-                        date: '{{ post.date | date:"Y-m-d" }}',
-                    },
+                {% if publication_calendar %}
+                    {% for post in publication_calendar %}
+                        {
+                            title: '{{ post.count_publications }} new publication(s)!',
+                            date: '{{ post.date | date:"Y-m-d" }}',
+                        },
 
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
             ]
 
         });

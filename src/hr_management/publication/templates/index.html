@@ -13,18 +13,19 @@
 </head>
 
 <body>
-    <h1> Publications Page 🐙</h1>
-
-    <section>
+    <h1> Publications Page </h1>
 
         {% for post in publication_post %}
+        <section>
         <h1>{{post.title}}</h1>
         <p> {{post.body_description|safe}}
         <p style="text-align: right; color: rgb(49, 49, 49);">
             <i> Published: {{post.publication_date}} </i></p>
+        </section>
+        <br>
         {% endfor %}
 
-    </section>
+    
 
 </body>
 

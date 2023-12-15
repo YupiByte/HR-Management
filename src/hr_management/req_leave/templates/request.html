@@ -9,13 +9,27 @@
 <head>
 
     <meta charset="UTF-8">
-    <title> {% block title %} Leave Request {% endblock %} </title>
+    <title> {% block title %} Request Leave {% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'req_leave/request.css' %}">
 
 </head>
 
 <body>
-    <h1> Request Leave Page 🐙</h1>
+    <section>
+        <h1> Request Leave </h1>
+    </section>
+
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} 
+            class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+
+    {% endif %}
+
 
     <form action="" method="POST"> {% csrf_token %}
 
