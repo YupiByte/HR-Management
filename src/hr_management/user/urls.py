@@ -38,6 +38,7 @@ urlpatterns = [
 
     # Help
     path('help/', views.help, name='help'),
+    path('home/', auth_views.login_user, name='login')
 
 
 ]
