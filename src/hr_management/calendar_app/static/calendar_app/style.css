@@ -24,3 +24,9 @@ section {
     border-radius: 5px;
     box-shadow: 0 0 10px rgb(220, 220, 220);
 }
+
+h1 {
+    color: #023047;
+    padding: 20px;
+    text-align: center;
+}

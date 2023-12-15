@@ -6,14 +6,13 @@ body {
 }
 
 h1 {
-    background-color: #033047;
-    color: #fff;
+    color: #023047;
     padding: 20px;
     text-align: center;
 }
 
 form {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 20px auto;
     background-color: #fff;
     border-radius: 5px;
@@ -67,3 +66,12 @@ input[type="submit"]:hover {
 }
 
 
+
+section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(220, 220, 220);
+}
