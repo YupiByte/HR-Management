@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title> {% block title %} View Leave Requests {% endblock %} </title>
+    <title> {% block title %} My Requests {% endblock %} </title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'req_leave/style.css' %}">
 
@@ -27,8 +27,9 @@
 </head>
 
 <body>
-    <h1> View Leave Requests</h1>
-
+    <section>
+        <h1> My Requests</h1>
+    </section>
     <!-- If incorrect action
         Obsolete given new 
         cancel request check condition -->
@@ -60,7 +61,7 @@
 
             {% for leave_request in view_request %}
 
-            <tr>
+            <tr class="th-items">
                 <td>{{ leave_request.employee_id }}</td>
                 <td>{{ leave_request.start_date }}</td>
                 <td>{{ leave_request.end_date }}</td>

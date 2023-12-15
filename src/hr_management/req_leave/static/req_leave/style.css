@@ -6,8 +6,9 @@ body {
 }
 
 h1 {
-    padding: 0;
+    padding: 20px;
     text-align: center;
+    color: #023047;
 }
 
 /* Viewing Requests */
@@ -27,19 +28,21 @@ th, td {
     border-bottom: 1px solid #ddd;
 }
 
+.th-items:not(.th-banner):hover {
+    background-color: #f5f5f5;
+}
+
+
 .th-banner {
     background-color: #033047;
     color: #fff;
 }
 
 .th-banner:hover {
-    background-color: none;
+    background-color: #033047;
     text-decoration: none;
 }
 
-tr:not(.th-banner):hover {
-    background-color: #f5f5f5;
-}
 
 /* Manage Buttons */
 button {

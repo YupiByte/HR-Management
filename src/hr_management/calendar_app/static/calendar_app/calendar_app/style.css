@@ -18,3 +18,9 @@ th {
 section {
     margin-bottom: 30px;
 }
+
+h1 {
+    color: #023047;
+    padding: 20px;
+    text-align: center;
+}
