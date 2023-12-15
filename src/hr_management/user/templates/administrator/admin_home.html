@@ -8,14 +8,15 @@
         <div class="division-4">
             <div class="division-4-item">
                 <h4>Manage Employee</h4>
-                <p>We can add, edit and remove employees. See employee information.</p>
+                <p>You can add, edit and remove employees. See employee information.</p>
                 <a href="{% url 'manage_employees' %}"><button class="btn btn-info" type="button">Manage Employees</button></a>
             </div>
             <div class="division-4-item">
                 <h4>Requests</h4>
-                <p>View and manage employee requests.</p>
+                <p>View and manage employee requests, or request days of for yourself.</p>
                 <a href="{% url 'manage_req' %}"><button class="btn btn-info" type="button">Manage Requests</button></a>
-                <a href="{% url 'submit_req' %}"><button class="btn btn-warning" type="button">Request Days Off</button></a>
+                <a href="{% url 'view_req' %}"><button class="btn btn-info" type="button">View Requests</button></a>
+                <a href="{% url 'submit_req' %}"><button class="btn btn-info" type="button">Request Days Off</button></a>
             </div>
             <div class="division-4-item">
                 <h4>Create Publications</h4>
