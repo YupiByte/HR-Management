@@ -101,6 +101,19 @@ def remove_publication(request, id):
         if request.method == "POST":
             # Confirming delete OwO
             publication.delete()
+
+            try:
+                # Delete from the Publication Calendar
+                publication_calendar = Publication_Calendar.\
+                    objects.get(title=publication.title)
+
+                publication_calendar.delete()
+            # Maintain same conditional logic
+            # as used in the Calendar's template
+            # to avoid page crashing
+            except Publication_Calendar.DoesNotExist:
+                pass
+
             return redirect("../../create/")
         
         context = {"publication": publication}
