@@ -32,7 +32,6 @@ def days_requested(start, end):
     return total_days - weekend_days
 
 
-# TO-DO: Make immutable fields!
 # Admin page, view requests, can only change status fields.
 # Admin can click on a box, accept or decline which then updates
 # the Request's status field.
