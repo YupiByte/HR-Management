@@ -1,6 +1,6 @@
 from django import forms
 from .models import Request
-from datetime import timedelta, datetime, date
+from datetime import timedelta, datetime, date, time
 from uuid import uuid1
 from django.urls import reverse_lazy
 from crispy_forms.helper import FormHelper
@@ -31,6 +31,12 @@ def days_requested(start, end):
 
     return total_days - weekend_days
 
+# Check if request has expired
+def check_expired(day):
+
+    # Convert date to datetime
+    start_to_datetime = datetime.combine(day, time.min)
+    return start_to_datetime < datetime.now()
 
 # Admin page, view requests, can only change status fields.
 # Admin can click on a box, accept or decline which then updates
@@ -106,6 +112,9 @@ class RequestCreateForm(forms.ModelForm):
 
         d_req = days_requested(start_date, end_date)
         
+        is_expired = check_expired(end_date)
+
+
         # This has to be tested manually due to its error type
         # As of latest build - Works as expected
         if d_req > 15:

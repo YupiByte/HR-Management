@@ -153,6 +153,12 @@ def manage_request(request):
             leave_request.days_requested = \
                 days_requested(leave_request.start_date, leave_request.end_date)
         
+            # Check if request has expired
+            # Change to start_date -> end_date if we want the expiration
+            # to be until the end of the request
+            leave_request.is_expired = check_expired(leave_request.start_date)
+
+
         context = {"view_request": view_request, "form": form}
         return render(request, "manage_request.html", context)
     
