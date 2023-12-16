@@ -28,7 +28,7 @@ def admin_home(request):
 		context = {"title": "Dashboard"}
 		return render(request, "../templates/administrator/admin_home.html", context)
 	else:
-		messages.success(request, "You must be logged in as admin to access admin dashboard.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')  
 
 
@@ -64,7 +64,7 @@ def manage_employees(request):
         }
         return render(request, 'administrator/manage_employees.html', context)
     else:
-        messages.success(request, "You must be logged in as admin to manage company employees.")
+        messages.success(request, "Please log in to view page.")
         return redirect('login')
 
 
@@ -87,7 +87,7 @@ def register_employee(request):
 
 		return render(request, '../templates/administrator/register_employee.html', {'form':form})
 	else:
-		messages.success(request, "You must be logged in as admin to register a new employee.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
 
 
@@ -97,7 +97,7 @@ def employee_record(request, pk):
 		employee_record = Employee.objects.get(id=pk) # Look Up Records
 		return render(request, '../templates/administrator/employee_record.html', {'title': 'Employee Record', 'employee_record':employee_record})
 	else:
-		messages.success(request, "You must be logged in as admin to view employee records.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
 
 
@@ -119,7 +119,7 @@ def update_employee(request, pk):
         }
 		return render(request, '../templates/administrator/update_employee.html', context)
 	else:
-		messages.success(request, "You must be logged in as admin to update employee info.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
 	
 
@@ -131,7 +131,7 @@ def delete_employee(request, pk):
 		messages.success(request, "Employee Deleted Successfully")
 		return redirect('manage_employees')
 	else:
-		messages.success(request, "You must be logged in as admin to delete an employee.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
 
 
@@ -156,7 +156,7 @@ def employee_home(request):
 		}
 		return render(request, '../templates/employees/employee_home.html', context)
 	else:
-		messages.success(request, "You must be logged in as employee to view the employee home page.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')  
 
 
@@ -174,7 +174,7 @@ def edit_profile(request):
 			return redirect('employee_home')
 		return render(request, '../templates/employees/edit_profile.html', {'title': 'Edit My Profile', 'form':form})
 	else:
-		messages.success(request, "You must be logged in as employee to access the edit profile page.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
 
 
@@ -186,5 +186,5 @@ def help(request):
 	elif request.user.is_authenticated and not(request.user.is_staff):
 		return render(request, '../templates/help/employee_home_help.html', {'title': 'Help'})
 	else:
-		messages.success(request, "You must be logged in to view the help page.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
