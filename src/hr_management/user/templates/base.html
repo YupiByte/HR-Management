@@ -34,13 +34,7 @@
         <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
         </ul>
         </div>
-        {% if user.is_authenticated %}
-
-        {% else %}
-        <p class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Login</a>
-        </p>
-        {% endif %}
+    
 
     <!-- Print messages -->
     {% if messages %}
