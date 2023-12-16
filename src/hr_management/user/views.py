@@ -7,6 +7,8 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
 
 # Reference custom user model Employee
@@ -19,18 +21,18 @@ def is_admin(user):
 
 # ======> Admin Views <======
 
-
+@never_cache
 # Admin landing page after authentication
 def admin_home(request):
 	if request.user.is_authenticated and request.user.is_staff:
 		context = {"title": "Dashboard"}
 		return render(request, "../templates/administrator/admin_home.html", context)
 	else:
-		messages.success(request, "You must be logged in as admin to access admin dashboard.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')  
 
 
-
+@never_cache
 def manage_employees(request):
     if request.user.is_authenticated and request.user.is_staff:
         employees_list = Employee.objects.all()
@@ -62,11 +64,11 @@ def manage_employees(request):
         }
         return render(request, 'administrator/manage_employees.html', context)
     else:
-        messages.success(request, "You must be logged in as admin to manage company employees.")
+        messages.success(request, "Please log in to view page.")
         return redirect('login')
 
 
-
+@never_cache
 def register_employee(request):
 	if request.user.is_authenticated and request.user.is_staff:
 		if request.method == 'POST':
@@ -85,21 +87,21 @@ def register_employee(request):
 
 		return render(request, '../templates/administrator/register_employee.html', {'form':form})
 	else:
-		messages.success(request, "You must be logged in as admin to register a new employee.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
 
 
-
+@never_cache
 def employee_record(request, pk):
 	if request.user.is_authenticated and request.user.is_staff:
 		employee_record = Employee.objects.get(id=pk) # Look Up Records
 		return render(request, '../templates/administrator/employee_record.html', {'title': 'Employee Record', 'employee_record':employee_record})
 	else:
-		messages.success(request, "You must be logged in as admin to view employee records.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
 
 
-
+@never_cache
 def update_employee(request, pk):
 	if request.user.is_authenticated and request.user.is_staff:
 		current_employee = Employee.objects.get(id=pk)
@@ -117,11 +119,11 @@ def update_employee(request, pk):
         }
 		return render(request, '../templates/administrator/update_employee.html', context)
 	else:
-		messages.success(request, "You must be logged in as admin to update employee info.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
 	
 
-
+@never_cache
 def delete_employee(request, pk):
 	if request.user.is_authenticated and request.user.is_staff:
 		delete_it = Employee.objects.get(id=pk)
@@ -129,7 +131,7 @@ def delete_employee(request, pk):
 		messages.success(request, "Employee Deleted Successfully")
 		return redirect('manage_employees')
 	else:
-		messages.success(request, "You must be logged in as admin to delete an employee.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
 
 
@@ -137,7 +139,7 @@ def delete_employee(request, pk):
 
 # ======> Employee Views <======
 
-
+@never_cache
 def employee_home(request):
     # Retrieve user attributes from the database
 	if request.user.is_authenticated and not(request.user.is_staff):
@@ -154,12 +156,13 @@ def employee_home(request):
 		}
 		return render(request, '../templates/employees/employee_home.html', context)
 	else:
-		messages.success(request, "You must be logged in as employee to view the employee home page.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')  
 
 
 
 # Employee view for editing first name, last name, email, and phone number
+@never_cache
 def edit_profile(request):
 	if request.user.is_authenticated and not(request.user.is_staff):
 		current_employee = Employee.objects.get(id=request.user.id)
@@ -171,16 +174,17 @@ def edit_profile(request):
 			return redirect('employee_home')
 		return render(request, '../templates/employees/edit_profile.html', {'title': 'Edit My Profile', 'form':form})
 	else:
-		messages.success(request, "You must be logged in as employee to access the edit profile page.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
 
 
 # ======> Help Views <======
+@never_cache
 def help(request):
 	if request.user.is_authenticated and request.user.is_staff:
 		return render(request, '../templates/help/admin_home_help.html', {'title': 'Help'})
 	elif request.user.is_authenticated and not(request.user.is_staff):
 		return render(request, '../templates/help/employee_home_help.html', {'title': 'Help'})
 	else:
-		messages.success(request, "You must be logged in to view the help page.")
+		messages.success(request, "Please log in to view page.")
 		return redirect('login')
