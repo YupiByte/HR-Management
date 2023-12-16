@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
-
+from django.views.decorators.cache import never_cache
 
 # Reference custom user model Employee
 Employee = get_user_model()
 
+@never_cache
 def login_user(request):
 	# Check if the user is already authenticated and redirect them 
 	# to their corresponding home page
