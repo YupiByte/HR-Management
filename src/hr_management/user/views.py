@@ -7,6 +7,8 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
 
 # Reference custom user model Employee
@@ -19,7 +21,7 @@ def is_admin(user):
 
 # ======> Admin Views <======
 
-
+@never_cache
 # Admin landing page after authentication
 def admin_home(request):
 	if request.user.is_authenticated and request.user.is_staff:
@@ -30,7 +32,7 @@ def admin_home(request):
 		return redirect('login')  
 
 
-
+@never_cache
 def manage_employees(request):
     if request.user.is_authenticated and request.user.is_staff:
         employees_list = Employee.objects.all()
@@ -66,7 +68,7 @@ def manage_employees(request):
         return redirect('login')
 
 
-
+@never_cache
 def register_employee(request):
 	if request.user.is_authenticated and request.user.is_staff:
 		if request.method == 'POST':
@@ -89,7 +91,7 @@ def register_employee(request):
 		return redirect('login')
 
 
-
+@never_cache
 def employee_record(request, pk):
 	if request.user.is_authenticated and request.user.is_staff:
 		employee_record = Employee.objects.get(id=pk) # Look Up Records
@@ -99,7 +101,7 @@ def employee_record(request, pk):
 		return redirect('login')
 
 
-
+@never_cache
 def update_employee(request, pk):
 	if request.user.is_authenticated and request.user.is_staff:
 		current_employee = Employee.objects.get(id=pk)
@@ -121,7 +123,7 @@ def update_employee(request, pk):
 		return redirect('login')
 	
 
-
+@never_cache
 def delete_employee(request, pk):
 	if request.user.is_authenticated and request.user.is_staff:
 		delete_it = Employee.objects.get(id=pk)
@@ -137,7 +139,7 @@ def delete_employee(request, pk):
 
 # ======> Employee Views <======
 
-
+@never_cache
 def employee_home(request):
     # Retrieve user attributes from the database
 	if request.user.is_authenticated and not(request.user.is_staff):
@@ -160,6 +162,7 @@ def employee_home(request):
 
 
 # Employee view for editing first name, last name, email, and phone number
+@never_cache
 def edit_profile(request):
 	if request.user.is_authenticated and not(request.user.is_staff):
 		current_employee = Employee.objects.get(id=request.user.id)
@@ -176,6 +179,7 @@ def edit_profile(request):
 
 
 # ======> Help Views <======
+@never_cache
 def help(request):
 	if request.user.is_authenticated and request.user.is_staff:
 		return render(request, '../templates/help/admin_home_help.html', {'title': 'Help'})
